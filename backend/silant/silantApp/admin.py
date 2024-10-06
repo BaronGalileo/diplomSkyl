@@ -8,5 +8,5 @@ admin.site.register(EngineModel)
 admin.site.register(TransmissionModel)
 admin.site.register(DrivingAxleModel)
 admin.site.register(ModelOfAControlledBridge)
-admin.site.register(ServiceCompany)
+
 

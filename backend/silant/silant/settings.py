@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'silantApp',
     'usersApp',
+    'serviceApp',
 ]
 
 MIDDLEWARE = [

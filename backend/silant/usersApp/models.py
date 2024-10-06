@@ -11,6 +11,10 @@ class Manager(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = "Менеджер"
+        verbose_name_plural = "Менеджеры"
+
 
 class ServiseOrganization(models.Model):
     name = models.CharField(max_length=100)
@@ -18,6 +22,10 @@ class ServiseOrganization(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = "Сервисная компания"
+        verbose_name_plural = "Сервисные компании"
 
 
 class Client(models.Model):
@@ -27,3 +35,7 @@ class Client(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = "Клиент"
+        verbose_name_plural = "Клиенты"

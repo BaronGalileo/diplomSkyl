@@ -1,6 +1,6 @@
 from django.db import models
 
-from usersApp.models import Client
+from usersApp.models import Client, ServiseOrganization
 
 
 class Machine(models.Model):
@@ -16,16 +16,19 @@ class Machine(models.Model):
     model_of_a_controlled_bridge = models.ForeignKey('ModelOfAControlledBridge', on_delete=models.PROTECT)
     num_of_a_controlled_bridge = models.CharField(max_length=120)
     contractNo = models.CharField(max_length=120, unique=True)
-    date_from_the_factory = models.DateField
+    date_from_the_factory = models.DateField()
     consignee = models.CharField(max_length=255)
     delivery_address = models.CharField(max_length=255)
     equipment = models.CharField(max_length=255, blank=True)
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
-    service_company = models.ForeignKey('ServiceCompany', models.SET_NULL, blank=True, null=True)
+    service_company = models.ForeignKey(ServiseOrganization, models.SET_NULL, blank=True, null=True)
 
     def __str__(self):
         return self.brand
 
+    class Meta:
+        verbose_name = "Машина"
+        verbose_name_plural = "Машины"
 
 class CarModel(models.Model):
     name = models.CharField(max_length=100)
@@ -33,6 +36,10 @@ class CarModel(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = "Модель техники"
+        verbose_name_plural = "Модели техник"
 
 
 class EngineModel(models.Model):
@@ -42,6 +49,10 @@ class EngineModel(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = "Модель двигателя"
+        verbose_name_plural = "Модели двигателей"
+
 
 class TransmissionModel(models.Model):
     name = models.CharField(max_length=100)
@@ -49,6 +60,10 @@ class TransmissionModel(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = "Модель трансмиссии"
+        verbose_name_plural = "Модели трансмиссий"
 
 
 class DrivingAxleModel(models.Model):
@@ -58,6 +73,10 @@ class DrivingAxleModel(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = "Модель ведущего моста"
+        verbose_name_plural = "Модели ведущих мостов"
+
 
 class ModelOfAControlledBridge(models.Model):
     name = models.CharField(max_length=100)
@@ -66,18 +85,9 @@ class ModelOfAControlledBridge(models.Model):
     def __str__(self):
         return self.name
 
-
-# class Client(models.Model):
-#     login = models.CharField(max_length=255, unique=True)
-#     password = models.CharField(max_length=100)
-#
-#     def __str__(self):
-#         return self.login
+    class Meta:
+        verbose_name = "Модель управляемого моста"
+        verbose_name_plural = "Модели управляемых мостов"
 
 
-class ServiceCompany(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-    specification = models.TextField(blank=True)
 
-    def __str__(self):
-        return self.name
