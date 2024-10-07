@@ -1,4 +1,4 @@
-from rest_framework import generics, viewsets
+from rest_framework import viewsets
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -8,7 +8,7 @@ from usersApp.models import *
 from .models import *
 from .permissions import IsManagerUser, IsServece
 from .serializers import *
-
+from .utils import authUser_is_person
 
 
 class MachineViewSet(viewsets.ModelViewSet):
@@ -18,12 +18,13 @@ class MachineViewSet(viewsets.ModelViewSet):
     permission_classes = [IsManagerUser]
 
     def list(self, request):
+        is_auth_user = authUser_is_person(user=request.user.id)
         machines = Machine.objects.all()
-        manager = Manager.objects.filter(user=request.user)
-        servise_organization = ServiseOrganization.objects.filter(user=request.user)
-        client = Client.objects.filter(user=request.user)
+        # manager = Manager.objects.filter(user=request.user)
+        # servise_organization = ServiseOrganization.objects.filter(user=request.user)
+        # client = Client.objects.filter(user=request.user)
         if (request.user.is_authenticated and
-                manager or servise_organization or client):
+                is_auth_user):
             serializer = MachineSerializer(machines, many=True)
         else:
             serializer = MachineSerializerNotAuth(machines, many=True)
@@ -31,12 +32,13 @@ class MachineViewSet(viewsets.ModelViewSet):
 
     def retrieve(self, request, pk=None):
         machines = Machine.objects.all()
-        manager = Manager.objects.filter(user=request.user)
-        servise_organization = ServiseOrganization.objects.filter(user=request.user)
-        client = Client.objects.filter(user=request.user)
+        is_auth_user = authUser_is_person(user=request.user.id)
+        # manager = Manager.objects.filter(user=request.user)
+        # servise_organization = ServiseOrganization.objects.filter(user=request.user)
+        # client = Client.objects.filter(user=request.user)
         machine = get_object_or_404(machines, pk=pk)
         if (request.user.is_authenticated and
-                manager or servise_organization or client):
+                is_auth_user):
             serializer = MachineSerializer(machine)
         else:
             serializer = MachineSerializerNotAuth(machine)
