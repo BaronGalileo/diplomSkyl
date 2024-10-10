@@ -1,0 +1,26 @@
+@import url("./font.css");
+
+body {
+    text-align: center; 
+  }
+
+.test1 {
+    font-family: "Regular";
+}
+
+.test2 {
+    font-family: "Bold";
+}
+
+.test3 {
+    color: blue;
+    font-family: "Italic";
+}
+
+.test4 {
+    font-family: "Italic-Bold";
+}
+
+p {
+    font-family: "Bold"; 
+}
