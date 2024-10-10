@@ -20,9 +20,6 @@ class MachineViewSet(viewsets.ModelViewSet):
     def list(self, request):
         is_auth_user = authUser_is_person(user=request.user.id)
         machines = Machine.objects.all()
-        # manager = Manager.objects.filter(user=request.user)
-        # servise_organization = ServiseOrganization.objects.filter(user=request.user)
-        # client = Client.objects.filter(user=request.user)
         if (request.user.is_authenticated and
                 is_auth_user):
             serializer = MachineSerializer(machines, many=True)
@@ -33,9 +30,6 @@ class MachineViewSet(viewsets.ModelViewSet):
     def retrieve(self, request, pk=None):
         machines = Machine.objects.all()
         is_auth_user = authUser_is_person(user=request.user.id)
-        # manager = Manager.objects.filter(user=request.user)
-        # servise_organization = ServiseOrganization.objects.filter(user=request.user)
-        # client = Client.objects.filter(user=request.user)
         machine = get_object_or_404(machines, pk=pk)
         if (request.user.is_authenticated and
                 is_auth_user):
@@ -45,50 +39,39 @@ class MachineViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
-# class MachineAPIView(APIView):
-#     def get(self, request):
-#         machines = Machine.objects.all()
-#         manager = Manager.objects.filter(user=request.user)
-#         servise_organization = ServiseOrganization.objects.filter(user=request.user)
-#         client = Client.objects.filter(user=request.user)
-#
-#         if (request.user.is_authenticated and
-#                 manager or servise_organization or client):
-#             serializer = MachineSerializer(machines, many=True)
-#         else:
-#             serializer = MachineSerializerNotAuth(machines, many=True)
-#         return Response(serializer.data)
-#
-#
-# class MachineCreateAPIView(generics.ListCreateAPIView):
-#     queryset = Machine.objects.all()
-#     serializer_class = MachineSerializer
-#     permission_classes = (IsManagerUser,)
-#
-# class MachineUpdateAPIView(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = Machine.objects.all()
-#     serializer_class = MachineSerializer
-#     permission_classes = (IsManagerUser,)
-#
-#
-# class CarModelCreateAPIView(generics.ListCreateAPIView):
-#     queryset = CarModel.objects.all()
-#     serializer_class = CarModelSerializer
-#     permission_classes = (IsManagerUser,)
-#
-#
-# class CarModelUpdateAPIView(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = CarModel.objects.all()
-#     serializer_class = CarModelSerializer
-#     permission_classes = (IsManagerUser,)
-#
-# class FailureNodeUpdateAPIView(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = FailureNode.objects.all()
-#     serializer_class = FailureNodeSerializer
-#     permission_classes = (IsServece,)
-#
-#
-#
-#
+class CarModelViewSet(viewsets.ModelViewSet):
+    queryset = CarModel.objects.all()
+    serializer_class = CarModelSerializer
+    permission_classes = [IsManagerUser]
+
+
+class EngineModelViewSet(viewsets.ModelViewSet):
+    queryset = EngineModel.objects.all()
+    serializer_class = EngineModelSerializer
+    permission_classes = [IsManagerUser]
+
+
+class TransmissionModelViewSet(viewsets.ModelViewSet):
+    queryset = TransmissionModel.objects.all()
+    serializer_class = TransmissionModelSerializer
+    permission_classes = [IsManagerUser]
+
+
+class DrivingAxleModelViewSet(viewsets.ModelViewSet):
+    queryset = DrivingAxleModel.objects.all()
+    serializer_class = DrivingAxleModelSerializer
+    permission_classes = [IsManagerUser]
+
+
+class ModelOfAControlledBridgeViewSet(viewsets.ModelViewSet):
+    queryset = ModelOfAControlledBridge.objects.all()
+    serializer_class = ModelOfAControlledBridgeSerializer
+    permission_classes = [IsManagerUser]
+
+
+
+
+
+
 
 

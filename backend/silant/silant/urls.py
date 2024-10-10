@@ -27,5 +27,4 @@ urlpatterns = [
     path('api/', include('silantApp.urls')),
     path('api/service/', include('serviceApp.urls')),
 
-
     ]

@@ -24,7 +24,27 @@ class CarModelSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class FailureNodeSerializer(serializers.ModelSerializer):
+class EngineModelSerializer(serializers.ModelSerializer):
     class Meta:
-        model = FailureNode
+        model = EngineModel
         fields ='__all__'
+
+
+class TransmissionModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TransmissionModel
+        fields = '__all__'
+
+
+class DrivingAxleModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DrivingAxleModel
+        fields = '__all__'
+
+
+class ModelOfAControlledBridgeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ModelOfAControlledBridge
+        fields = '__all__'
+
+
