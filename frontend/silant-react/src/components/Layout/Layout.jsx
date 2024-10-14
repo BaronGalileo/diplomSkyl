@@ -1,30 +1,28 @@
 import { Outlet } from "react-router-dom";
 import React from "react";
-// import { Img } from "../Img/img";
-// import { Text } from "../Text/Text";
-// import { useSelector} from "react-redux";
-// import { Traffic } from "../Traffic/Traffic";
-// import { Account } from "../Account/Account";
+import { Header } from "../Header/Header";
+import { Footer } from "../Footer/Footer";
+
+
+
 
 
 
 
 function Layout() {
-
-    // const isAuth = useSelector(state => state.auth);
-
+    
     return (
         <div className="page">
-            <header>   
-                <h1>Шапка</h1>  
+            <header> 
+                <Header/>
             </header>
             <main>
                 <Outlet/>            
             </main>
             <footer>
-                <h2>Подвал</h2>
+                <Footer/>
             </footer>
-      </div>
+        </div>
     )
 }
 

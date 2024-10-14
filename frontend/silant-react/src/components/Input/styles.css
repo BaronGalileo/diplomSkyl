@@ -1,0 +1,27 @@
+.input-wrapper{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.input-element{
+   width: 90%;
+   margin: 6px;
+   border-radius: 5px;
+}
+
+.input-element.error {
+    border-color: #D20A11;
+}
+
+.input-wrapper span {
+    font-size: 14px;
+    color: #D20A11;
+    font-family: 'Regular';
+}
+
+input {
+    width: 90%;
+    margin: 5px;
+    padding: 5px;
+}

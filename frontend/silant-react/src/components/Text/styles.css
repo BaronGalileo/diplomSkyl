@@ -1,0 +1,16 @@
+
+
+.txt {
+    color: #EBE6D6;
+    font-family: "Regular", serif;
+    display: inline;
+    
+}
+
+
+.left {
+    text-align: start;
+    margin: 3px;
+    padding: 5px;
+  }
+

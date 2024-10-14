@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from serviceApp.models import FailureNode
 from usersApp.models import *
 from .models import *
-from .permissions import IsManagerUser, IsServece
+from .permissions import IsManagerUser, IsServece, OnlyManagerPost
 from .serializers import *
 from .utils import authUser_is_person
 
@@ -15,7 +15,7 @@ class MachineViewSet(viewsets.ModelViewSet):
 
     queryset = Machine.objects.all()
     serializer_class = MachineSerializer
-    permission_classes = [IsManagerUser]
+    permission_classes = [OnlyManagerPost]
 
     def list(self, request):
         is_auth_user = authUser_is_person(user=request.user.id)
@@ -30,7 +30,7 @@ class MachineViewSet(viewsets.ModelViewSet):
     def retrieve(self, request, pk=None):
         machines = Machine.objects.all()
         is_auth_user = authUser_is_person(user=request.user.id)
-        machine = get_object_or_404(machines, pk=pk)
+        machine = get_object_or_404(machines, serial_num=pk)
         if (request.user.is_authenticated and
                 is_auth_user):
             serializer = MachineSerializer(machine)

@@ -22,21 +22,31 @@ class IsManagerUser(BasePermission):
             )
 
 
-class IsServece(BasePermission):
+class OnlyManagerPost(BasePermission):
 
     def has_permission(self, request, view):
-        is_auth_user = authUser_is_person(user=request.user.id)
+        manager = Manager.objects.filter(user=request.user.id)
 
-
-        if is_auth_user:
+        if manager:
             return bool(
                 request.method != 'DELETE'
             )
         else:
             return bool(
                 request.method in SAFE_METHODS
-                and is_auth_user
             )
+
+
+class IsServece(BasePermission):
+
+    def has_permission(self, request, view):
+        is_auth_user = authUser_is_person(user=request.user.id)
+
+        if is_auth_user:
+            return bool(
+                request.method != 'DELETE'
+            )
+
 
 class IsReclamation(BasePermission):
 
@@ -44,7 +54,7 @@ class IsReclamation(BasePermission):
         is_auth_user = authUser_is_person(user=request.user.id)
         client = Client.objects.filter(user_id=request.user.id)
 
-        if (not client  and is_auth_user):
+        if (not client and is_auth_user):
             return bool(
                 request.method != 'DELETE'
             )

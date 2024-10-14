@@ -3,8 +3,11 @@ import { Route, Routes } from "react-router-dom";
 import { Layout } from './components/Layout/Layout';
 import { Home } from './pages/Home/Home';
 import { Reclamation } from './pages/Reclamation/Reclamation';
+import { Notfoundpage } from './pages/NotFoundPage/Notfoundpage';
 import { useForm, FormProvider } from "react-hook-form";
 import './styles/index.css'
+import { LoginPage } from './pages/LoginPage/LoginPage';
+
 
 
 function App() {
@@ -20,7 +23,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout/>}>
             <Route index element={<Home/>}/>
+            <Route path="login" element={<LoginPage/>}/>
             <Route path="reclamation" element={<Reclamation/>}/>
+            <Route path="*" element={<Notfoundpage/>}/>
           </Route>
         </Routes>
       </FormProvider>

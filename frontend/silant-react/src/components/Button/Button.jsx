@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import './styles.css'
 
 
 function Button({children = 'Default button', onClick =() => {}, className = '', disabled = false, active = false, clean = false, ...restProps}){

@@ -1,0 +1,16 @@
+
+
+.footer-wrapper {
+    background-color: #163E6C;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.text-footer {
+    display: block;
+    padding: 8px;
+}
+

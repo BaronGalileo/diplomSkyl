@@ -1,0 +1,12 @@
+
+
+.header-wrapper {
+    background-color: #163E6C;
+    border-radius: 12px;
+}
+
+.header-cap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

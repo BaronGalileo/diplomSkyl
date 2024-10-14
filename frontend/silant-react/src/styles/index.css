@@ -1,26 +1,36 @@
 @import url("./font.css");
 
 body {
-    text-align: center; 
+    text-align: center;
+    background-color: #ffffff; 
   }
 
-.test1 {
-    font-family: "Regular";
-}
+.page {
+    display: flex;
+    flex-direction: column;
+    min-height: 98vh;
+    justify-content: space-between;
+    overflow-x: hidden;
+  }
 
-.test2 {
-    font-family: "Bold";
-}
 
-.test3 {
-    color: blue;
-    font-family: "Italic";
-}
+main {
+    display: flex;
+    margin: 3px;
+    padding: 2px;
+    background-color: #163E6C;
+    justify-content:center;
+    align-items: center;
+    min-height: 73vh;
+    border-radius: 12px;
+  }
 
-.test4 {
-    font-family: "Italic-Bold";
-}
 
-p {
-    font-family: "Bold"; 
-}
+
+@media (max-width: 1035px) {
+    .col1 {
+      background-color: aqua;   
+  }
+  }
+
+
