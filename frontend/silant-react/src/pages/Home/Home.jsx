@@ -1,26 +1,22 @@
 import React from "react"
-import { Test } from "../../components/test/Test"
 import { FindMachine } from "../../components/FindMachine/FindMachine"
+import { ResultFind } from "../../components/ResultFind/ResultFind"
+import { useSelector } from "react-redux";
+import { MainPanel } from "../../components/MainPanel/MainPanel";
 
 
 function Home() {
+
+    const isAuth = useSelector(state => state.auth)
+
     return(
         <div>
             <FindMachine/>
-            {/* <Test></Test>
-            <p>Привет</p>
-            <p className="test1">Привет1 !</p>
-            <p className="test2">Привет1 !</p>
-            <p className="test3">Привет1 !</p>
-            <p className="test4">Привет1 !</p>
-            <p className="test1">Привет1 !</p>
-            <p className="test2">Привет1 !</p>
-            <p className="test3">Привет1 !</p>
-            <p className="test4">Привет1 !</p>
-            <p className="test1">Привет1 !</p>
-            <p className="test2">Привет1 !</p>
-            <p className="test3">Привет1 !</p>
-            <p className="test4">Привет1 !</p> */}
+            {!isAuth.isAuth &&
+            <ResultFind/>}
+            {isAuth.isAuth &&
+            <MainPanel/>}
+
         </div>
     )
 }

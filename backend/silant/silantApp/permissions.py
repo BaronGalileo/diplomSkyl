@@ -63,3 +63,8 @@ class IsReclamation(BasePermission):
                 request.method in SAFE_METHODS
                 and is_auth_user
             )
+
+
+class ReadOnly(BasePermission):
+    def has_permission(self, request, view):
+        return request.method in SAFE_METHODS

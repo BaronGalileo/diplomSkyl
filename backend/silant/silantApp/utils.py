@@ -9,3 +9,5 @@ def authUser_is_person(user):
         servise_organization = ServiseOrganization.objects.filter(user_id=user)
         client = Client.objects.filter(user_id=user)
         return bool(manager or servise_organization or client)
+
+

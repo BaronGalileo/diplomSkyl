@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAuth } from "../../store/authSlice"
 import { Input } from "../Input/Input";
 import {  useFormContext } from "react-hook-form";
+import { removeMachine } from "../../store/machineSlice";
 
 
 
@@ -17,18 +18,20 @@ function Login() {
         formState: {isValid}
     } = useFormContext()
 
-
-    
+    const isAuth = useSelector(state => state.auth)    
 
     const dispatch = useDispatch();
 
     const path = "http://127.0.0.1:8000/auth/token/login/"
 
-    const isAuth = useSelector(state => state.auth)
+    const pach_user = "http://127.0.0.1:8000/api/v1/auth/users/me/"
+
+    const pach_id_user = "http://127.0.0.1:8000/api/v1/auth/users/me/"
     
 
 
     const onSubmit = (data) => {
+        dispatch(removeMachine())
         axios.post(path, data)
         .then(res => {
             const account = {

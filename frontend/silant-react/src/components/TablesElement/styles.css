@@ -1,0 +1,35 @@
+.frame-tables-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.resultFind-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.tablesMachine-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.tablesMachine-element {
+    margin: 3px;
+    padding: 3px;
+    border-radius: 5px;
+    background-color: #EBE6D6;
+    width: 97%;
+
+}
+
+.frame-tables {
+    display: flex;
+    flex-direction: row;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}

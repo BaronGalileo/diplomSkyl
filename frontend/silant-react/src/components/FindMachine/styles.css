@@ -1,0 +1,15 @@
+
+
+.input-serialNum {
+    display: flex;
+    flex-direction: row;
+    align-items:flex-end;
+}
+
+
+.input-btn {
+    width: 50%;
+    margin: 7px;
+    line-height: 1.5em;
+}
+

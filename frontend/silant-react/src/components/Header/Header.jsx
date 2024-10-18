@@ -5,7 +5,9 @@ import { Button } from '../Button/Button';
 import { Text } from '../Text/Text';
 import { useLocation } from "react-router-dom";
 import { removeAuth } from "../../store/authSlice"
+import axios from 'axios';
 import './styles.css'
+import { removeMachine } from '../../store/machineSlice';
 
 
 function Header() {
@@ -16,12 +18,22 @@ function Header() {
 
     const loca = useLocation()
 
-    const isLogin = loca.pathname == '/login'
+    const isLogin = loca.pathname === '/login'
 
     function logout() {
         dispatch(removeAuth())
+        dispatch(removeMachine())
         }
+    
+    const pach_user = "http://127.0.0.1:8000/api/v1/auth/users/me/"
 
+    function show() {
+        console.log(isAuth)
+        axios.get(pach_user, isAuth.confermAut)
+        .then(resol => {
+            console.log(resol.data.id)
+        })
+    }
 
 
 
@@ -40,6 +52,7 @@ function Header() {
                     
                 </div>
                 <Text as='h1'>Электронная сервисная книжка "Мой Силант"</Text>
+                <Button onClick={show}>Жмых</Button>
             </div>
 
         </div>

@@ -14,3 +14,18 @@
     padding: 5px;
   }
 
+.dark-color {
+    color: #163E6C;
+}
+
+.italic {
+    font-family: "Italic";
+}
+
+.italic-bold {
+    font-family: "Italic-Bold";
+}
+
+.bold {
+    font-family: "Bold";
+}

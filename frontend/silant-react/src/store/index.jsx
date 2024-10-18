@@ -10,13 +10,15 @@ import {
   REGISTER,
  } from 'redux-persist'
 import storage from 'redux-persist/lib/storage';
-import authReducer from './authSlice' 
+import authReducer from './authSlice'
+import machineReducer from './machineSlice' 
 
 
 
 
 const rootReducer = combineReducers({
-  auth: authReducer
+  auth: authReducer,
+  machine: machineReducer
 })
 
 const persistConfig = {
