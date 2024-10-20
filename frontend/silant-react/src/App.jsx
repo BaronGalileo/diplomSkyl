@@ -7,6 +7,7 @@ import { Notfoundpage } from './pages/NotFoundPage/Notfoundpage';
 import { useForm, FormProvider } from "react-hook-form";
 import './styles/index.css'
 import { LoginPage } from './pages/LoginPage/LoginPage';
+import { Test } from './pages/test/test';
 
 
 
@@ -25,6 +26,7 @@ function App() {
             <Route index element={<Home/>}/>
             <Route path="login" element={<LoginPage/>}/>
             <Route path="reclamation" element={<Reclamation/>}/>
+            <Route path="test" element={<Test/>}/>
             <Route path="*" element={<Notfoundpage/>}/>
           </Route>
         </Routes>

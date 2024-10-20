@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "../Button/Button";
 import { Navigate } from "react-router-dom";
 import axios from 'axios';
@@ -12,21 +12,43 @@ import { removeMachine } from "../../store/machineSlice";
 
 function Login() {
 
+    const isAuth = useSelector(state => state.auth)
+
+    useEffect(() => {
+        if(isAuth.confermAut){
+            axios.get(pach_user_role, isAuth.confermAut)
+            .then(res => {
+                res.data.roles.map(val => {
+                    console.log("res.data", res.data)
+                    if(val[0]){
+                        const accountAdd = {
+                            username: isAuth.username,
+                            confermAut : isAuth.confermAut,
+                            user_role: val[0]?.role,
+                            auth_token: isAuth.auth_token,
+                        }
+                        return dispatch(setAuth(accountAdd))
+                    }
+                    return null
+                })
+            })
+        }
+    }, [isAuth])
+
     const {
         handleSubmit,
         reset,
         formState: {isValid}
     } = useFormContext()
-
-    const isAuth = useSelector(state => state.auth)    
+  
 
     const dispatch = useDispatch();
 
     const path = "http://127.0.0.1:8000/auth/token/login/"
 
-    const pach_user = "http://127.0.0.1:8000/api/v1/auth/users/me/"
+    const pach_user_role = "http://127.0.0.1:8000/users/role/"
 
-    const pach_id_user = "http://127.0.0.1:8000/api/v1/auth/users/me/"
+
     
 
 
@@ -34,9 +56,10 @@ function Login() {
         dispatch(removeMachine())
         axios.post(path, data)
         .then(res => {
+            console.log("token", res)
             const account = {
                 username: data.username,
-                token: res.data.auth_token,
+                auth_token: res.data.auth_token,
                 confermAut : {headers: {"Authorization" : `Token ${res.data.auth_token}`}},               
                 ...res.data}
             dispatch(setAuth(account))

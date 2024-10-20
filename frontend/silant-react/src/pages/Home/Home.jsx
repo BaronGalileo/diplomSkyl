@@ -12,6 +12,7 @@ function Home() {
     return(
         <div>
             <FindMachine/>
+            <ResultFind/>
             {!isAuth.isAuth &&
             <ResultFind/>}
             {isAuth.isAuth &&

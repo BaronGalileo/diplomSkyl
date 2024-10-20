@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework import viewsets
 
 from silantApp.permissions import IsServece, IsReclamation, IsManagerUser
+from silantApp.utils import filter_by_role
 from .models import *
 from .serializers import *
 
@@ -16,6 +17,13 @@ class ReclamationViewSet(viewsets.ModelViewSet):
     queryset = Reclamation.objects.all()
     serializer_class = ReclamationSerializer
     permission_classes = [IsReclamation,]
+
+    def list(self, request):
+        queryset = Reclamation.objects.all()
+        my_serializer = ReclamationSerializer
+        if filter_by_role(request, queryset, my_serializer):
+            return filter_by_role(request, queryset, my_serializer)
+
 
 
 class TypeOfServiceViewSet(viewsets.ModelViewSet):

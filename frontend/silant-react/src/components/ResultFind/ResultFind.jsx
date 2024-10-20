@@ -4,6 +4,7 @@ import './styles.css'
 import { useSelector } from "react-redux";
 import { TablesElement } from "../TablesElement/TablesElement";
 import { mashine_dict } from "../../helpers/Dictionary";
+import { TestTablesElement } from "../test/Test";
 
 function ResultFind() {
 
@@ -23,7 +24,9 @@ function ResultFind() {
                     <div className="tables_row">
                         <TablesElement key_of_dictionary={mashine_dict}  dictionary={targetMachine} classNameFrame="column" classNameText="italic-bold"/>
                         <TablesElement   dictionary={targetMachine} classNameFrame="column"classNameText="italic-bold"/>
-                    </div>                   
+                    </div>                 
+
+                                       
                 </div>
             </div>
         )
