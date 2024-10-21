@@ -1,6 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
+    
     brand: null,
     serial_num:  null,
     car_model: null,
@@ -22,10 +23,33 @@ const initialState = {
 }
 
 
+    
+        // brand: null,
+        // serial_num:  null,
+        // car_model: null,
+        // engine_model:  null,
+        // engine_num: null,
+        // transmission_model:  null,
+        // transmission_num: null,
+        // driving_axle_model:  null,
+        // driving_axle_num:  null,
+        // model_of_a_controlled_bridge: null,
+        // num_of_a_controlled_bridge: null,
+        // contractNo: null,
+        // date_from_the_factory: null,
+        // consignee: null,
+        // delivery_address: null,
+        // equipment: null,
+        // client: null,
+        // service_company: null,
+    
+
+
 const machineSlice = createSlice({
     name: 'machine',
     initialState,
     reducers: {
+
         setMachine(state, action) {
             state.brand = action.payload.brand;
             state.serial_num = action.payload.serial_num;
@@ -45,6 +69,7 @@ const machineSlice = createSlice({
             state.equipment = action.payload.equipment;
             state.client = action.payload.client;
             state.service_company = action.payload.service_company;
+            
         },
         removeMachine(state) {
             state.brand = null;
@@ -65,10 +90,10 @@ const machineSlice = createSlice({
             state.equipment = null;
             state.client = null;
             state.service_company = null;
-        }
+
     },
 
-});
+}});
 
 export const {setMachine, removeMachine} = machineSlice.actions;
 

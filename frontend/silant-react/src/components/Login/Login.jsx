@@ -22,6 +22,7 @@ function Login() {
                     console.log("res.data", res.data)
                     if(val[0]){
                         const accountAdd = {
+                            name: val[0]?.name,
                             username: isAuth.username,
                             confermAut : isAuth.confermAut,
                             user_role: val[0]?.role,
@@ -79,9 +80,6 @@ function Login() {
         })
     }
 
-    function click() {
-        console.log(isAuth)
-    }
 
     if(isAuth.isAuth) return <Navigate to="/"/>
     
@@ -94,7 +92,6 @@ function Login() {
                 <Input name="password" type="password" message="Обязательно заполнить!">Пароль:</Input>
                 <Button className="btn_login" disabled={!isValid}>Войти</Button>
             </form>
-            <Button onClick={click}>Проверка</Button>
         </div>
         </>
     )

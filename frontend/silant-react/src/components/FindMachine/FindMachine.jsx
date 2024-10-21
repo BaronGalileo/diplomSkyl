@@ -6,7 +6,7 @@ import {  useFormContext } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import axios from 'axios';
 import './styles.css'
-import { removeMachine, setMachine } from "../../store/machineSlice";
+import { setMachine } from "../../store/machineSlice";
 
 
 function FindMachine() {
@@ -57,14 +57,6 @@ function FindMachine() {
         })
     }
 
-    function clear() {
-        dispatch(removeMachine())
-    }
-
-    function show() {
-        console.log(targetMachine)
-    }
-
     return(
         <>
         <Text as="h2">Проверте комплектацию и технические характеристики техники Силант</Text>
@@ -74,9 +66,6 @@ function FindMachine() {
                 <Button className="input-btn">Найти машину</Button>
             </div>
         </form>
-        <Button onClick={clear}>Убрать машину</Button>
-        <Button onClick={show}>Показать</Button>
-
         </>
     )
 }

@@ -24,10 +24,6 @@ function Header() {
         dispatch(removeMachine())
         }
 
-    function show() {
-        console.log("isAuch", isAuth)
-    }
-
 
 
     return(
@@ -45,7 +41,6 @@ function Header() {
                     
                 </div>
                 <Text as='h1'>Электронная сервисная книжка "Мой Силант"</Text>
-                <Button onClick={show}>Жмых</Button>
             </div>
 
         </div>
