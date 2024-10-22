@@ -1,17 +1,21 @@
 export const ColomnsService = [
     {
         Header: 'Машина',
-        accessor: 'machine',
+        accessor: 'machine.brand',
+        sticky: 'left'
+    },
+    {
+        Header: 'сервисная компания',
+        accessor: 'service_company.name',
         sticky: 'left'
     },
     {
         Header: 'дата проведения ТО',
         accessor: 'date_service',
-        sticky: 'left'
     },
     {
         Header: 'Вид ТО',
-        accessor: 'type_of_service'
+        accessor: 'type_of_service.name'
     },
     {
         Header: 'наработка, м/час',
@@ -24,9 +28,5 @@ export const ColomnsService = [
     {
         Header: 'дата заказ-наряда',
         accessor: 'date_order'
-    },
-    {
-        Header: 'сервисная компания',
-        accessor: 'service_company'
     },
 ]

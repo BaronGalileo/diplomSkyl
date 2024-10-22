@@ -11,16 +11,16 @@ function Home() {
 
     const isAuth = useSelector(state => state.auth)
 
-    const machines = useSelector(state => state.machines)
+    const target = useSelector(state => state.targetmachine)
 
     const dispatch = useDispatch()
 
     function show() {
-        console.log("Machine", machines)
-        console.log("Machine", machines["23131"])
-        Object.entries(machines).map(key => {
-            console.log(key)
-        })
+        console.log("targetmachine", target)
+
+        // Object.entries(machines).map(key => {
+        //     console.log(key)
+        // })
     }
 
     function delite() {

@@ -1,17 +1,10 @@
 from rest_framework import serializers
+
+from silantApp.serializers import MachineSerializer
+from usersApp.serializers import ServiseOrganizationSerializer
 from .models import *
 
 
-class ServiceSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Service
-        fields = '__all__'
-
-
-class ReclamationSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Reclamation
-        fields = '__all__'
 
 
 class TypeOfServiceSerializer(serializers.ModelSerializer):
@@ -32,3 +25,23 @@ class RecoveryMethodSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class ServiceSerializer(serializers.ModelSerializer):
+    machine = MachineSerializer()
+    service_company = ServiseOrganizationSerializer()
+    type_of_service = TypeOfServiceSerializer()
+
+
+    class Meta:
+        model = Service
+        fields = '__all__'
+
+
+class ReclamationSerializer(serializers.ModelSerializer):
+    machine = MachineSerializer()
+    service_company = ServiseOrganizationSerializer()
+    failure_node = FailureNodeSerializer()
+    recovery_method = RecoveryMethodSerializer()
+
+    class Meta:
+        model = Reclamation
+        fields = '__all__'

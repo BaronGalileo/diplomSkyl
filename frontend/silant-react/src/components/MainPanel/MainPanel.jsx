@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useFormContext } from "react-hook-form"
 import { Text } from "../Text/Text";
 import "./styles.css"
 import { Button } from "../Button/Button";
 import axios from "axios";
-import { LayoutTable } from "../Tables/LayoutTable";
-import { columnsFullMachine } from "../Tables/ColomnsTables/columnsFullMachine";
-import { ColomnsService } from "../Tables/ColomnsTables/columnsService"
-import { ColomnsReclamation } from "../Tables/ColomnsTables/columnsReclamation"
-import { StickyTable } from "../Tables/StickyTable";
 import { setMachines } from "../../store/machinesSlice";
 import { MachinesTable } from "../MachinesTable/MachinesTable";
 import { ServicesTable } from "../ServicesTable/ServicesTable";
 import { ReclamationTable } from "../ReclamationTable/ReclamationTable";
+import { setTargetmachine } from "../../store/targetmachineSlice";
+import { setReclamation } from "../../store/reclamationSlice";
+import { setServices } from "../../store/servicesSlice";
 
 
 
@@ -23,6 +22,11 @@ function MainPanel() {
 
     const isMashines = useSelector(state => state.machines)
 
+    const isReclamation = useSelector(state => state.reclamation)
+
+    const isServices = useSelector(state => state.services)
+
+    const[isTargetMachine, setIsTargetMachine] = useState(false)
 
     const isAuth = useSelector(state => state.auth)
 
@@ -31,6 +35,13 @@ function MainPanel() {
     const[servicesTable, setServicesTable] = useState(false)
 
     const[reclamationTable, setReclamationTable] = useState(false)
+
+    const {
+        handleSubmit,
+        formState: {isValid},
+        reset,
+    
+      } = useFormContext()
     
 
     const DICT_ROLE = {
@@ -46,10 +57,14 @@ function MainPanel() {
 
     const path_reclamation = "http://127.0.0.1:8000/api/service/v1/reclamation/"
 
+    useEffect( () => checkedCheckBox())
+ 
     useEffect(() => {
-        console.log("useEffect addMachine")
         addDataMachine()
-    }, [])
+        checkedOff()
+        
+    }, [macinesTable])
+
 
     function addDataMachine() {
         if(!isMashines[0]){
@@ -59,22 +74,54 @@ function MainPanel() {
                     machines_data: res.data,
                 }
                 dispatch(setMachines(data_for_store))
-                console.log("setMachines(res.data)",res)
               })
         }
     }
 
     function addDataService() {
-        axios.get(path_service, isAuth.confermAut).then(res => {
-            console.log(res.data)
-          })
+        if(!isServices[0]){
+
+            axios.get(path_service, isAuth.confermAut)
+            .then(res => {
+                const data_for_store = {
+                    services_data: res.data
+                }
+                dispatch(setServices(data_for_store))
+            })
+        }
     }
 
     function addDataReclamations() {
-        axios.get(path_reclamation, isAuth.confermAut).then(res => {
-            console.log(res.data)
-          })
+        if(!isReclamation[0]) {
+            axios.get(path_reclamation, isAuth.confermAut)
+            .then(res => {
+                const data_for_store = {
+                    reclamation_data: res.data,
+                }
+                dispatch(setReclamation(data_for_store))
+            })
+        }
     }
+
+    const onSubmit = (data) => {
+        Object.entries(data).map(key => {
+            if(key[1]){
+                dispatch(setTargetmachine(key[0]))
+            }
+            reset()
+        })
+
+        console.log("DATA", data)
+        }
+
+    function checkedOff() {
+        const checkboxsArray = document.querySelectorAll(".checkbox-element");
+        for (let i = 0; i < checkboxsArray.length; i++) {
+            if(checkboxsArray[i].checked){
+                return checkboxsArray[i].checked = false
+            }
+        }
+        }
 
 
     function change(e) {
@@ -104,6 +151,32 @@ function MainPanel() {
         return e.currentTarget.classList.add("active")
     }
 
+    const checkedCheckBox = () => {
+        let count_checkbox = 0
+        const checkboxsArray = document.querySelectorAll(".checkbox-element");
+        checkboxsArray.forEach((elem) => {
+        elem.addEventListener("click", (e) => {
+            for (let i = 0; i < checkboxsArray.length; i++) {
+                if(checkboxsArray[i] !== e.target){
+                    checkboxsArray[i].checked = false
+                }
+              }
+            if(e.target.checked){
+                count_checkbox ++
+                setIsTargetMachine(true)
+            } else if(count_checkbox === 0) { 
+                setIsTargetMachine(false)
+            } else {
+                count_checkbox --
+            }
+            if(count_checkbox === 0){
+                setIsTargetMachine(false)
+            }
+        });
+    });
+    }
+   
+
 
     if(!isAuth){
         return( 
@@ -111,6 +184,10 @@ function MainPanel() {
         </>
         )
     }
+
+    const errorSubmit = (data) => {
+        console.log("ERRRoR", data)
+    } 
     
 
 
@@ -121,28 +198,19 @@ function MainPanel() {
             <Text className="left" as="h2">{DICT_ROLE[isAuth.user_role]} / {isAuth.name},  добро пожаловать!</Text>
         </div>}
         <Text as="h3">Информация о комплектации и технических характеристиках Вашей техники</Text>
-        {/* <div className="main-panel-element">
-            <Button className="all-info"onClick={change} active>Общая информация</Button>
-            <Button className="TO" onClick={change}>Техническое обслуживание</Button>
-            <Button className="reclam" onClick={change}>Рекламация</Button>
-        </div> */}
-        <div className="main-panel-element">
-            <MachinesTable show={macinesTable}/>
-            <ServicesTable show={servicesTable}/>
-            <ReclamationTable show={reclamationTable}/>
-{/* 
-            <StickyTable dataTable={machines} columnsTable={columnsFullMachine}/>
-            {services&&
-            <StickyTable dataTable={services} columnsTable={ColomnsService}/>}
-            {reclamation&&
-            <StickyTable dataTable={reclamation} columnsTable={ColomnsReclamation}/>} */}
-            {/* {machines&&
-            <LayoutTable dataTable={machines} columnsTable={columnsFullMachine}/>}
-            {services&&
-            <LayoutTable dataTable={services} columnsTable={ColomnsService}/>}
-            {reclamation&&
-            <LayoutTable dataTable={reclamation} columnsTable={ColomnsReclamation}/>} */}
-        </div>
+        <form onSubmit={handleSubmit(onSubmit, errorSubmit)}>
+                <Button className="all-info"onClick={change} active>Общая информация</Button>
+                <Button className="TO" onClick={change} disabled={!isTargetMachine}>Техническое обслуживание</Button>
+                <Button className="reclam" onClick={change} disabled={!isTargetMachine}>Рекламация</Button>
+                {isMashines[0]&&macinesTable&&
+                <MachinesTable/>}
+        </form>
+        {servicesTable&&
+            <ServicesTable/>
+        }
+        {reclamationTable&&
+            <ReclamationTable/>
+        }
         </div>
     
     )

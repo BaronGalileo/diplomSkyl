@@ -1,9 +1,10 @@
 from django.shortcuts import render
+from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework import viewsets
 
 from silantApp.permissions import IsServece, IsReclamation, IsManagerUser
-from silantApp.utils import filter_by_role
+from silantApp.utils import filter_by_role, authUser_is_person
 from .models import *
 from .serializers import *
 
@@ -20,8 +21,6 @@ class ServiceViewSet(viewsets.ModelViewSet):
             return filter_by_role(request.user.id, queryset, my_serializer)
         else:
             return Response({'404': "NotFoundPage"})
-
-
 
 
 class ReclamationViewSet(viewsets.ModelViewSet):

@@ -65,6 +65,7 @@ function Login() {
                 confermAut : {headers: {"Authorization" : `Token ${res.data.auth_token}`}},               
                 ...res.data}
             dispatch(setAuth(account))
+            reset()
         
         })
         .catch(err => {

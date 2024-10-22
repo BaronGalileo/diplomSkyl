@@ -6,7 +6,7 @@ import { Text } from "../Text/Text";
 
 
 
-function Checkbox({name, message, children, ...restProps}) {
+function Checkbox({name, type, message, children, ...restProps}) {
 
 
     useEffect(() =>{
@@ -27,7 +27,8 @@ function Checkbox({name, message, children, ...restProps}) {
                 {...register(name, {
                     required: message? `${message}`: false,
                 })}
-                type="checkbox"
+                type={type}
+                defaultChecked={false} 
                 className="checkbox-element"/>
             <Text className="left dark-color">{children}</Text>
         </label>
@@ -35,19 +36,3 @@ function Checkbox({name, message, children, ...restProps}) {
 }
 export {Checkbox}
 
-// import React from "react";
-
-// export const Checkbox = React.forwardRef(({ indeterminate, ...rest }, ref) => {
-//     const defaultRef = React.useRef()
-//     const resolvedRef = ref || defaultRef
-
-//     React.useEffect(() => {
-//         resolvedRef.current.indeterminate = indeterminate
-//     }, [resolvedRef, indeterminate])
-
-//     return (
-//         <>
-//         <input type="checkbox" ref={resolvedRef} {...rest}/>
-//         </>
-//     )
-// })

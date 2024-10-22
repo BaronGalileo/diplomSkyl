@@ -9,9 +9,7 @@ const reclamationSlice = createSlice({
     reducers: {
 
         setReclamation : (state, action) => {
-
             return state = action.payload.reclamation_data;
-
         },removeReclamation(state) {
             
             return state = [];

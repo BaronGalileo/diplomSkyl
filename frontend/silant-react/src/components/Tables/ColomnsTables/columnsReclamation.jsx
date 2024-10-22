@@ -1,12 +1,12 @@
 export const ColomnsReclamation = [
     {
         Header: 'машина',
-        accessor: 'machine',
+        accessor: 'machine.brand',
         sticky: 'left'
     },
     {
         Header: 'сервисная компания',
-        accessor: 'service_company',
+        accessor: 'service_company.name',
         sticky: 'left'
     },
     {
@@ -19,7 +19,7 @@ export const ColomnsReclamation = [
     },
     {
         Header: 'узел отказа',
-        accessor: 'failure_node'
+        accessor: 'failure_node.name'
     },
     {
         Header: 'описание отказа',
@@ -27,7 +27,7 @@ export const ColomnsReclamation = [
     },
     {
         Header: 'способ восстановления',
-        accessor: 'recovery_method'
+        accessor: 'recovery_method.name'
     },
     {
         Header: 'используемые запасные части',

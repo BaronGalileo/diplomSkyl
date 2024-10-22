@@ -6,7 +6,7 @@ export const columnsFullMachine = [
         Header: 'Зав.№ машины',
         accessor: 'serial_num',
         sticky: 'left',
-        Cell: ({value}) => { return (<Checkbox message="Выберите хотя бы одну машину" name={value}>{value}</Checkbox>)}
+        Cell: ({value}) => { return (<Checkbox type="checkbox" message="Выберите одну машину"  name={value}>{value}</Checkbox>)}
     },
     {
         Header: 'Бренд',
@@ -79,3 +79,4 @@ export const columnsFullMachine = [
         accessor: 'service_company.name'
     },
 ]
+
