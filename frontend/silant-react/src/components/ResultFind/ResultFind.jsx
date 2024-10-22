@@ -8,7 +8,7 @@ import { mashine_dict } from "../../helpers/Dictionary";
 
 function ResultFind() {
 
-    const targetMachine = useSelector(state => state.machine)
+    const targetMachine = useSelector(state => state.one_machine)
 
     const frame_dict = {
         name_colons: "Техническая характеристика",
@@ -23,8 +23,8 @@ function ResultFind() {
                     <div className="tablesMachine-wrapper">
                     <TablesElement  classNameText="bold" dictionary={frame_dict}/>
                     <div className="tables_row">
-                        <TablesElement key_of_dictionary={mashine_dict}  dictionary={targetMachine} classNameFrame="column" classNameText="italic-bold"/>
-                        <TablesElement   dictionary={targetMachine} classNameFrame="column"classNameText="italic-bold"/>
+                        <TablesElement key_of_dictionary={mashine_dict}  dictionary={targetMachine} classNameFrame="column" classNameText="bold"/>
+                        <TablesElement   dictionary={targetMachine} classNameFrame="column"classNameText="italic"/>
                     </div>                 
 
                                        

@@ -1,7 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
-    
     brand: null,
     serial_num:  null,
     car_model: null,
@@ -23,34 +22,13 @@ const initialState = {
 }
 
 
-    
-        // brand: null,
-        // serial_num:  null,
-        // car_model: null,
-        // engine_model:  null,
-        // engine_num: null,
-        // transmission_model:  null,
-        // transmission_num: null,
-        // driving_axle_model:  null,
-        // driving_axle_num:  null,
-        // model_of_a_controlled_bridge: null,
-        // num_of_a_controlled_bridge: null,
-        // contractNo: null,
-        // date_from_the_factory: null,
-        // consignee: null,
-        // delivery_address: null,
-        // equipment: null,
-        // client: null,
-        // service_company: null,
-    
-
-
-const machineSlice = createSlice({
-    name: 'machine',
+const one_machineSlice = createSlice({
+    name: 'one_machine',
     initialState,
     reducers: {
 
-        setMachine(state, action) {
+        setOne_machine(state, action) {
+            console.log("set",action)
             state.brand = action.payload.brand;
             state.serial_num = action.payload.serial_num;
             state.car_model = action.payload.car_model;
@@ -71,7 +49,7 @@ const machineSlice = createSlice({
             state.service_company = action.payload.service_company;
             
         },
-        removeMachine(state) {
+        removeOne_machine(state) {
             state.brand = null;
             state.serial_num = null;
             state.car_model = null;
@@ -91,10 +69,10 @@ const machineSlice = createSlice({
             state.client = null;
             state.service_company = null;
 
-    },
+        },
+    }
+});
 
-}});
+export const {setOne_machine, removeOne_machine} = one_machineSlice.actions;
 
-export const {setMachine, removeMachine} = machineSlice.actions;
-
-export default machineSlice.reducer;
+export default one_machineSlice.reducer;

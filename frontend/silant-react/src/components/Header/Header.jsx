@@ -5,8 +5,10 @@ import { Button } from '../Button/Button';
 import { Text } from '../Text/Text';
 import { useLocation } from "react-router-dom";
 import { removeAuth } from "../../store/authSlice"
-import './styles.css'
-import { removeMachine } from '../../store/machineSlice';
+import { removeMachines } from '../../store/machinesSlice';
+import { removeOne_machine } from '../../store/oneMachineSlice';
+import './styles.css';
+
 
 
 function Header() {
@@ -14,6 +16,7 @@ function Header() {
     const dispatch = useDispatch();
 
     const isAuth = useSelector(state => state.auth)
+    const mach = useSelector(state => state.one_machine)
 
     const loca = useLocation()
 
@@ -21,8 +24,17 @@ function Header() {
 
     function logout() {
         dispatch(removeAuth())
-        dispatch(removeMachine())
+        dispatch(removeOne_machine())
+        dispatch(removeMachines())
         }
+
+    function del() {
+        dispatch(removeOne_machine())
+    }
+
+    function sh() {
+        console.log(mach)
+    }
 
 
 
@@ -38,6 +50,8 @@ function Header() {
                     <Button onClick={logout}>выход</Button>}
                     {!isLogin && !isAuth.isAuth &&
                     <Button href="login">авторизация</Button>}
+                    <Button onClick={del}>Очистить машину</Button>
+                    <Button onClick={sh}>Показ маашины</Button>
                     
                 </div>
                 <Text as='h1'>Электронная сервисная книжка "Мой Силант"</Text>

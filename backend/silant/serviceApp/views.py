@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from rest_framework.response import Response
 from rest_framework import viewsets
 
 from silantApp.permissions import IsServece, IsReclamation, IsManagerUser
@@ -12,6 +13,16 @@ class ServiceViewSet(viewsets.ModelViewSet):
     serializer_class = ServiceSerializer
     permission_classes = [IsServece,]
 
+    def list(self, request):
+        queryset = Service.objects.all()
+        my_serializer = ServiceSerializer
+        if filter_by_role(request.user.id, queryset, my_serializer):
+            return filter_by_role(request.user.id, queryset, my_serializer)
+        else:
+            return Response({'404': "NotFoundPage"})
+
+
+
 
 class ReclamationViewSet(viewsets.ModelViewSet):
     queryset = Reclamation.objects.all()
@@ -21,8 +32,10 @@ class ReclamationViewSet(viewsets.ModelViewSet):
     def list(self, request):
         queryset = Reclamation.objects.all()
         my_serializer = ReclamationSerializer
-        if filter_by_role(request, queryset, my_serializer):
-            return filter_by_role(request, queryset, my_serializer)
+        if filter_by_role(request.user.id, queryset, my_serializer):
+            return filter_by_role(request.user.id, queryset, my_serializer)
+        else:
+            return Response({'404': "NotFoundPage"})
 
 
 

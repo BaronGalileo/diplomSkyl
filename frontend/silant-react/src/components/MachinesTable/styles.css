@@ -1,11 +1,11 @@
 
 
-.main-panel-wrapper {
+.machinesTable-wrapper {
     display: flex;
     flex-direction: column;
 }
 
-.main-panel-element {
+.machinesTable-element {
     display: flex;
     justify-content: space-around
 }

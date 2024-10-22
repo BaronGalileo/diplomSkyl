@@ -4,24 +4,27 @@ import { ResultFind } from "../../components/ResultFind/ResultFind"
 import { useDispatch, useSelector } from "react-redux";
 import { MainPanel } from "../../components/MainPanel/MainPanel";
 import { Button } from "../../components/Button/Button";
-import { removeMachine } from "../../store/machineSlice";
+import { removeMachines } from "../../store/machinesSlice";
 
 
 function Home() {
 
     const isAuth = useSelector(state => state.auth)
 
-    const machine = useSelector(state => state.machine)
+    const machines = useSelector(state => state.machines)
 
     const dispatch = useDispatch()
 
     function show() {
-        console.log("Machine", machine)
-
+        console.log("Machine", machines)
+        console.log("Machine", machines["23131"])
+        Object.entries(machines).map(key => {
+            console.log(key)
+        })
     }
 
     function delite() {
-        dispatch(removeMachine())
+        dispatch(removeMachines())
     }
 
     return(

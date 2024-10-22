@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react"
-import { TestTablesElement } from "../../components/test/Test";
-import { mashine_dict } from "../../helpers/Dictionary";
 import { useSelector } from "react-redux";
-import { BasicTable } from "../../components/test/BasicTables";
 import { Button } from "../../components/Button/Button";
+import { Text } from "../../components/Text/Text";
 import axios from "axios";
-import { COLUMNS } from "../../components/test/columns";
+import { LayoutTable } from "../../components/Tables/LayoutTable";
+import { columnsFullMachine } from "../../components/Tables/ColomnsTables/columnsFullMachine";
 
 
 function Test() {
@@ -21,11 +20,9 @@ function Test() {
     const targetMachine = useSelector(state => state.machine)
 
 
-
     const path = "http://127.0.0.1:8000/api/v1/machine/"
 
     function show() {
-        console.log("COLUMNS", COLUMNS)
         axios.get(path, isAuth.confermAut)
         .then(res => {
             setData(res.data)
@@ -33,11 +30,15 @@ function Test() {
     }
 
     return(
-        <>
-           <h1>Test. Test</h1>
-           <Button onClick={show}>Отправить</Button>
-           {data && 
-           <BasicTable dataFrom={data}></BasicTable>}
+        <div className="wrapper_test">
+            <div className="test-elem"><Text as="h1">Тестовая страница</Text></div> 
+            <div className="test-elem">
+                {data && 
+                <LayoutTable dataTable={data} columnsTable={columnsFullMachine}></LayoutTable>}
+            </div>
+            <div className="test-elem"><h1>Test. Test</h1></div>
+            <div className="test-elem"><Button onClick={show}>Отправить</Button></div>
+            <div className="test-elem"></div>          
            <div className="resultFind-wrapper">
 
                     {/* <div className="tables_row">
@@ -50,7 +51,7 @@ function Test() {
 
             </div>
          
-        </>
+        </div>
     )
 }
 

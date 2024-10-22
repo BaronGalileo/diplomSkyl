@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAuth } from "../../store/authSlice"
 import { Input } from "../Input/Input";
 import {  useFormContext } from "react-hook-form";
-import { removeMachine } from "../../store/machineSlice";
+import { removeOne_machine } from "../../store/oneMachineSlice";
+
 
 
 
@@ -54,10 +55,10 @@ function Login() {
 
 
     const onSubmit = (data) => {
-        dispatch(removeMachine())
+        dispatch(removeOne_machine())
         axios.post(path, data)
         .then(res => {
-            console.log("token", res)
+            console.log("token", data)
             const account = {
                 username: data.username,
                 auth_token: res.data.auth_token,

@@ -1,0 +1,22 @@
+.wrapper_test {
+    display: flex;
+    flex-direction: column;
+}
+
+.test-elem {
+    display: flex;
+    width: 100%;
+    background-color: aqua;
+}
+
+p {
+    color: #163E6C;
+}
+
+h1 {
+    background-color: #D20A11;
+}
+
+h3 {
+    color: #EBE6D6;
+}

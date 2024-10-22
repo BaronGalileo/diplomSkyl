@@ -2,6 +2,7 @@ from rest_framework.permissions import BasePermission, SAFE_METHODS
 
 from silantApp.serializers import MachineSerializerNotAuth
 from silantApp.utils import authUser_is_person
+# from silantApp.utils import authUser_is_person
 from usersApp.models import Manager, ServiseOrganization, Client
 
 

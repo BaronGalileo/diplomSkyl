@@ -1,3 +1,4 @@
+from django.contrib.auth.models import AnonymousUser
 from rest_framework import viewsets
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
@@ -12,17 +13,20 @@ class MachineViewSet(viewsets.ModelViewSet):
     serializer_class = MachineSerializer
     permission_classes = [OnlyManagerPost]
 
+
     def list(self, request):
         queryset = Machine.objects.all()
         my_serializer = MachineSerializer
-        if filter_by_role(request, queryset, my_serializer):
-            return filter_by_role(request, queryset, my_serializer)
-        is_auth_user = authUser_is_person(user=request.user.id)
-        machines = Machine.objects.all()
-        if (request.user.is_authenticated and
-                is_auth_user or request.user.is_staff):
-            serializer = MachineSerializer(machines, many=True)
+
+        if filter_by_role(request.user.id, queryset, my_serializer):
+            return filter_by_role(request.user.id, queryset, my_serializer)
+        # is_auth_user = authUser_is_person(user=request.user)
+        # machines = Machine.objects.all()
+        # if (request.user.is_authenticated and
+        #         is_auth_user or request.user.is_staff):
+        #     serializer = MachineSerializer(machines, many=True)
         else:
+            machines = Machine.objects.all()
             serializer = MachineSerializerNotAuth(machines, many=True)
         return Response(serializer.data)
 

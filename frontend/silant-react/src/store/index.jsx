@@ -11,14 +11,16 @@ import {
  } from 'redux-persist'
 import storage from 'redux-persist/lib/storage';
 import authReducer from './authSlice'
-import machineReducer from './machineSlice' 
+import one_MachineReducer from './oneMachineSlice'
+import machinesReducer from './machinesSlice'  
 
 
 
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  machine: machineReducer
+  one_machine: one_MachineReducer,
+  machines: machinesReducer,
 })
 
 const persistConfig = {

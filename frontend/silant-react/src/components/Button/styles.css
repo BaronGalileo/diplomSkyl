@@ -66,3 +66,8 @@
     height: 60%;
 }
 
+.active {
+  background-color: #164983;
+  color: #EBE6D6;
+}
+
