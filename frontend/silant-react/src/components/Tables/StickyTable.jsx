@@ -19,6 +19,7 @@ function StickyTable({dataTable, columnsTable, ...resProps}) {
     getTableProps,
     getTableBodyProps,
     headerGroups,
+    footerGroups,
     rows,
     prepareRow,
   } = useTable(
@@ -34,7 +35,7 @@ function StickyTable({dataTable, columnsTable, ...resProps}) {
 
     return(
     <Styles>
-      <div {...getTableProps()} className="table sticky" style={{ width: 900, height: 500 }}>
+      <div {...getTableProps()} className="table sticky" style={{ width: 800, height: "auto" }}>
         <div className="header">
           {headerGroups.map((headerGroup) => (
             <div {...headerGroup.getHeaderGroupProps()} className="tr">

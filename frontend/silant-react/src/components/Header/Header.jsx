@@ -8,6 +8,9 @@ import { removeAuth } from "../../store/authSlice"
 import { removeMachines } from '../../store/machinesSlice';
 import { removeOne_machine } from '../../store/oneMachineSlice';
 import './styles.css';
+import { removeTargetmachine } from '../../store/targetmachineSlice';
+import { removeReclamation } from '../../store/reclamationSlice';
+import { removeServices } from '../../store/servicesSlice';
 
 
 
@@ -26,6 +29,9 @@ function Header() {
         dispatch(removeAuth())
         dispatch(removeOne_machine())
         dispatch(removeMachines())
+        dispatch(removeServices())
+        dispatch(removeTargetmachine())
+        dispatch(removeReclamation())
         }
 
     function del() {

@@ -2,7 +2,9 @@
 
 body {
     text-align: center;
-    background-color: #ffffff; 
+    background-color: #ffffff;
+    scrollbar-color:#163E6C #EBE6D6; 
+
   }
 
 .page {
@@ -24,6 +26,8 @@ main {
     min-height: 73vh;
     border-radius: 12px;
   }
+
+
 
 
 

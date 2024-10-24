@@ -1,6 +1,14 @@
 import {createSlice} from "@reduxjs/toolkit";
 
-const initialState = []
+const initialState = {
+    sorted_data: {},
+    expire: null,
+}
+
+const CACHE = {
+    hour: 3600000, // 1час
+    test: 10000 // 10сек
+}
 
 
 const reclamationSlice = createSlice({
@@ -8,11 +16,16 @@ const reclamationSlice = createSlice({
     initialState,
     reducers: {
 
-        setReclamation : (state, action) => {
-            return state = action.payload.reclamation_data;
-        },removeReclamation(state) {
+        setReclamation(state, action){
+            state.sorted_data = action.payload.reclamation_data;
+            state.expire = Date.now() + CACHE.test
+        },
+        removeReclamation(state) {
             
-            return state = [];
+            return state = {
+                sorted_data: {},
+                expire: null,
+            };
         },
     }
 });

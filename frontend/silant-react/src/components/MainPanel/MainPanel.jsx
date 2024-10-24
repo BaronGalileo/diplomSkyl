@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormContext } from "react-hook-form"
 import { Text } from "../Text/Text";
@@ -9,9 +10,11 @@ import { setMachines } from "../../store/machinesSlice";
 import { MachinesTable } from "../MachinesTable/MachinesTable";
 import { ServicesTable } from "../ServicesTable/ServicesTable";
 import { ReclamationTable } from "../ReclamationTable/ReclamationTable";
-import { setTargetmachine } from "../../store/targetmachineSlice";
+import { removeTargetmachine, setTargetmachine } from "../../store/targetmachineSlice";
 import { setReclamation } from "../../store/reclamationSlice";
 import { setServices } from "../../store/servicesSlice";
+import { addValue } from "../../helpers/addValue";
+import { sortedDataBySerialNum } from "../../helpers/sortedData";
 
 
 
@@ -70,8 +73,10 @@ function MainPanel() {
         if(!isMashines[0]){
             axios.get(path_machine, isAuth.confermAut)
             .then(res => {
+                const dataRES = sortedDataBySerialNum(res.data)
                 const data_for_store = {
                     machines_data: res.data,
+                    sorted_serian_num: dataRES,
                 }
                 dispatch(setMachines(data_for_store))
               })
@@ -80,11 +85,11 @@ function MainPanel() {
 
     function addDataService() {
         if(!isServices[0]){
-
             axios.get(path_service, isAuth.confermAut)
             .then(res => {
+                const dataRES = sortedDataBySerialNum(res.data)
                 const data_for_store = {
-                    services_data: res.data
+                    services_data: dataRES
                 }
                 dispatch(setServices(data_for_store))
             })
@@ -95,8 +100,9 @@ function MainPanel() {
         if(!isReclamation[0]) {
             axios.get(path_reclamation, isAuth.confermAut)
             .then(res => {
+                const dataRES = sortedDataBySerialNum(res.data)
                 const data_for_store = {
-                    reclamation_data: res.data,
+                    reclamation_data: dataRES,
                 }
                 dispatch(setReclamation(data_for_store))
             })
@@ -105,7 +111,7 @@ function MainPanel() {
 
     const onSubmit = (data) => {
         Object.entries(data).map(key => {
-            if(key[1]){
+            if(key[1]&&isMashines.sorted_serian_num[key[0]]){
                 dispatch(setTargetmachine(key[0]))
             }
             reset()
@@ -120,6 +126,7 @@ function MainPanel() {
             if(checkboxsArray[i].checked){
                 return checkboxsArray[i].checked = false
             }
+            setIsTargetMachine(false)
         }
         }
 
@@ -152,41 +159,28 @@ function MainPanel() {
     }
 
     const checkedCheckBox = () => {
-        let count_checkbox = 0
         const checkboxsArray = document.querySelectorAll(".checkbox-element");
         checkboxsArray.forEach((elem) => {
         elem.addEventListener("click", (e) => {
+            dispatch(removeTargetmachine())
             for (let i = 0; i < checkboxsArray.length; i++) {
                 if(checkboxsArray[i] !== e.target){
                     checkboxsArray[i].checked = false
                 }
               }
             if(e.target.checked){
-                count_checkbox ++
                 setIsTargetMachine(true)
-            } else if(count_checkbox === 0) { 
-                setIsTargetMachine(false)
-            } else {
-                count_checkbox --
-            }
-            if(count_checkbox === 0){
+            } else { 
                 setIsTargetMachine(false)
             }
         });
     });
     }
    
+    if(!isAuth.isAuth) return <Navigate to="/"/>
 
-
-    if(!isAuth){
-        return( 
-        <>
-        </>
-        )
-    }
 
     const errorSubmit = (data) => {
-        console.log("ERRRoR", data)
     } 
     
 
@@ -197,12 +191,17 @@ function MainPanel() {
         <div className="main-panel-element">
             <Text className="left" as="h2">{DICT_ROLE[isAuth.user_role]} / {isAuth.name},  добро пожаловать!</Text>
         </div>}
-        <Text as="h3">Информация о комплектации и технических характеристиках Вашей техники</Text>
+        {macinesTable&&
+        <Text as="h3">Информация о комплектации и технических характеристиках Вашей техники</Text>}
+        {servicesTable &&
+        <Text as="h3">Информация о проведенных ТО Вашей техники</Text>}
+        {reclamationTable &&
+        <Text as="h3">Информация о рекламации Вашей техники</Text>}
         <form onSubmit={handleSubmit(onSubmit, errorSubmit)}>
                 <Button className="all-info"onClick={change} active>Общая информация</Button>
                 <Button className="TO" onClick={change} disabled={!isTargetMachine}>Техническое обслуживание</Button>
                 <Button className="reclam" onClick={change} disabled={!isTargetMachine}>Рекламация</Button>
-                {isMashines[0]&&macinesTable&&
+                {isMashines.machines_data&&macinesTable&&
                 <MachinesTable/>}
         </form>
         {servicesTable&&

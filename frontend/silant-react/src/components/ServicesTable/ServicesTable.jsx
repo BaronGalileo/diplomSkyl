@@ -6,10 +6,12 @@ import { ColomnsService } from "../Tables/ColomnsTables/columnsService";
 export const ServicesTable = () => {
 
     const isServices = useSelector(state => state.services)
+    const target = useSelector(state => state.targetmachine)
 
     return(
         <>
-        <StickyTable dataTable={isServices} columnsTable={ColomnsService}/>
+        {isServices.sorted_data[target.target]&&
+        <StickyTable dataTable={isServices.sorted_data[target.target]} columnsTable={ColomnsService}/>}
         </>
     )
 }

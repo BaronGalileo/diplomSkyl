@@ -8,6 +8,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import './styles/index.css'
 import { LoginPage } from './pages/LoginPage/LoginPage';
 import { Test } from './pages/test/test';
+import { ExaminationExpires } from './components/Examination/ExaminationExpires';
 
 
 
@@ -21,15 +22,16 @@ function App() {
   return (
     <div className="App">
       <FormProvider {...methods}>
-        <Routes>
-          <Route path="/" element={<Layout/>}>
-            <Route index element={<Home/>}/>
-            <Route path="login" element={<LoginPage/>}/>
-            <Route path="reclamation" element={<Reclamation/>}/>
-            <Route path="test" element={<Test/>}/>
-            <Route path="*" element={<Notfoundpage/>}/>
-          </Route>
-        </Routes>
+        <ExaminationExpires/>
+          <Routes>
+            <Route path="/" element={<Layout/>}>
+              <Route index element={<Home/>}/>
+              <Route path="login" element={<LoginPage/>}/>
+              <Route path="reclamation" element={<Reclamation/>}/>
+              <Route path="test" element={<Test/>}/>
+              <Route path="*" element={<Notfoundpage/>}/>
+            </Route>
+          </Routes>
       </FormProvider>
     </div>
   );

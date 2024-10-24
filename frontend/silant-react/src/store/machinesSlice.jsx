@@ -1,6 +1,9 @@
 import {createSlice} from "@reduxjs/toolkit";
 
-const initialState = []
+const initialState = {
+    machines_data: {},
+    sorted_serian_num: {},
+}
 
 
 const machinesSlice = createSlice({
@@ -9,12 +12,11 @@ const machinesSlice = createSlice({
     reducers: {
 
         setMachines : (state, action) => {
-
-            return state = action.payload.machines_data;
-
-        },removeMachines(state) {
-            
-            return state = [];
+            state.machines_data = action.payload.machines_data;
+            state.sorted_serian_num = action.payload.sorted_serian_num;
+        },
+        removeMachines(state) {      
+            return state = {};
         },
     }
 });

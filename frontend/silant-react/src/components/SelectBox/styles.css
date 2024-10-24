@@ -1,0 +1,23 @@
+.select-wrapper {
+    display: flex;
+    flex-direction: column;
+    width:100%;
+
+}
+
+.select-element{
+    margin: 6px;
+    padding: 5px;
+    width:95%;
+    border-radius: 5px;
+ }
+
+.select-element.error {
+    border-color: #D20A11;
+}
+
+.select-wrapper span {
+    /* font-size: 9px; */
+    color: #D20A11;
+    font-family: 'Regular';
+}
