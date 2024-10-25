@@ -24,7 +24,6 @@ export const SelectFailureNode = ({value, message, name}) => {
         })
     }, [])
 
-
     return(
         <>
         {failureNode&&

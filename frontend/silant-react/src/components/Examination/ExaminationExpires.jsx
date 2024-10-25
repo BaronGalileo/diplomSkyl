@@ -15,8 +15,6 @@ export const ExaminationExpires = () => {
 
     const dispatch = useDispatch();
 
-    console.log("ExaminationExpires", expireServices, expireReclamation)
-
     const expireTimeServices = expireServices.expire ? expireServices.expire : null;
     
     const expireTimeReclamation = expireServices.expire ? expireServices.expire : null;

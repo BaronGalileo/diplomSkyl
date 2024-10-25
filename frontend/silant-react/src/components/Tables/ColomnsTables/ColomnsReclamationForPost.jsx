@@ -1,5 +1,7 @@
 import { FormChoiceMachine } from '../../FormComponents/FormChoiceMachine/FormChoiceMachine';
+import { FormChoiceServiceOrg } from '../../FormComponents/FormChoiceServiceOrg/FormChoiceServiceOrg';
 import { SelectFailureNode } from '../../FormComponents/FormComponentSelect/SelectFailure_node';
+import { SelectRecoveryMethod } from '../../FormComponents/FormComponentSelect/SelectRecoveryMethod';
 import { Input } from '../../Input/Input'
 
 
@@ -16,17 +18,17 @@ export const ColomnsReclamationPOST = [
         Header: 'сервисная компания',
         accessor: 'service_company',
         // sticky: 'left',
-        Cell: () => { return (<Input message="обязательно заполнить" name={'service_company'}></Input>)}
+        Cell: () => { return (<FormChoiceServiceOrg/>)}
     },
     {
         Header: 'дата отказа',
         accessor: 'date_of_failure',
-        Cell: ({value}) => { return (<Input message="обязательно заполнить" name={'date_of_failure'}></Input>)}
+        Cell: () => { return (<Input type="date" message="Укажите дату поломки" name={'date_of_failure'}/>)}
     },
     {
         Header: 'наработка, м/час',
         accessor: 'working_hours',
-        Cell: () => { return (<Input message="обязательно заполнить" name={'working_hours'}></Input>)}
+        Cell: () => { return (<Input type="number" message="Укажите числом кол-во часов работы" name={'working_hours'}></Input>)}
     },
     {
         Header: 'узел отказа',
@@ -41,7 +43,7 @@ export const ColomnsReclamationPOST = [
     {
         Header: 'способ восстановления',
         accessor: 'recovery_method',
-        Cell: () => { return (<Input name={'recovery_method'}></Input>)}
+        Cell: ({value}) => { return (<SelectRecoveryMethod message="Выберете метод" name="recovery_method">{value}</SelectRecoveryMethod>)}
     },
     {
         Header: 'используемые запасные части',
@@ -51,7 +53,7 @@ export const ColomnsReclamationPOST = [
     {
         Header: 'дата восстановления',
         accessor: 'date_of_restoration',
-        Cell: () => { return (<Input name={'date_of_restoration'}></Input>)}
+        Cell: () => { return (<Input  name={'date_of_restoration'}></Input>)}
     },
     {
         Header: 'время простоя техники',

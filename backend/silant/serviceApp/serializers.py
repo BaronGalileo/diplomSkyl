@@ -45,3 +45,10 @@ class ReclamationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reclamation
         fields = '__all__'
+
+class ReclamationPostSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Reclamation
+        fields = '__all__'
+

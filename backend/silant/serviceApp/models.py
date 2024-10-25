@@ -40,8 +40,8 @@ class Reclamation(models.Model):
     description_of_failure = models.TextField(verbose_name="описание отказа")
     recovery_method = models.ForeignKey('RecoveryMethod', on_delete=models.PROTECT, verbose_name="способ восстановления")
     spare_parts = models.TextField(blank=True, verbose_name="используемые запасные части")
-    date_of_restoration = models.CharField(max_length=100, verbose_name="дата восстановления")
-    downtime = models.CharField(max_length=100, verbose_name="время простоя техники")
+    date_of_restoration = models.CharField(max_length=100, verbose_name="дата восстановления", blank=True)
+    downtime = models.CharField(max_length=100, verbose_name="время простоя техники", blank=True)
     service_company = models.ForeignKey(ServiseOrganization, on_delete=models.PROTECT, verbose_name="сервисная компания")
     machine = models.ForeignKey(Machine, on_delete=models.CASCADE, verbose_name="машина")
 

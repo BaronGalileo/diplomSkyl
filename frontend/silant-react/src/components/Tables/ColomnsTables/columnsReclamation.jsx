@@ -1,13 +1,23 @@
+import { Checkbox } from "../../CheckBox/Checkbox"
+import { FormChoiceReclamation } from "../../FormComponents/FormChoiceReclamation/FormChoiceReclamation"
+
 export const ColomnsReclamation = [
     {
-        Header: 'машина',
-        accessor: 'machine.brand',
-        sticky: 'left'
+        Header: 'id',
+        accessor: 'id',
+        sticky: 'left',
+        Cell: ({value}) => {return(<Checkbox value={value} name="id">{machine.brand}</Checkbox>)}
     },
+    // {
+    //     Header: 'машина',
+    //     accessor: 'machine.brand',
+    //     sticky: 'left',
+    //     Cell: ({value}) => {return(<Checkbox type="checkbox" name={value}>{value}</Checkbox>)}
+    // },
     {
         Header: 'сервисная компания',
         accessor: 'service_company.name',
-        sticky: 'left'
+        // sticky: 'left'
     },
     {
         Header: 'дата отказа',

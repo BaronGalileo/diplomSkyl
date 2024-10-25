@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import classNames from "classnames";
 import "./styles.css"
 import {  useFormContext } from "react-hook-form";
 import { Text } from "../Text/Text";
@@ -6,7 +7,7 @@ import { Text } from "../Text/Text";
 
 
 
-function Checkbox({name, type, message, children, ...restProps}) {
+function Checkbox({name, className="", type="checkbox", message, children, ...restProps}) {
 
 
     useEffect(() =>{
@@ -15,6 +16,11 @@ function Checkbox({name, type, message, children, ...restProps}) {
         register,
         formState: {errors}
     } = useFormContext()
+
+    const classes = classNames(
+        'checkbox-element',
+        className,
+    )
 
 
     const error = errors.name?.message;
@@ -29,7 +35,7 @@ function Checkbox({name, type, message, children, ...restProps}) {
                 })}
                 type={type}
                 defaultChecked={false} 
-                className="checkbox-element"/>
+                className={classes}/>
             <Text className="left dark-color">{children}</Text>
         </label>
     )

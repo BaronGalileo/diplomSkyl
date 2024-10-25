@@ -141,14 +141,14 @@ export const MachinesTable = () => {
     return(
         <>
         <div className="machinesTable-element">
-            {isMashines.machines_data&&
+            {isMashines.machines_data[0]&&
             <StickyTable dataTable={isMashines.machines_data} columnsTable={columnsFullMachine}/>}
             {/* <form onSubmit={handleSubmit(onSubmit, errorSubmit)}>
                 <Button className="all-info"onClick={change} active>Общая информация</Button>
                 <Button className="TO" onClick={change} disabled={!isTargetMachine}>Техническое обслуживание</Button>
                 <Button className="reclam" onClick={change} disabled={!isTargetMachine}>Рекламация</Button>
-                {isMashines[0]&&
-                <StickyTable dataTable={isMashines} columnsTable={columnsFullMachine}/>}
+                {isMashines.machines_data&&
+                <StickyTable dataTable={isMashines.machines_data} columnsTable={columnsFullMachine}/>}
             </form> */}
         </div>
         </>

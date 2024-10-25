@@ -16,8 +16,7 @@ function LayoutTable({dataTable, columnsTable, ...resProps}) {
         getTableBodyProps,
         headerGroups,
         rows,
-        prepareRow
-
+        prepareRow,
     } = useTable({
         columns,
         data

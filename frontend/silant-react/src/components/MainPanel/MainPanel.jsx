@@ -6,14 +6,13 @@ import { Text } from "../Text/Text";
 import "./styles.css"
 import { Button } from "../Button/Button";
 import axios from "axios";
-import { setMachines } from "../../store/machinesSlice";
+import { setMachines, setSorted_serian_num } from "../../store/machinesSlice";
 import { MachinesTable } from "../MachinesTable/MachinesTable";
 import { ServicesTable } from "../ServicesTable/ServicesTable";
 import { ReclamationTable } from "../ReclamationTable/ReclamationTable";
 import { removeTargetmachine, setTargetmachine } from "../../store/targetmachineSlice";
 import { setReclamation } from "../../store/reclamationSlice";
 import { setServices } from "../../store/servicesSlice";
-import { addValue } from "../../helpers/addValue";
 import { sortedDataBySerialNum } from "../../helpers/sortedData";
 
 
@@ -38,6 +37,8 @@ function MainPanel() {
     const[servicesTable, setServicesTable] = useState(false)
 
     const[reclamationTable, setReclamationTable] = useState(false)
+
+    const[titleMachine, setTitleMachine] = useState(null)
 
     const {
         handleSubmit,
@@ -68,17 +69,20 @@ function MainPanel() {
         
     }, [macinesTable])
 
-
     function addDataMachine() {
-        if(!isMashines[0]){
+        if(!isMashines.machines_data[0]){
             axios.get(path_machine, isAuth.confermAut)
             .then(res => {
+                const data = {
+                    machines_data: res.data
+                }
+                dispatch(setMachines(data))
                 const dataRES = sortedDataBySerialNum(res.data)
                 const data_for_store = {
                     machines_data: res.data,
                     sorted_serian_num: dataRES,
                 }
-                dispatch(setMachines(data_for_store))
+                dispatch(setSorted_serian_num(data_for_store))
               })
         }
     }
@@ -110,18 +114,24 @@ function MainPanel() {
     }
 
     const onSubmit = (data) => {
-        Object.entries(data).map(key => {
-            if(key[1]&&isMashines.sorted_serian_num[key[0]]){
-                dispatch(setTargetmachine(key[0]))
+        for (const [key, value] of Object.entries(data)) {
+            if(value) {
+                setTitleMachine(isMashines.sorted_serian_num[key][0])
+                dispatch(setTargetmachine(key))
             }
             reset()
-        })
-
-        console.log("DATA", data)
+        }
+        // Object.entries(data).map(key => {
+        //     if(key[1]&&isMashines.sorted_serian_num[key[0]]){
+        //         setTitleMachine(isMashines.sorted_serian_num[key[0]][0])
+        //         dispatch(setTargetmachine(key[0]))
+        //     }
+        //     reset()
+        // })
         }
 
     function checkedOff() {
-        const checkboxsArray = document.querySelectorAll(".checkbox-element");
+        const checkboxsArray = document.querySelectorAll(".serian-num");
         for (let i = 0; i < checkboxsArray.length; i++) {
             if(checkboxsArray[i].checked){
                 return checkboxsArray[i].checked = false
@@ -159,9 +169,10 @@ function MainPanel() {
     }
 
     const checkedCheckBox = () => {
-        const checkboxsArray = document.querySelectorAll(".checkbox-element");
+        const checkboxsArray = document.querySelectorAll(".serian-num");
         checkboxsArray.forEach((elem) => {
         elem.addEventListener("click", (e) => {
+            setTitleMachine(null)
             dispatch(removeTargetmachine())
             for (let i = 0; i < checkboxsArray.length; i++) {
                 if(checkboxsArray[i] !== e.target){
@@ -189,7 +200,12 @@ function MainPanel() {
         <div className="main-panel-wrapper">
         {isAuth &&
         <div className="main-panel-element">
-            <Text className="left" as="h2">{DICT_ROLE[isAuth.user_role]} / {isAuth.name},  добро пожаловать!</Text>
+            {/* {macinesTable&&
+                <Text className="left" as="h2">{DICT_ROLE[isAuth.user_role]} / {isAuth.name},  добро пожаловать!</Text>}
+            {servicesTable&&titleMachine?.brand&& 
+                <Text className="left" as="h2">Машина - {titleMachine?.brand} / Серийный номер -{titleMachine?.serial_num}</Text>}
+            {reclamationTable&&titleMachine?.brand&& 
+                <Text className="left" as="h2">Машина - {titleMachine?.brand} / Серийный номер -{titleMachine?.serial_num}</Text>} */}
         </div>}
         {macinesTable&&
         <Text as="h3">Информация о комплектации и технических характеристиках Вашей техники</Text>}
@@ -201,7 +217,7 @@ function MainPanel() {
                 <Button className="all-info"onClick={change} active>Общая информация</Button>
                 <Button className="TO" onClick={change} disabled={!isTargetMachine}>Техническое обслуживание</Button>
                 <Button className="reclam" onClick={change} disabled={!isTargetMachine}>Рекламация</Button>
-                {isMashines.machines_data&&macinesTable&&
+                {isMashines.machines_data&& macinesTable&&
                 <MachinesTable/>}
         </form>
         {servicesTable&&
