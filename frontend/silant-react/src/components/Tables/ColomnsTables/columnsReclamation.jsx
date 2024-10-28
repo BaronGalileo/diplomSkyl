@@ -1,12 +1,13 @@
 import { Checkbox } from "../../CheckBox/Checkbox"
 import { FormChoiceReclamation } from "../../FormComponents/FormChoiceReclamation/FormChoiceReclamation"
+import { FormTextOrСhange } from '../../FormComponents/FormTextOrСhange/FormTextOrСhange'
 
 export const ColomnsReclamation = [
     {
-        Header: 'id',
+        Header: 'Марка машины',
         accessor: 'id',
         sticky: 'left',
-        Cell: ({value}) => {return(<Checkbox value={value} name="id">{machine.brand}</Checkbox>)}
+        Cell: ({value}) => {return(<FormChoiceReclamation value={value} name="id"></FormChoiceReclamation>)}
     },
     // {
     //     Header: 'машина',
@@ -22,6 +23,7 @@ export const ColomnsReclamation = [
     {
         Header: 'дата отказа',
         accessor: 'date_of_failure',
+        // Cell: ({value}) => {return(<FormTextOrСhange>{value}</FormTextOrСhange>)}
     },
     {
         Header: 'наработка, м/час',
@@ -33,7 +35,8 @@ export const ColomnsReclamation = [
     },
     {
         Header: 'описание отказа',
-        accessor: 'description_of_failure'
+        accessor: 'description_of_failure',
+
     },
     {
         Header: 'способ восстановления',

@@ -5,7 +5,7 @@ import {  useFormContext } from "react-hook-form"
 import { findKey } from "../../helpers/findKey";
 
 
-function Input({name,  message, valueAsNumber, children, ...restProps}) {
+function Input({name, message, valueAsNumber, children, ...restProps}) {
 
     const {
         register,

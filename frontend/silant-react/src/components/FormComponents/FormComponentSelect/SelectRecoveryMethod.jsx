@@ -25,7 +25,7 @@ export const SelectRecoveryMethod = ({value, message, name}) => {
     return(
         <>
         {recoveryMetod&&
-        <SelectBox options={recoveryMetod} message={message} name={name} placeholder={"-----"}>{value}</SelectBox>}
+        <SelectBox options={recoveryMetod} message={message} name={name} >{value}</SelectBox>}
 
         </>
     )

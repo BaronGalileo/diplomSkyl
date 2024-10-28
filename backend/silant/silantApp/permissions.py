@@ -61,8 +61,6 @@ class IsReclamation(BasePermission):
     def has_permission(self, request, view):
         is_auth_user = authUser_is_person(user=request.user.id)
         client = Client.objects.filter(user_id=request.user.id)
-        if request.user.is_staff:
-            return request.user.is_staff
 
         if (not client and is_auth_user):
             return bool(
@@ -71,7 +69,7 @@ class IsReclamation(BasePermission):
         else:
             return bool(
                 request.method in SAFE_METHODS
-                and is_auth_user or request.user.is_staff
+                and client
             )
 
 

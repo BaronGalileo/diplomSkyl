@@ -58,7 +58,6 @@ function Login() {
         dispatch(removeOne_machine())
         axios.post(path, data)
         .then(res => {
-            console.log("token", data)
             const account = {
                 username: data.username,
                 auth_token: res.data.auth_token,

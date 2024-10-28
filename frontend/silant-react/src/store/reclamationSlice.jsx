@@ -1,6 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
+    ids: {},
     sorted_data: {},
     expire: null,
 }
@@ -16,6 +17,9 @@ const reclamationSlice = createSlice({
     initialState,
     reducers: {
 
+        setReclamation_id(state, action){
+            state.ids = action.payload.ids;
+        },
         setReclamation(state, action){
             state.sorted_data = action.payload.reclamation_data;
             state.expire = Date.now() + CACHE.test
@@ -23,6 +27,7 @@ const reclamationSlice = createSlice({
         removeReclamation(state) {
             
             return state = {
+                ids: {},
                 sorted_data: {},
                 expire: null,
             };
@@ -30,6 +35,6 @@ const reclamationSlice = createSlice({
     }
 });
 
-export const {setReclamation, removeReclamation} = reclamationSlice.actions;
+export const {setReclamation, setReclamation_id, removeReclamation} = reclamationSlice.actions;
 
 export default reclamationSlice.reducer;

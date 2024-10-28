@@ -27,7 +27,7 @@ export const SelectFailureNode = ({value, message, name}) => {
     return(
         <>
         {failureNode&&
-        <SelectBox options={failureNode} message={message} name={name} placeholder={"-----"}>{value}</SelectBox>}
+        <SelectBox options={failureNode} message={message} name={name} >{value}</SelectBox>}
 
         </>
     )

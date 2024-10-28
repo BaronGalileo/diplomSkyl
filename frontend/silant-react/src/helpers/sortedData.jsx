@@ -1,6 +1,9 @@
 import { addValue } from "./addValue"
 
 export const sortedDataBySerialNum = (obj) => {
+    if(!obj[Symbol.iterator]){
+        return null
+    }
     const dataRES = {}
     obj.map(val => {
         if(val?.machine?.serial_num){

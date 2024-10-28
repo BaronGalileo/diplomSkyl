@@ -11,9 +11,10 @@ import { MachinesTable } from "../MachinesTable/MachinesTable";
 import { ServicesTable } from "../ServicesTable/ServicesTable";
 import { ReclamationTable } from "../ReclamationTable/ReclamationTable";
 import { removeTargetmachine, setTargetmachine } from "../../store/targetmachineSlice";
-import { setReclamation } from "../../store/reclamationSlice";
+import { setReclamation, setReclamation_id } from "../../store/reclamationSlice";
 import { setServices } from "../../store/servicesSlice";
 import { sortedDataBySerialNum } from "../../helpers/sortedData";
+import { sorted_id } from "../../helpers/sorted_id";
 
 
 
@@ -95,7 +96,9 @@ function MainPanel() {
                 const data_for_store = {
                     services_data: dataRES
                 }
-                dispatch(setServices(data_for_store))
+                if(data_for_store.services_data){
+                    dispatch(setServices(data_for_store))
+                }
             })
         }
     }
@@ -104,30 +107,31 @@ function MainPanel() {
         if(!isReclamation[0]) {
             axios.get(path_reclamation, isAuth.confermAut)
             .then(res => {
-                const dataRES = sortedDataBySerialNum(res.data)
-                const data_for_store = {
-                    reclamation_data: dataRES,
+                const data_by_id = {
+                    ids:sorted_id(res.data)
                 }
-                dispatch(setReclamation(data_for_store))
+                dispatch(setReclamation_id(data_by_id))
+                const data_for_store = {
+                    reclamation_data: sortedDataBySerialNum(res.data)
+                }
+                if(data_for_store.reclamation_data){
+                    dispatch(setReclamation(data_for_store))
+                }
             })
         }
     }
 
     const onSubmit = (data) => {
-        for (const [key, value] of Object.entries(data)) {
-            if(value) {
-                setTitleMachine(isMashines.sorted_serian_num[key][0])
-                dispatch(setTargetmachine(key))
+        if(data.target_serial_num) {
+            for (const [key, value] of Object.entries(data.target_serial_num)) {
+                if(value) {
+                    setTitleMachine(isMashines.sorted_serian_num[key][0])
+                    dispatch(setTargetmachine(key))
+                }
+                reset()
             }
-            reset()
+
         }
-        // Object.entries(data).map(key => {
-        //     if(key[1]&&isMashines.sorted_serian_num[key[0]]){
-        //         setTitleMachine(isMashines.sorted_serian_num[key[0]][0])
-        //         dispatch(setTargetmachine(key[0]))
-        //     }
-        //     reset()
-        // })
         }
 
     function checkedOff() {
@@ -193,19 +197,17 @@ function MainPanel() {
 
     const errorSubmit = (data) => {
     } 
-    
-
 
     return(
         <div className="main-panel-wrapper">
         {isAuth &&
         <div className="main-panel-element">
-            {/* {macinesTable&&
+            {macinesTable&&
                 <Text className="left" as="h2">{DICT_ROLE[isAuth.user_role]} / {isAuth.name},  добро пожаловать!</Text>}
             {servicesTable&&titleMachine?.brand&& 
                 <Text className="left" as="h2">Машина - {titleMachine?.brand} / Серийный номер -{titleMachine?.serial_num}</Text>}
             {reclamationTable&&titleMachine?.brand&& 
-                <Text className="left" as="h2">Машина - {titleMachine?.brand} / Серийный номер -{titleMachine?.serial_num}</Text>} */}
+                <Text className="left" as="h2">Машина - {titleMachine?.brand} / Серийный номер -{titleMachine?.serial_num}</Text>}
         </div>}
         {macinesTable&&
         <Text as="h3">Информация о комплектации и технических характеристиках Вашей техники</Text>}

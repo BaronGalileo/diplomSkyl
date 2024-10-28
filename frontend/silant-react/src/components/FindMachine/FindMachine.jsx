@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from 'axios';
 import './styles.css'
 import { setOne_machine } from "../../store/oneMachineSlice";
+import { removeOne_machine } from "../../store/oneMachineSlice";
 
 
 function FindMachine() {
@@ -47,6 +48,7 @@ function FindMachine() {
         }).catch(err => {
             if(err.status === 404)
                 alert("К сожалению машины с таким серийным номером не удалось найти")
+                dispatch(removeOne_machine())
                 reset()
 
         })

@@ -1,35 +1,28 @@
 import { useSelector } from "react-redux"
 import { Checkbox } from "../../CheckBox/Checkbox";
-import { useFormContext } from "react-hook-form";
+import { useEffect } from "react";
+import { Text } from "../../Text/Text";
 
 
 
-export const FormChoiceReclamation = ({name}) => {
 
-    const {
-        register
-    } = useFormContext()
+export const FormChoiceReclamation = ({name, value}) => {
 
-    // const isMachines = useSelector(state => state.machines.sorted_serian_num)
+    const role_user = useSelector(state => state.auth.user_role)
 
-    // const target = useSelector(state => state.targetmachine.target)
+    const isReclamation_ids = useSelector(state => state.reclamation.ids)
 
-    // const machine_obj = isMachines[target][0]
-
-
-    // useEffect(() => {
-    //     const data = {machine_obj:machine_obj}
-    //     dispatch(setMachine_obj(data))
-
-    // }, [])
+    const title_name = isReclamation_ids[value].machine.brand
 
 
     return(
-        <>
-        {/* <input {...register(`id`)} type="hidden" value={id}/> */}
-            
-            <Checkbox type="checkbox"  name={name}>Редактировать</Checkbox>
-        </>
+        <div className="redact-element">  
+        {title_name&&role_user!=="client"&&
+            <Checkbox className="check-reclamation" value={value} name={name}>{title_name}</Checkbox>
+        }
+        {role_user === "client"&&
+        <Text className="dark-color">{title_name}</Text>}
+        </div>
     )
 }
 
