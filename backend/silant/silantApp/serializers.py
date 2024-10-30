@@ -35,6 +35,12 @@ class ModelOfAControlledBridgeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class MachinePostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Machine
+        fields = "__all__"
+
+
 class MachineSerializer(serializers.ModelSerializer):
     client = ClientSerializer()
     service_company = ServiseOrganizationSerializer()

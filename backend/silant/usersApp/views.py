@@ -2,11 +2,14 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from silantApp.permissions import IsManagerUser
 from .forms import LoginUserForm
 from .models import *
+from .serializers import ClientSerializer, ServiseOrganizationSerializer
 
 
 def login_user(request):
@@ -43,3 +46,15 @@ class RoleView(APIView):
             'client': client,
         }
         return Response({'roles': {my_dict.get('servise_org'), my_dict.get('client'), my_dict.get('manager'), }})
+
+
+class ClientViewSet(viewsets.ModelViewSet):
+    queryset = Client.objects.all()
+    serializer_class = ClientSerializer
+    permission_classes = [IsManagerUser, ]
+
+
+class ServiseOrgViewSet(viewsets.ModelViewSet):
+    queryset = ServiseOrganization.objects.all()
+    serializer_class = ServiseOrganizationSerializer
+    permission_classes = [IsManagerUser, ]
