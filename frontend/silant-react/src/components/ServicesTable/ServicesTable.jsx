@@ -49,7 +49,6 @@ export const ServicesTable = () => {
     useEffect( () => checkedCheckBox())
 
     const onSubmit = (data) => {
-        debugger
         if(data?.id) {
             
             const service_data_old = isServices.ids[data.id[0]]

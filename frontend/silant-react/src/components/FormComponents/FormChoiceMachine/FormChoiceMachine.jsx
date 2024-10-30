@@ -8,8 +8,6 @@ import { setMachine_obj } from "../../../store/machinesSlice";
 
 export const FormChoiceMachine = () => {
 
-    debugger
-
     const {
         register
     } = useFormContext()

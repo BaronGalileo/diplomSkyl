@@ -1,156 +1,101 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useFormContext } from "react-hook-form"
+import React from "react";
+import { useSelector } from "react-redux";
 import { StickyTable } from "../Tables/StickyTable";
-import { columnsFullMachine } from "../Tables/ColomnsTables/columnsFullMachine";
+import { useFormContext } from "react-hook-form"
+import { ColumnsMachinePost } from "../Tables/ColomnsTables/columnsMachinePost"
 import { Button } from "../Button/Button";
-import { setMachines } from "../../store/machinesSlice";
 import axios from "axios";
+import { ColumnsMachinePatch } from "../Tables/ColomnsTables/columnsMachinePatch";
 
 
 
-export const MachinesTable = () => {
+export const MachinesTable = ({createMachine, machineObj, setFlag, addDataMachine}) => {
 
-
-    const isMashines = useSelector(state => state.machines)
-
-    // const dispatch  = useDispatch()
+    const {
+        handleSubmit,
+        formState: {isValid},
+        reset,
+    
+    } = useFormContext()
 
     const isAuth = useSelector(state => state.auth)
 
-    // const[macinesTable, setMacinesTable] = useState(true)
+    const path_machine = "http://127.0.0.1:8000/api/v1/machine/"
 
-    // const[servicesTable, setServicesTable] = useState(false)
-
-    // const[reclamationTable, setReclamationTable] = useState(false)
-
-    // const[isTargetMachine, setIsTargetMachine] = useState(false)
-
-    // const {
-    //     handleSubmit,
-    //     formState: {isValid},
-    
-    //   } = useFormContext()
-    
-    // const elementsArray = document.querySelectorAll(".checkbox-element");
-
-    // elementsArray.forEach((elem) => {
-    //     elem.addEventListener("change", () => {
-
-    //     });
-    // })
-    
-    // useEffect(() => {
-    //     let count_checkbox = 0
-    //     const elementsArray = document.querySelectorAll(".checkbox-element");
-    //     elementsArray.forEach((elem) => {
-    //         console.log('arrr', elem)
-    //     elem.addEventListener("change", (e) => {
-    //         if(e.target.checked){
-    //             count_checkbox ++
-    //             setIsTargetMachine(true)
-    //         }
-    //         else {
-    //             count_checkbox --
-    //             if(count_checkbox === 0){
-    //                 setIsTargetMachine(false)
-    //             }
-    //         }
-    //         console.log("мена", e.target.checked)
-    //     });
-    // });
+    const data_machine = [{
+        brand: '',
+        serial_num: '',
+        car_model: '',
+        engine_model: '',
+        engine_num: '',
+        transmission_model: '',
+        transmission_num: '',
+        driving_axle_model: '',
+        driving_axle_num: '',
+        model_of_a_controlled_bridge: '',
+        num_of_a_controlled_bridge: '',
+        contractNo: '',
+        date_from_the_factory: '',
+        consignee: '',
+        delivery_address: '',
+        equipment: '',
+        client: '',
+        service_company: ''
+    }]
 
 
+    const onSubmitPost = (data) => {
+        if(data.target_serial_num){
+            delete data["target_serial_num"]
+        }
+        console.log("DATA machine", data)
+        axios.post(path_machine, data, isAuth.confermAut)
+        .then(res => {
+            alert("Машина создана!")
+            setFlag(res=> !res)
+            addDataMachine(overload=>!overload)
+        })
+        .catch(err => {
+            alert(err.request.responseText)
+        })
+        reset()
+    }
 
-    // }, [])
+    const onSubmitPatch = (data) => {
+        console.log("patch", data)
+        const path_patch = path_machine + data.id +'/'
+        axios.patch(path_patch, data, isAuth.confermAut)
+        .then(res => {
+            alert("Редакция прошла успешно!")
+            setFlag(res=> !res)
+            addDataMachine(overload=>!overload)
+        })
+        .catch(err => {
+            alert(err.request.responseText)
+        })
+        reset()
+    }
 
-    // const path_service = "http://127.0.0.1:8000/api/service/v1/service/"
-
-    // const path_reclamation = "http://127.0.0.1:8000/api/service/v1/reclamation/"
-
-
-    // function addDataService() {
-    //     axios.get(path_service, isAuth.confermAut).then(res => {
-    //         console.log(res.data)
-    //       })
-    // }
-
-    // function addDataReclamations() {
-    //     axios.get(path_reclamation, isAuth.confermAut).then(res => {
-    //         console.log(res.data)
-    //       })
-    // }
-
-    // function change(e) {
-    //     if(e.target.className === "btn all-info"){
-    //         setMacinesTable(res => true)
-    //         setServicesTable(res => false)
-    //         setReclamationTable(res => false)
-    //     }
-    //     else if(e.target.className === "btn TO"){
-    //         addDataService()
-    //         setMacinesTable(res => false)
-    //         setServicesTable(res => true)
-    //         setReclamationTable(res => false)
-    //     }
-    //     else if(e.target.className === "btn reclam"){
-    //         addDataReclamations()
-    //         setMacinesTable(res => false)
-    //         setServicesTable(res => false)
-    //         setReclamationTable(res => true)
-    //     }
-    //     const btns = document.querySelectorAll("button");
-    //     for (let i = 0; i < btns.length; i++) {
-    //         btns[i].classList.remove("active");
-    //       }
-        
-    //     return e.currentTarget.classList.add("active")
-    // }
-
-    // const onSubmit = (data) => {
-
-    //     console.log("DATA", data)
-
-        // axios.post(path, data, isAuth.confermAut).then(res => {
-        //   if(res.data.items.length > 0 ) {
-        //     dispatch(setResult(res.data));        
-    
-        //     axios.post(pathHistograms, data, isAuth.confermAut).then(re => {  
-        //       let union = unionArray(re.data)
-        //       if(union) {
-        //         dispatch(setHistograms(union));
-        //         setChangePage(true)
-        //       }
-        //       else alert("К сожалению не нашли ничего.Попробуйте больший отрезок времени.")
-    
-        //     })
-        //     .catch(err => {
-        //       alert("Извените, что-то пошло не так!")})
-    
-        //   } 
-        //   else {
-        //     dispatch(removeResult())
-        //     dispatch(removeHistograms())
-        //     alert("К сожалению ниего не удалось найти. Попробуйте фильтр поменять, тональность или проверьте ИНН")
-        //   }
-        // }
-          
-        //   )
-        // }
+    const errorsSubmit = (data) => {
+        console.log("ERROR", data)
+        reset()
+    }
+ 
 
     return(
-        <>
-        <div className="machinesTable-element">
-            {isMashines.machines_data[0]&&
-            <StickyTable dataTable={isMashines.machines_data} columnsTable={columnsFullMachine}/>}
-            {/* <form onSubmit={handleSubmit(onSubmit, errorSubmit)}>
-                <Button className="all-info"onClick={change} active>Общая информация</Button>
-                <Button className="TO" onClick={change} disabled={!isTargetMachine}>Техническое обслуживание</Button>
-                <Button className="reclam" onClick={change} disabled={!isTargetMachine}>Рекламация</Button>
-                {isMashines.machines_data&&
-                <StickyTable dataTable={isMashines.machines_data} columnsTable={columnsFullMachine}/>}
-            </form> */}
+        <div className="reclamation-wrapper">
+            <div className="reclamation-element">
+                {createMachine&&
+                <form onSubmit={handleSubmit(onSubmitPost, errorsSubmit)}>               
+                    <StickyTable dataTable={data_machine} columnsTable={ColumnsMachinePost}/>
+                    <Button>Создать машину</Button>
+                </form>}
+                {machineObj&&!createMachine&&
+                    <form onSubmit={handleSubmit(onSubmitPatch, errorsSubmit)}>            
+                        <StickyTable dataTable={machineObj} columnsTable={ColumnsMachinePatch}/>
+                        <Button >Редактировать машину</Button>
+                    </form>}
+            </div>
         </div>
-        </>
     )
 }

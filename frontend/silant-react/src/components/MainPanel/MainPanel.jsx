@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormContext } from "react-hook-form"
@@ -6,7 +6,7 @@ import { Text } from "../Text/Text";
 import "./styles.css"
 import { Button } from "../Button/Button";
 import axios from "axios";
-import { setMachines, setSorted_serian_num } from "../../store/machinesSlice";
+import { removeMachine_obj, removeMachines, setMachine_obj, setMachines, setSorted_serian_num } from "../../store/machinesSlice";
 import { MachinesTable } from "../MachinesTable/MachinesTable";
 import { ServicesTable } from "../ServicesTable/ServicesTable";
 import { ReclamationTable } from "../ReclamationTable/ReclamationTable";
@@ -15,6 +15,8 @@ import { setReclamation, setReclamation_id } from "../../store/reclamationSlice"
 import { setServices, setServices_ids } from "../../store/servicesSlice";
 import { sortedDataBySerialNum } from "../../helpers/sortedData";
 import { sorted_id } from "../../helpers/sorted_id";
+import { StickyTableFilters } from "../Tables/StickyTableFilters";
+import { columnsFullMachine } from "../Tables/ColomnsTables/columnsFullMachine";
 
 
 
@@ -29,7 +31,11 @@ function MainPanel() {
 
     const isServices = useSelector(state => state.services)
 
+    const target = useSelector(state => state.targetmachine)
+
     const[isTargetMachine, setIsTargetMachine] = useState(false)
+
+    const[isTargetMachineForManager, setIsTargetMachineForManager] = useState(false)
 
     const isAuth = useSelector(state => state.auth)
 
@@ -40,6 +46,18 @@ function MainPanel() {
     const[reclamationTable, setReclamationTable] = useState(false)
 
     const[titleMachine, setTitleMachine] = useState(null)
+
+    const[redactionForManager, setRedactionForManager] = useState(false)
+
+    const[flag, setFlag] = useState(false)
+
+    const[createMachine, setCreateMachine] = useState(false)
+
+    const[machinesDataTable, setMachinesDataTable] = useState(isMashines.machines_data)
+
+    const client_and_serv = Boolean(isAuth.user_role === "client" || isAuth.user_role === "serviseorg" )
+
+    const[machineObj, setMachineObj] = useState(null)
 
     const {
         handleSubmit,
@@ -68,10 +86,14 @@ function MainPanel() {
         addDataMachine()
         checkedOff()
         
-    }, [macinesTable ])
+    }, [macinesTable, flag])
 
-    function addDataMachine() {
-        if(!isMashines.machines_data[0]){
+    useEffect(() => {
+
+    }, [redactionForManager, machinesDataTable, machineObj])
+
+    function addDataMachine(overload=false) {
+        if(!isMashines.machines_data||overload){
             axios.get(path_machine, isAuth.confermAut)
             .then(res => {
                 const data = {
@@ -84,7 +106,9 @@ function MainPanel() {
                     sorted_serian_num: dataRES,
                 }
                 dispatch(setSorted_serian_num(data_for_store))
-              })
+                setMachinesDataTable(res.data)
+              }
+            )
         }
     }
 
@@ -129,6 +153,10 @@ function MainPanel() {
         if(data.target_serial_num) {
             for (const [key, value] of Object.entries(data.target_serial_num)) {
                 if(value) {
+                    const data_for_state = {
+                        machine_obj : isMashines.sorted_serian_num[key][0]
+                    }
+                    dispatch(setMachine_obj(data_for_state))
                     setTitleMachine(isMashines.sorted_serian_num[key][0])
                     dispatch(setTargetmachine(key))
                 }
@@ -142,9 +170,11 @@ function MainPanel() {
         const checkboxsArray = document.querySelectorAll(".serian-num");
         for (let i = 0; i < checkboxsArray.length; i++) {
             if(checkboxsArray[i].checked){
+                setRedactionForManager(false)
                 return checkboxsArray[i].checked = false
             }
             setIsTargetMachine(false)
+            setIsTargetMachineForManager(false)
         }
         }
 
@@ -159,12 +189,14 @@ function MainPanel() {
         else if(e.target.className === "btn TO"){
             addDataService()
             setMacinesTable(res => false)
+            setRedactionForManager(false)
             setServicesTable(res => true)
             setReclamationTable(res => false)
         }
         else if(e.target.className === "btn reclam"){
             addDataReclamations()
             setMacinesTable(res => false)
+            setRedactionForManager(false)
             setServicesTable(res => false)
             setReclamationTable(res => true)
         }
@@ -172,7 +204,6 @@ function MainPanel() {
         for (let i = 0; i < btns.length; i++) {
             btns[i].classList.remove("active");
           }
-        
         return e.currentTarget.classList.add("active")
     }
 
@@ -182,15 +213,22 @@ function MainPanel() {
         elem.addEventListener("click", (e) => {
             setTitleMachine(null)
             dispatch(removeTargetmachine())
+            dispatch(removeMachine_obj())
             for (let i = 0; i < checkboxsArray.length; i++) {
                 if(checkboxsArray[i] !== e.target){
                     checkboxsArray[i].checked = false
                 }
               }
             if(e.target.checked){
+                setRedactionForManager(true)
                 setIsTargetMachine(true)
-            } else { 
+                setIsTargetMachineForManager(true)
+                setMachineObj(isMashines?.sorted_serian_num[e.target.id])
+            } else {
+                setMachineObj(null) 
+                setRedactionForManager(false)
                 setIsTargetMachine(false)
+                setIsTargetMachineForManager(false)
             }
         });
     });
@@ -200,7 +238,7 @@ function MainPanel() {
 
 
     const errorSubmit = (data) => {
-    } 
+    }     
 
     return(
         <div className="main-panel-wrapper">
@@ -219,19 +257,39 @@ function MainPanel() {
         <Text as="h3">Информация о проведенных ТО Вашей техники</Text>}
         {reclamationTable &&
         <Text as="h3">Информация о рекламации Вашей техники</Text>}
-        <form onSubmit={handleSubmit(onSubmit, errorSubmit)}>
-                <Button className="all-info"onClick={change} active>Общая информация</Button>
-                <Button className="TO" onClick={change} disabled={!isTargetMachine}>Техническое обслуживание</Button>
-                <Button className="reclam" onClick={change} disabled={!isTargetMachine}>Рекламация</Button>
-                {isMashines.machines_data&& macinesTable&&
-                <MachinesTable/>}
-        </form>
-        {servicesTable&&
-            <ServicesTable/>
-        }
-        {reclamationTable&&
-            <ReclamationTable/>
-        }
+            <form onSubmit={handleSubmit(onSubmit, errorSubmit)}>
+            <Button className="all-info"onClick={change} active>Общая информация</Button>
+            <Button className="TO" onClick={change} disabled={!isTargetMachine}>Техническое обслуживание</Button>
+            <Button className="reclam" onClick={change} disabled={!isTargetMachine}>Рекламация</Button>
+            {machinesDataTable&& macinesTable&&!flag&&
+            <StickyTableFilters dataTable={machinesDataTable} columnsTable={columnsFullMachine}/>}
+            {redactionForManager&&isTargetMachineForManager&&!client_and_serv&&
+                <Button  onClick={() => {
+                    setFlag(res=>!res);
+                    setIsTargetMachine(res=>!res)
+                }}>{!flag?"Редактировать машину": "В меню"}</Button>}
+            </form>
+        <div className="main-panel-element">
+            {!client_and_serv&&!redactionForManager&&!servicesTable&&!reclamationTable&&
+                <Button onClick={() => {
+                    setCreateMachine(res=>!res)
+                    setFlag(res=>!res)
+                }}
+                >{!flag?"Создать машину": "В меню"}</Button>}
+        </div>
+
+        <div className="main-panel-element">
+        {flag&&(createMachine||machineObj)&&
+                <MachinesTable createMachine={createMachine} machineObj={machineObj} addDataMachine={addDataMachine} setFlag={setFlag}/>}
+        </div>
+        <div className="main-panel-element">
+        {servicesTable&&!flag&&
+            <ServicesTable/>}
+        </div>
+        <div className="main-panel-element">
+        {reclamationTable&&!flag&&
+            <ReclamationTable/>}
+        </div>
         </div>
     
     )

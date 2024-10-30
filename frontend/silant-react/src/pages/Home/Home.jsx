@@ -34,10 +34,10 @@ function Home() {
         setTimeData(timeNew)
         console.log("targetmachine", target)
         console.log("isReclamation", isReclamation)
-        console.log("isMashines", isMashines.machines_data)
+        console.log("isMashines", isMashines)
         console.log("isServices", isServices)
         console.log("const isAuth = useSelector(state => state.auth)" , isAuth.expire )
-        console.log("Time +1000",time2 < isAuth.expire)
+        console.log("isAuth",isAuth)
         // Object.entries(machines).map(key => {
         //     console.log(key)
         // })

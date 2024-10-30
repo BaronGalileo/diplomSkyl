@@ -2,12 +2,12 @@ import React, { useMemo } from "react";
 import { useTable, useBlockLayout, useSortBy, useFilters } from 'react-table';
 import { useSticky } from 'react-table-sticky'
 import { Styles } from "./TableStyles";
-import { Checkbox } from "../CheckBox/Checkbox";
 
 
 
 
-function StickyTable({dataTable, columnsTable, ...resProps}) {
+
+function StickyTableFilters({dataTable, columnsTable, ...resProps}) {
 
   const columns = useMemo(() => columnsTable, [])
   const data = useMemo(() => dataTable, [])
@@ -25,7 +25,7 @@ function StickyTable({dataTable, columnsTable, ...resProps}) {
       columns,
       data,
     },
-    // useFilters,
+    useFilters,
     useBlockLayout,
     useSticky,
     useSortBy,
@@ -43,8 +43,9 @@ function StickyTable({dataTable, columnsTable, ...resProps}) {
               {headerGroup.headers.map((column) => (
                 <div {...column.getHeaderProps(column.getSortByToggleProps())} className="th">
                   {column.render('Header')}
-                  {/* <div>{column.canFilter ? column.render('Filter') : null}</div> */}
-                  <span>
+                  {column.Filter&&
+                    <div>{column.canFilter ? column.render('Filter') : null}</div>} 
+                    <span>
                     {column.isSorted ? (column.isSortedDesc ? '🔽' : '🔼') : ''}
                   </span>
                 </div>
@@ -81,4 +82,4 @@ function StickyTable({dataTable, columnsTable, ...resProps}) {
     </Styles>
     )
 }
-export {StickyTable}
+export {StickyTableFilters}

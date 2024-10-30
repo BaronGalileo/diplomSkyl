@@ -6,7 +6,7 @@ import { FormSelectFromServer } from "../FormComponents/FormComponentSelect/Form
 
 
 
-export const RedactSelect = ({path_for_serv, value, field_name=''}) => {
+export const RedactSelect = ({path_for_serv, value, field_name='', field_user=false}) => {
 
     const classes = classNames(
         "redact-element",
@@ -29,22 +29,22 @@ export const RedactSelect = ({path_for_serv, value, field_name=''}) => {
         element_for_redaction.addEventListener('click', e => {
             if(e.target.tagName !== "SELECT"){
                 setЕouch(res => !res)
+                const input_element = element_for_redaction.querySelector('select')
+                if(input_element?.value){
+                    const target_elem =  input_element.selectedIndex
+                    const selected = input_element[target_elem]?.textContent
+                    setUpdated_value(selected)
             }
-            const input_element = element_for_redaction.querySelector('select')
-            if(input_element?.value){
-                const selected = input_element[input_element.value].textContent
-                setUpdated_value(selected)
             }
         })
 
     }, [])
-
     return(
         <>
         <div className={classes}>
             <Text className="dark-color">{updated_value}</Text>
             {touch&&
-            <FormSelectFromServer path={path_for_serv} message="обязательно заполнить" name={field_name}>{value}</FormSelectFromServer>}
+            <FormSelectFromServer user={field_user} path={path_for_serv} message="обязательно заполнить" name={field_name}>{updated_value}</FormSelectFromServer>}
         </div>
         </>
     )
