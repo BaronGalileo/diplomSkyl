@@ -1,7 +1,7 @@
+import { RedactTextDate } from '../../ElementForRedaction/RedactTextDate';
 import { FormChoiceMachine } from '../../FormComponents/FormChoiceMachine/FormChoiceMachine';
 import { FormChoiceServiceOrg } from '../../FormComponents/FormChoiceServiceOrg/FormChoiceServiceOrg';
-import { SelectFailureNode } from '../../FormComponents/FormComponentSelect/SelectFailure_node';
-import { SelectRecoveryMethod } from '../../FormComponents/FormComponentSelect/SelectRecoveryMethod';
+import { FormSelectFromServer } from '../../FormComponents/FormComponentSelect/FormSelectFromServer';
 import { Input } from '../../Input/Input'
 
 
@@ -12,7 +12,7 @@ export const ColomnsReclamationPOST = [
         Header: 'машина',
         accessor: 'machine',
         sticky: 'left',
-        Cell: ({value}) => { return (<FormChoiceMachine name={"machine"}>{value}</FormChoiceMachine>)}
+        Cell: () => { return (<FormChoiceMachine/>)}
     },
     {
         Header: 'сервисная компания',
@@ -33,7 +33,7 @@ export const ColomnsReclamationPOST = [
     {
         Header: 'узел отказа',
         accessor: 'failure_node',
-        Cell: ({value}) => { return (<SelectFailureNode message="обязательно заполнить" name="failure_node">{value}</SelectFailureNode>)}
+        Cell: ({value}) => { return (<FormSelectFromServer path="http://127.0.0.1:8000/api/service/v1/failurenode/" message="обязательно заполнить" name="failure_node">{value}</FormSelectFromServer>)}
     },
     {
         Header: 'описание отказа',
@@ -43,7 +43,7 @@ export const ColomnsReclamationPOST = [
     {
         Header: 'способ восстановления',
         accessor: 'recovery_method',
-        Cell: ({value}) => { return (<SelectRecoveryMethod message="Выберете метод" name="recovery_method">{value}</SelectRecoveryMethod>)}
+        Cell: ({value}) => { return (<FormSelectFromServer path="http://127.0.0.1:8000/api/service/v1/recoverymethod/" message="Выберете метод" name="recovery_method">{value}</FormSelectFromServer>)}
     },
     {
         Header: 'используемые запасные части',
@@ -53,11 +53,6 @@ export const ColomnsReclamationPOST = [
     {
         Header: 'дата восстановления',
         accessor: 'date_of_restoration',
-        Cell: () => { return (<Input  name={'date_of_restoration'}></Input>)}
-    },
-    {
-        Header: 'время простоя техники',
-        accessor: 'downtime',
-        Cell: () => { return (<Input name={'downtime'}></Input>)}
+        Cell: () => { return (<Input type="date" name={'date_of_restoration'}></Input>)}
     },
 ]

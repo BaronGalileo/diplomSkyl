@@ -25,6 +25,7 @@ export const RedactTextDate = ({type, value, field_name=''}) => {
 
 
     useEffect(() => {
+
         const element_for_redaction = document.querySelector(`.${field_name}`)
         element_for_redaction.addEventListener('click', e => {
             if(e.target.tagName !== "INPUT"){
@@ -33,6 +34,9 @@ export const RedactTextDate = ({type, value, field_name=''}) => {
             const input_element = element_for_redaction.querySelector('input')
             if(input_element?.value){
                 setUpdated_value(input_element.value)
+            }
+            else{
+                setUpdated_value(value)
             }
         })
 

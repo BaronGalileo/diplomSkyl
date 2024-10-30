@@ -1,13 +1,17 @@
+import { FormChoiceService } from "../../FormComponents/FormChoiceService/FormChoiceService"
+import { FormChoiceServiceOrg } from "../../FormComponents/FormChoiceServiceOrg/FormChoiceServiceOrg"
+
 export const ColomnsService = [
     {
         Header: 'Машина',
-        accessor: 'machine.brand',
-        sticky: 'left'
+        accessor: 'id',
+        sticky: 'left',
+        Cell: ({value}) => {return(<FormChoiceService value={value} name="id"></FormChoiceService>)}
     },
     {
         Header: 'сервисная компания',
         accessor: 'service_company.name',
-        sticky: 'left'
+        sticky: 'left',
     },
     {
         Header: 'дата проведения ТО',

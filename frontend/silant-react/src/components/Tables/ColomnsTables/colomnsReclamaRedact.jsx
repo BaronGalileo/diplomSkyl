@@ -1,10 +1,5 @@
 import { RedactTextDate } from '../../ElementForRedaction/RedactTextDate';
 import { RedactSelect } from '../../ElementForRedaction/RedactSelect';
-import { FormChoiceMachine } from '../../FormComponents/FormChoiceMachine/FormChoiceMachine';
-import { FormChoiceServiceOrg } from '../../FormComponents/FormChoiceServiceOrg/FormChoiceServiceOrg';
-import { SelectFailureNode } from '../../FormComponents/FormComponentSelect/SelectFailure_node';
-import { SelectRecoveryMethod } from '../../FormComponents/FormComponentSelect/SelectRecoveryMethod';
-import { Input } from '../../Input/Input'
 import { RedactID } from '../../ElementForRedaction/RedactID';
 
 
@@ -20,8 +15,6 @@ export const ColomnsReclamaRedact = [
     {
         Header: 'сервисная компания',
         accessor: 'service_company',
-        // sticky: 'left',
-        // Cell: () => { return (<FormChoiceServiceOrg/>)}
     },
     {
         Header: 'дата отказа',
@@ -36,7 +29,7 @@ export const ColomnsReclamaRedact = [
     {
         Header: 'узел отказа',
         accessor: 'failure_node',
-        Cell: ({value}) => { return (<RedactSelect type="FailureNode" message="обязательно заполнить" value={value} field_name="failure_node"/>)}
+        Cell: ({value}) => { return (<RedactSelect path_for_serv="http://127.0.0.1:8000/api/service/v1/failurenode/" message="обязательно заполнить" value={value} field_name="failure_node"/>)}
     },
     {
         Header: 'описание отказа',
@@ -46,7 +39,7 @@ export const ColomnsReclamaRedact = [
     {
         Header: 'способ восстановления',
         accessor: 'recovery_method',
-        Cell: ({value}) => { return (<RedactSelect type='RecoveryMethod' message="обязательно заполнить" value={value} field_name="recovery_method"/>)}
+        Cell: ({value}) => { return (<RedactSelect path_for_serv="http://127.0.0.1:8000/api/service/v1/recoverymethod/" message="обязательно заполнить" value={value} field_name="recovery_method"/>)}
     },
     {
         Header: 'используемые запасные части',
@@ -57,10 +50,5 @@ export const ColomnsReclamaRedact = [
         Header: 'дата восстановления',
         accessor: 'date_of_restoration',
         Cell: ({value}) => { return (<RedactTextDate  type="date" field_name={"date_of_restoration"} value={value}></RedactTextDate>)}
-    },
-    {
-        Header: 'время простоя техники',
-        accessor: 'downtime',
-        Cell: ({value}) => { return (<RedactTextDate  type="number" field_name={"downtime"} value={value}></RedactTextDate>)}
     },
 ]

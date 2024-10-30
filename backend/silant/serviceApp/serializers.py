@@ -25,6 +25,13 @@ class RecoveryMethodSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+
+class ServicePostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Service
+        fields = '__all__'
+
+
 class ServiceSerializer(serializers.ModelSerializer):
     machine = MachineSerializer()
     service_company = ServiseOrganizationSerializer()

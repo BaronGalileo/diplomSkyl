@@ -2,12 +2,11 @@ import React, { Children, useEffect, useState } from "react"
 import { Text } from "../Text/Text"
 import classNames from 'classnames'
 import "./styles.css"
-import { SelectFailureNode } from "../FormComponents/FormComponentSelect/SelectFailure_node"
-import { SelectRecoveryMethod } from "../FormComponents/FormComponentSelect/SelectRecoveryMethod"
+import { FormSelectFromServer } from "../FormComponents/FormComponentSelect/FormSelectFromServer"
 
 
 
-export const RedactSelect = ({type='', value, field_name=''}) => {
+export const RedactSelect = ({path_for_serv, value, field_name=''}) => {
 
     const classes = classNames(
         "redact-element",
@@ -44,10 +43,8 @@ export const RedactSelect = ({type='', value, field_name=''}) => {
         <>
         <div className={classes}>
             <Text className="dark-color">{updated_value}</Text>
-            {touch&&type==="FailureNode"&&
-            <SelectFailureNode message="обязательно заполнить" name={field_name}>{value}</SelectFailureNode>}
-            {touch&&type==="RecoveryMethod"&&
-            <SelectRecoveryMethod message="обязательно заполнить" name={field_name}>{value}</SelectRecoveryMethod>}
+            {touch&&
+            <FormSelectFromServer path={path_for_serv} message="обязательно заполнить" name={field_name}>{value}</FormSelectFromServer>}
         </div>
         </>
     )

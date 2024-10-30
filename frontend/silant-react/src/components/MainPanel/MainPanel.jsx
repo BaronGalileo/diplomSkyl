@@ -12,7 +12,7 @@ import { ServicesTable } from "../ServicesTable/ServicesTable";
 import { ReclamationTable } from "../ReclamationTable/ReclamationTable";
 import { removeTargetmachine, setTargetmachine } from "../../store/targetmachineSlice";
 import { setReclamation, setReclamation_id } from "../../store/reclamationSlice";
-import { setServices } from "../../store/servicesSlice";
+import { setServices, setServices_ids } from "../../store/servicesSlice";
 import { sortedDataBySerialNum } from "../../helpers/sortedData";
 import { sorted_id } from "../../helpers/sorted_id";
 
@@ -68,7 +68,7 @@ function MainPanel() {
         addDataMachine()
         checkedOff()
         
-    }, [macinesTable])
+    }, [macinesTable ])
 
     function addDataMachine() {
         if(!isMashines.machines_data[0]){
@@ -92,6 +92,10 @@ function MainPanel() {
         if(!isServices[0]){
             axios.get(path_service, isAuth.confermAut)
             .then(res => {
+                const data_by_id = {
+                    ids:sorted_id(res.data)
+                }
+                dispatch(setServices_ids(data_by_id))
                 const dataRES = sortedDataBySerialNum(res.data)
                 const data_for_store = {
                     services_data: dataRES

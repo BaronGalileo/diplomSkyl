@@ -8,6 +8,8 @@ import { setMachine_obj } from "../../../store/machinesSlice";
 
 export const FormChoiceMachine = () => {
 
+    debugger
+
     const {
         register
     } = useFormContext()
@@ -31,7 +33,7 @@ export const FormChoiceMachine = () => {
         <>
         <input {...register(`machine`)} type="hidden" value={machine_obj.id}/>
         {machine_obj&&
-        <Text className="dark-color bold">{machine_obj.brand}</Text>}
+        <Text className="dark-color">{machine_obj.brand}</Text>}
         </>
     )
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from "react";
-import { useTable, useBlockLayout, useRowSelect } from 'react-table';
+import { useTable, useBlockLayout, useSortBy } from 'react-table';
 import { useSticky } from 'react-table-sticky'
 import { Styles } from "./TableStyles";
 import { Checkbox } from "../CheckBox/Checkbox";
@@ -28,7 +28,8 @@ function StickyTable({dataTable, columnsTable, ...resProps}) {
       data,
     },
     useBlockLayout,
-    useSticky
+    useSticky,
+    useSortBy
     )
 
     const firstPageRows = rows.slice(0, 20)
@@ -40,8 +41,11 @@ function StickyTable({dataTable, columnsTable, ...resProps}) {
           {headerGroups.map((headerGroup) => (
             <div {...headerGroup.getHeaderGroupProps()} className="tr">
               {headerGroup.headers.map((column) => (
-                <div {...column.getHeaderProps()} className="th">
+                <div {...column.getHeaderProps(column.getSortByToggleProps())} className="th">
                   {column.render('Header')}
+                  <span>
+                    {column.isSorted ? (column.isSortedDesc ? '🔽' : '🔼') : ''}
+                  </span>
                 </div>
               ))}
             </div>

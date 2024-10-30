@@ -2,6 +2,7 @@ import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
     sorted_data: {},
+    ids: {},
     expire: null,
 }
 
@@ -15,6 +16,11 @@ const servicesSlice = createSlice({
     initialState,
     reducers: {
 
+        setServices_ids(state, action){
+            state.ids = action.payload.ids;
+
+        },
+
         setServices(state, action){
             state.sorted_data = action.payload.services_data;
             state.expire = Date.now() + CACHE.test
@@ -22,12 +28,13 @@ const servicesSlice = createSlice({
         removeServices(state) {
             return state = {
                 sorted_data: {},
+                ids: {},
                 expire: null,
             };
         },
     }
 });
 
-export const {setServices, removeServices} = servicesSlice.actions;
+export const {setServices, setServices_ids, removeServices} = servicesSlice.actions;
 
 export default servicesSlice.reducer;

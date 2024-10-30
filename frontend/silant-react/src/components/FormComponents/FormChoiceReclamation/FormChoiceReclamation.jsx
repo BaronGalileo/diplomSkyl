@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux"
 import { Checkbox } from "../../CheckBox/Checkbox";
-import { useEffect } from "react";
 import { Text } from "../../Text/Text";
 
 

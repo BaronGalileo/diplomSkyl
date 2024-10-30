@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import './styles.css'
 import { Text } from "../Text/Text";
 import {  useFormContext } from "react-hook-form"
@@ -7,10 +7,12 @@ import { findKey } from "../../helpers/findKey";
 
 function Input({name, message, valueAsNumber, children, ...restProps}) {
 
+
     const {
         register,
         formState: {errors}
     } = useFormContext()
+
 
 
 

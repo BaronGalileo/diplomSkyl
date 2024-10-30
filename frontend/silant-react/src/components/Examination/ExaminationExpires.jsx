@@ -28,11 +28,11 @@ export const ExaminationExpires = () => {
         alert("Пожалуйста, авторизуйтесь!")
     }
 
-    if(expireTimeServices && expireTimeServices < timeNew) {
-        dispatch(removeServices())
-    }
+    // if(expireTimeServices && expireTimeServices < timeNew) {
+    //     dispatch(removeServices())
+    // }
 
-    if(expireTimeReclamation && expireTimeReclamation < timeNew) {
-        dispatch(removeReclamation())
-    }
+    // if(expireTimeReclamation && expireTimeReclamation < timeNew) {
+    //     dispatch(removeReclamation())
+    // }
 }

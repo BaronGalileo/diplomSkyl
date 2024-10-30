@@ -5,9 +5,8 @@ import { ColomnsReclamation } from "../Tables/ColomnsTables/columnsReclamation";
 import { ColomnsReclamationPOST } from "../Tables/ColomnsTables/ColomnsReclamationForPost";
 import { ColomnsReclamaRedact } from "../Tables/ColomnsTables/colomnsReclamaRedact"
 import { Button } from "../Button/Button";
-import { set, useFormContext } from "react-hook-form"
+import { useFormContext } from "react-hook-form"
 import { useDispatch } from "react-redux";
-import { Text } from "../Text/Text";
 import axios from "axios";
 import { removeReclamation } from "../../store/reclamationSlice";
 
@@ -36,7 +35,9 @@ export const ReclamationTable = () => {
         formState: {isValid},
         reset,
     
-      } = useFormContext()
+      } = useFormContext({
+        
+      })
     
     useEffect( () => checkedCheckBox())
 
@@ -57,7 +58,6 @@ export const ReclamationTable = () => {
     const path_reclamation = "http://127.0.0.1:8000/api/service/v1/reclamation/"
 
     const onSubmit = (data) => {
-        debugger
         if(data?.id) {
             
             const reclamation_data_old = isReclamation.ids[data.id[0]]
@@ -83,44 +83,58 @@ export const ReclamationTable = () => {
     }
 
     const onSubmitPost = (data) => {
-        console.log("На сервер POST", data)
-        axios.post(path_reclamation, data, isAuth.confermAut)
-        .then(res => {
-            dispatch(removeReclamation())
-            reset()
-            alert("Рекламация успешно добавлена")
-        })
-        .catch(err => {
-            if(err.request.status >= 500) {
-                alert("Извените, проблема с сервером, попробуйте отправить позже!");
+        if(data.date_of_failure >= data.date_of_restoration){
+            alert("дата отказа не может быть раньше, чем дата восстановления")
+
+        }
+        else {
+            axios.post(path_reclamation, data, isAuth.confermAut)
+            .then(res => {
+                dispatch(removeReclamation())
                 reset()
-            }
+                alert("Рекламация успешно добавлена")
+            })
+            .catch(err => {
+                if(err.request.status >= 500) {
+                    console.log("ERROR", err)
+                    alert("Извените, проблема с сервером, попробуйте отправить позже!");
+                    reset()
+                }
 
-        })
-        setRedaction(false)
-        setFlag(res => !res)
-
+            })
+            setRedaction(false)
+            setFlag(res => !res)
+        }
     }
 
     const onSubmitPatch = (data) => {
-        const path_patch = path_reclamation + Number(data.id)+"/"
-        axios.patch(path_patch, data, isAuth.confermAut)
-        .then(res => {
-            dispatch(removeReclamation())
-            reset()
-            alert("Рекламация успешно обновлена")
-        })
-        .catch(err => {
-            console.log("error", err)
-            if(err.request.status >= 500) {
-                alert("Извените, проблема с сервером, попробуйте отправить позже!");
+          const touchedFields = {
+            date_of_failure: data.date_of_failure?  data.date_of_failure : redactionData[0].date_of_failure,
+            date_of_restoration: data.date_of_restoration? data.date_of_restoration : redactionData[0].date_of_restoration,
+        }
+        if(touchedFields.date_of_failure >= touchedFields.date_of_restoration){
+            alert("дата отказа не может быть раньше, чем дата восстановления")
+
+        }
+        else {
+            const path_patch = path_reclamation + Number(data.id)+"/"
+            axios.patch(path_patch, data, isAuth.confermAut)
+            .then(res => {
+                dispatch(removeReclamation())
                 reset()
-            }
+                alert("Рекламация успешно обновлена")
+            })
+            .catch(err => {
+                if(err.request.status >= 500) {
+                    alert("Извените, проблема с сервером, попробуйте отправить позже!");
+                    reset()
+                }
 
-        })
-        setRedaction(false)
-        setFlag(res => !res)
+            })
+            setRedaction(false)
+            setFlag(res => !res)
 
+        }
     }
 
     const checkedCheckBox = () => {

@@ -15,13 +15,11 @@ export const FormChoiceServiceOrg = () => {
 
     const serviceOrg = isMachines[target][0]
 
-    console.log("serviceOrg", serviceOrg)
-
     return(
         <>
         <input {...register(`service_company`)} type="hidden" value={serviceOrg.service_company.user}/>
         {serviceOrg&&
-        <Text className="dark-color bold">{serviceOrg.service_company.name}</Text>}
+        <Text className="dark-color">{serviceOrg.service_company.name}</Text>}
         </>
     )
 }
