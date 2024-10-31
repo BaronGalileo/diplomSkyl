@@ -38,27 +38,18 @@ function Header() {
         dispatch(removeOne_machine())
     }
 
-    function sh() {
-        console.log(mach)
-    }
-
-
-
     return(
         <div>
             <div className='header-wrapper'>
                 <div className='header-cap'>
-                    <Img className='logo-header' src='./images/Logotype RGB 2.png' alt="logo image"></Img>
+                    <Img className='logo-header' src='../images/Logotype RGB 2.png' alt="logo image"></Img>
                     <Button href="#">+7 -8352-20-12-09, telegram</Button>
                     {isLogin &&
                     <Button href="/">Назад</Button>}
                     {isAuth.isAuth &&
                     <Button onClick={logout}>выход</Button>}
                     {!isLogin && !isAuth.isAuth &&
-                    <Button href="login">авторизация</Button>}
-                    <Button onClick={del}>Очистить машину</Button>
-                    <Button onClick={sh}>Показ маашины</Button>
-                    
+                    <Button href="login">авторизация</Button>}                   
                 </div>
                 <Text as='h1'>Электронная сервисная книжка "Мой Силант"</Text>
             </div>

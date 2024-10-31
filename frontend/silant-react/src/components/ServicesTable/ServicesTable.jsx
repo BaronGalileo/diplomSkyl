@@ -8,6 +8,7 @@ import { ColomnsServicePost } from "../Tables/ColomnsTables/columnsServicePost";
 import axios from "axios";
 import { removeServices } from "../../store/servicesSlice";
 import { ColomnsServicePatch } from "../Tables/ColomnsTables/columnsServicePatch";
+import { StickyTableFilters } from "../Tables/StickyTableFilters";
 
 export const ServicesTable = () => {
 
@@ -170,7 +171,7 @@ export const ServicesTable = () => {
             <div classnema="reclamation-element">
             <form onSubmit={handleSubmit(onSubmit, errorSubmit)}>
             {isServices.sorted_data[target.target]&&!flag&&
-                <StickyTable dataTable={isServices.sorted_data[target.target]} columnsTable={ColomnsService}/>}
+                <StickyTableFilters dataTable={isServices.sorted_data[target.target]} columnsTable={ColomnsService}/>}
                     {redaction&&!flag&&
                     <Button>Редактировать</Button>}
             </form>
@@ -185,7 +186,7 @@ export const ServicesTable = () => {
                 </form>}
                 {flag&&redaction&&
                     <form onSubmit={handleSubmit(onSubmitPatch, errorSubmit)}>
-                        <StickyTable dataTable={redactionData} columnsTable={ColomnsServicePatch}/>
+                        <StickyTableFilters dataTable={redactionData} columnsTable={ColomnsServicePatch}/>
                         <Button>Редактировать рекламацию</Button>                    
                     </form>}
             </div>

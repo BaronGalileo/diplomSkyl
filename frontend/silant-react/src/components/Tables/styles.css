@@ -21,3 +21,22 @@ table th {
   background-color: #04AA6D;
   color: white;
 }
+
+.filter-element{
+  color: rgb(165, 42, 42);
+
+}
+
+.filter-input{
+  width: 90%;
+  margin: 2px;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.search-filter {
+  font-size: 1rem;
+  padding: 5px;
+  line-height: 1em;
+  margin-top: 5px;
+}

@@ -9,7 +9,7 @@ export const FormChoiceService = ({name, value}) => {
 
     const isService_ids = useSelector(state => state.services.ids)
 
-    const title_name = isService_ids[value].machine.brand
+    const title_name = isService_ids[value].machine.serial_num
 
     return(
         <div className="redact-element">  

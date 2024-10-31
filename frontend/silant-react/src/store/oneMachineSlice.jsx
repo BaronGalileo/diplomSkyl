@@ -1,6 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
+    id: null,
     brand: null,
     serial_num:  null,
     car_model: null,
@@ -28,7 +29,7 @@ const one_machineSlice = createSlice({
     reducers: {
 
         setOne_machine(state, action) {
-            console.log("set",action)
+            state.id = action.payload.id
             state.brand = action.payload.brand;
             state.serial_num = action.payload.serial_num;
             state.car_model = action.payload.car_model;
@@ -47,6 +48,7 @@ const one_machineSlice = createSlice({
             state.equipment = action.payload.equipment;
             state.client = action.payload.client;
             state.service_company = action.payload.service_company;
+
             
         },
         removeOne_machine(state) {

@@ -1,17 +1,21 @@
 import { FormChoiceService } from "../../FormComponents/FormChoiceService/FormChoiceService"
-import { FormChoiceServiceOrg } from "../../FormComponents/FormChoiceServiceOrg/FormChoiceServiceOrg"
+import { ColumnFilter } from "../ColumnsFilter"
 
 export const ColomnsService = [
     {
-        Header: 'Машина',
+        Header: 'Зав.№ машины',
         accessor: 'id',
         sticky: 'left',
-        Cell: ({value}) => {return(<FormChoiceService value={value} name="id"></FormChoiceService>)}
+        Cell: ({value}) => {return(<FormChoiceService value={value} name="id"></FormChoiceService>)},
+        disableSortBy: true,
+        Filter: ColumnFilter,
     },
     {
         Header: 'сервисная компания',
         accessor: 'service_company.name',
         sticky: 'left',
+        disableSortBy: true,
+        Filter: ColumnFilter,
     },
     {
         Header: 'дата проведения ТО',
@@ -19,18 +23,23 @@ export const ColomnsService = [
     },
     {
         Header: 'Вид ТО',
-        accessor: 'type_of_service.name'
+        accessor: 'type_of_service.name',
+        disableSortBy: true,
+        Filter: ColumnFilter,
     },
     {
         Header: 'наработка, м/час',
-        accessor: 'working_hours'
+        accessor: 'working_hours',
+        disableSortBy: true,
     },
     {
         Header: '№ заказ-наряда',
-        accessor: 'order_No'
+        accessor: 'order_No',
+        disableSortBy: true,
     },
     {
         Header: 'дата заказ-наряда',
-        accessor: 'date_order'
+        accessor: 'date_order',
+        disableSortBy: true,
     },
 ]

@@ -6,6 +6,7 @@ import { ColumnsMachinePost } from "../Tables/ColomnsTables/columnsMachinePost"
 import { Button } from "../Button/Button";
 import axios from "axios";
 import { ColumnsMachinePatch } from "../Tables/ColomnsTables/columnsMachinePatch";
+import { StickyTableFilters } from "../Tables/StickyTableFilters";
 
 
 
@@ -87,12 +88,12 @@ export const MachinesTable = ({createMachine, machineObj, setFlag, addDataMachin
             <div className="reclamation-element">
                 {createMachine&&
                 <form onSubmit={handleSubmit(onSubmitPost, errorsSubmit)}>               
-                    <StickyTable dataTable={data_machine} columnsTable={ColumnsMachinePost}/>
+                    <StickyTableFilters dataTable={data_machine} columnsTable={ColumnsMachinePost}/>
                     <Button>Создать машину</Button>
                 </form>}
                 {machineObj&&!createMachine&&
                     <form onSubmit={handleSubmit(onSubmitPatch, errorsSubmit)}>            
-                        <StickyTable dataTable={machineObj} columnsTable={ColumnsMachinePatch}/>
+                        <StickyTableFilters dataTable={machineObj} columnsTable={ColumnsMachinePatch}/>
                         <Button >Редактировать машину</Button>
                     </form>}
             </div>

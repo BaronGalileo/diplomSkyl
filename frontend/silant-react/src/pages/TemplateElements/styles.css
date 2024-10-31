@@ -1,0 +1,26 @@
+.templates-wraper{
+    display: flex;
+    flex-direction: column;
+    width: 92%;
+    align-items: stretch;
+}
+
+.templates-element {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background-color:#EBE6D6;
+    padding: 6px;
+    margin: 6px;
+    border-radius: 12px;
+    width: 95%;
+}
+
+
+
+.templates-wraper-redact {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}

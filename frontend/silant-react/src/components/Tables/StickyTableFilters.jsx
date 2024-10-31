@@ -1,7 +1,8 @@
-import React, { useMemo } from "react";
-import { useTable, useBlockLayout, useSortBy, useFilters } from 'react-table';
+import React, { useEffect, useMemo } from "react";
+import { useTable, useBlockLayout, useSortBy, useFilters, useRowSelect } from 'react-table';
 import { useSticky } from 'react-table-sticky'
 import { Styles } from "./TableStyles";
+import { CheckBoxTable } from "./CheckBoxTable";
 
 
 
@@ -20,16 +21,33 @@ function StickyTableFilters({dataTable, columnsTable, ...resProps}) {
     footerGroups,
     rows,
     prepareRow,
+    selectedFlatRows,
   } = useTable(
     {
       columns,
-      data,
+      data,     
     },
     useFilters,
     useBlockLayout,
     useSticky,
     useSortBy,
-    )
+    useRowSelect,
+    // ({ visibleColumns }) => {
+    //   visibleColumns.push((cols) => [
+    //     {
+    //       id: 'selection',
+    //       Header: ({ getToggleAllRowsSelectedProps }) => (
+    //         <CheckBoxTable {...getToggleAllRowsSelectedProps()} />
+    //       ),
+    //       Cell: ({ row }) => (
+    //         <CheckBoxTable {...row.getToggleRowSelectedProps()} />
+    //       )
+    //     },
+    //     ...cols
+    //   ])
+    // }
+  )
+    
 
     const firstPageRows = rows.slice(0, 20)
 
@@ -45,9 +63,10 @@ function StickyTableFilters({dataTable, columnsTable, ...resProps}) {
                   {column.render('Header')}
                   {column.Filter&&
                     <div>{column.canFilter ? column.render('Filter') : null}</div>} 
+                    {!column.disableSortBy&&
                     <span>
-                    {column.isSorted ? (column.isSortedDesc ? '🔽' : '🔼') : ''}
-                  </span>
+                      {column.isSorted ? (column.isSortedDesc ? '🔽' : '🔼') : '🔃'}
+                  </span>}
                 </div>
               ))}
             </div>
@@ -58,8 +77,8 @@ function StickyTableFilters({dataTable, columnsTable, ...resProps}) {
             prepareRow(row);
             return (
               <div {...row.getRowProps()} className="tr">
-                {row.cells.map((cell) => (
-                  <div {...cell.getCellProps()} className="td">
+                {row.cells.map((cell, item, arr ) => (
+                  <div {...cell.getCellProps()} className={`td ${row.id}`}>
                     {cell.render('Cell')}
                   </div>
                 ))}

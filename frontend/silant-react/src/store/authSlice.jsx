@@ -3,6 +3,8 @@ import { removeMachines } from "./machinesSlice";
 import { removeReclamation } from "./reclamationSlice";
 import { removeServices } from "./servicesSlice";
 import { removeTargetmachine } from "./targetmachineSlice";
+import { removeClick } from "./clickIndexRow";
+import { removeOne_machine } from "./oneMachineSlice";
 
 const initialState = {
     name: null,
@@ -47,6 +49,8 @@ const authSlice = createSlice({
             removeReclamation();
             removeServices();
             removeTargetmachine();
+            removeClick();
+            removeOne_machine();
         }
     },
 

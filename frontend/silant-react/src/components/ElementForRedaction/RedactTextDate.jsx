@@ -6,7 +6,7 @@ import "./styles.css"
 
 
 
-export const RedactTextDate = ({type, value, field_name=''}) => {
+export const RedactTextDate = ({type="text", value, field_name=''}) => {
 
     const classes = classNames(
         "redact-element",
@@ -47,7 +47,7 @@ export const RedactTextDate = ({type, value, field_name=''}) => {
         <div className={classes}>
             <Text className="dark-color">{updated_value}</Text>
             {touch&&
-            <Input  type={type} message="Укажите дату поломки" name={field_name}/>}
+            <Input  type={type} name={field_name}/>}
         </div>
         </>
     )

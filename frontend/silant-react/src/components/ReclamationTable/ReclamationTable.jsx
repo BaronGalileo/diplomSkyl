@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { StickyTable } from "../Tables/StickyTable";
 import { ColomnsReclamation } from "../Tables/ColomnsTables/columnsReclamation";
 import { ColomnsReclamationPOST } from "../Tables/ColomnsTables/ColomnsReclamationForPost";
 import { ColomnsReclamaRedact } from "../Tables/ColomnsTables/colomnsReclamaRedact"
@@ -9,6 +8,7 @@ import { useFormContext } from "react-hook-form"
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { removeReclamation } from "../../store/reclamationSlice";
+import { StickyTableFilters } from "../Tables/StickyTableFilters";
 
 
 
@@ -170,7 +170,7 @@ export const ReclamationTable = () => {
             <div classnema="reclamation-element">
             <form onSubmit={handleSubmit(onSubmit, errorSubmit)}>
                 {isReclamation.sorted_data[target.target]&&!flag&&
-                <StickyTable dataTable={isReclamation.sorted_data[target.target]} columnsTable={ColomnsReclamation}/>}
+                <StickyTableFilters dataTable={isReclamation.sorted_data[target.target]} columnsTable={ColomnsReclamation}/>}
                 {redaction&&!flag&&
                     <Button>Редактировать</Button>}
             </form>
@@ -181,12 +181,12 @@ export const ReclamationTable = () => {
                     <Button onClick={() => {setFlag(res=>!res)}}>{!flag?"Написать рекламацию": "Назад"}</Button>}
                 {flag&&!redaction&&
                     <form onSubmit={handleSubmit(onSubmitPost, errorSubmit)}>               
-                        <StickyTable dataTable={reclamData} columnsTable={ColomnsReclamationPOST}/>
+                        <StickyTableFilters dataTable={reclamData} columnsTable={ColomnsReclamationPOST}/>
                         <Button disabled={!isValid}>Отправить рекламацию</Button>
                 </form>}
                 {flag&&redaction&&
                     <form onSubmit={handleSubmit(onSubmitPatch, errorSubmit)}>
-                        <StickyTable dataTable={redactionData} columnsTable={ColomnsReclamaRedact}/>
+                        <StickyTableFilters dataTable={redactionData} columnsTable={ColomnsReclamaRedact}/>
                         <Button disabled={!isValid}>Редактировать рекламацию</Button>                    
                     </form>}
 

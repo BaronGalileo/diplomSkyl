@@ -11,7 +11,7 @@ export const FormChoiceReclamation = ({name, value}) => {
 
     const isReclamation_ids = useSelector(state => state.reclamation.ids)
 
-    const title_name = isReclamation_ids[value].machine.brand
+    const title_name = isReclamation_ids[value].machine.serial_num
 
 
     return(

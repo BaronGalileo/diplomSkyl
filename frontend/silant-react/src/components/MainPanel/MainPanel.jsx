@@ -17,6 +17,7 @@ import { sortedDataBySerialNum } from "../../helpers/sortedData";
 import { sorted_id } from "../../helpers/sorted_id";
 import { StickyTableFilters } from "../Tables/StickyTableFilters";
 import { columnsFullMachine } from "../Tables/ColomnsTables/columnsFullMachine";
+import { setClick } from "../../store/clickIndexRow";
 
 
 
@@ -92,6 +93,16 @@ function MainPanel() {
 
     }, [redactionForManager, machinesDataTable, machineObj])
 
+    useEffect(() => {
+        const elements = document.querySelectorAll(".td")
+        elements.forEach((elem) => {
+            elem.addEventListener("click", (e) => {
+                const click_index = elem.classList[1]
+                dispatch(setClick(click_index))
+           })
+        })
+    })
+
     function addDataMachine(overload=false) {
         if(!isMashines.machines_data||overload){
             axios.get(path_machine, isAuth.confermAut)
@@ -150,6 +161,7 @@ function MainPanel() {
     }
 
     const onSubmit = (data) => {
+        console.log("DTAT", data)
         if(data.target_serial_num) {
             for (const [key, value] of Object.entries(data.target_serial_num)) {
                 if(value) {
@@ -223,6 +235,7 @@ function MainPanel() {
                 setRedactionForManager(true)
                 setIsTargetMachine(true)
                 setIsTargetMachineForManager(true)
+                dispatch(setTargetmachine(e.target.id))
                 setMachineObj(isMashines?.sorted_serian_num[e.target.id])
             } else {
                 setMachineObj(null) 
@@ -238,6 +251,7 @@ function MainPanel() {
 
 
     const errorSubmit = (data) => {
+        console.log("Errrors", data)
     }     
 
     return(
