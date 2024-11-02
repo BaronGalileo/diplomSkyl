@@ -1,12 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import classNames from "classnames";
 import './styles.css'
 import { Text } from "../Text/Text";
 import {  useFormContext } from "react-hook-form"
-import { findKey } from "../../helpers/findKey";
 
 
-function Input({name, message, valueAsNumber, children, ...restProps}) {
 
+function Input({name, classText,  message, valueAsNumber, children, ...restProps}) {
+
+    const classes = classNames(
+        'txt',
+        classText
+    )
 
     const {
         register,
@@ -14,24 +19,12 @@ function Input({name, message, valueAsNumber, children, ...restProps}) {
     } = useFormContext()
 
 
-
-
-   
-    //для имени с глубиной вложености
-    const errorName =(errors, name) => {
-        const nameError = name.split('.')
-        const result = findKey(errors, nameError)
-        return result
-
-    }    
-
-    const error = errorName(errors, name)?.message;
-
+    const error = errors[name]?.message
 
 
     return (
         <label className="input-wrapper">
-            <Text className="left">{children}</Text>
+            <Text className={classes}>{children}</Text>
             <span>{error}</span>
             <input
             {...register(name, {

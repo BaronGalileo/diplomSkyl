@@ -8,6 +8,7 @@ import axios from "axios";
 import { removeServices, removeTargetServID } from "../../store/servicesSlice";
 import { ColomnsServicePatch } from "../Tables/ColomnsTables/columnsServicePatch";
 import { StickyTableServes } from "../Tables/StickyTableServes";
+import { ColomnsServicePostNotMachine } from "../Tables/ColomnsTables/ColumnsServicePostNotMachine";
 
 export const ServicesTable = () => {
 
@@ -45,6 +46,7 @@ export const ServicesTable = () => {
         type_of_service: '',
         working_hours: '',   
     }]
+
 
     const path_service = "http://127.0.0.1:8000/api/service/v1/service/"
 
@@ -115,7 +117,9 @@ export const ServicesTable = () => {
         if(!data.date_order){
             delete data["date_order"]
         }
-        debugger
+        if(!data.date_service){
+            delete data["date_service"]
+        }
         if(timeNew>data.date_service&&!redactionData[0].date_service){
             alert("Невозможно вернуться в прошлое. Выберете, пожалуйста, дату проведения ТО минимум на завтра")
         }
@@ -171,11 +175,17 @@ export const ServicesTable = () => {
             <div classnema="reclamation-element">
             {!redaction&&
                     <Button onClick={() => {setFlag(res=>!res)}}>{!flag?"Заказать ТО": "Назад"}</Button>}
-                {flag&&!redaction&&
+                {flag&&!redaction&&target.target&&
                     <form onSubmit={handleSubmit(onSubmitPost, errorSubmit)}>               
                         <StickyTableServes dataTable={service_data} columnsTable={ColomnsServicePost}/>
                         <Button >Заказать ТО</Button>
                     </form>}
+
+                {flag&&!redaction&&!target.target&&
+                <form onSubmit={handleSubmit(onSubmitPost, errorSubmit)}>               
+                    <StickyTableServes dataTable={service_data} columnsTable={ColomnsServicePostNotMachine}/>
+                    <Button >Заказать ТО</Button>
+                </form>}
                 {flag&&redaction&&
                     <form onSubmit={handleSubmit(onSubmitPatch, errorSubmit)}>
                         <StickyTableServes dataTable={redactionData} columnsTable={ColomnsServicePatch}/>

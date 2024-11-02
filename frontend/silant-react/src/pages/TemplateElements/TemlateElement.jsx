@@ -7,7 +7,7 @@ import './styles.css'
 import { Img } from "../../components/Img/Img";
 import { Button } from "../../components/Button/Button";
 import { useFormContext } from "react-hook-form";
-import { RedactTextDate } from "../../components/ElementForRedaction/RedactTextDate";
+import { Input } from "../../components/Input/Input";
 
 
 export const TemplateElement = ({path}) => {
@@ -15,7 +15,6 @@ export const TemplateElement = ({path}) => {
     const {
         handleSubmit,
         register,
-        formState: {isValid},
         reset,
     
       } = useFormContext()
@@ -26,7 +25,7 @@ export const TemplateElement = ({path}) => {
 
     const isAuth = useSelector(state => state.auth)
 
-    const manager = Boolean(isAuth.user_role !== 'client' || isAuth.user_role !== 'serviseorg')
+    const manager = Boolean(isAuth.user_role !== 'client' && isAuth.user_role !== 'serviseorg')
 
     const[flag, setFlag] = useState(false)
 
@@ -40,7 +39,7 @@ export const TemplateElement = ({path}) => {
         transmissionmodel: {"path":`http://127.0.0.1:8000/api/v1/transmissionmodel/${id}/`, "src":'../images/transmish.png', 'title': "Модель трансмиссии"},
         drivingaxlemodel: {"path":`http://127.0.0.1:8000/api/v1/drivingaxlemodel/${id}/`, "src":'../images/most-drive.png', 'title': "Модель ведущего моста"},
         modelofacontrolledbridge: {"path":`http://127.0.0.1:8000/api/v1/modelofacontrolledbridge/${id}/`, "src":'../images/control-drive.png', 'title': "Модель управляемого моста"},
-        typeofservice: {"path": `http://127.0.0.1:8000/api/service/v1/typeofservice/${id}/`, "src":'../images/type-TO', 'title': "Вид ТО"},
+        typeofservice: {"path": `http://127.0.0.1:8000/api/service/v1/typeofservice/${id}/`, "src": '../images/type-TO', 'title': "Вид ТО"},
         failurenode: {"path":`http://127.0.0.1:8000/api/service/v1/failurenode/${id}/`, "src":'../images/node-crash.png', 'title': "Узел отказа"},
         recoverymethod: {"path":`http://127.0.0.1:8000/api/service/v1/recoverymethod/${id}/`, "src":'../images/recover-metod.png', 'title': "Способ восстановления"},
         servicesorgan: {"path":`http://127.0.0.1:8000/users/v1/servicesorgan/${id}/`, "src":'../images/12.png', 'title': "Сервисная компания"},
@@ -58,22 +57,19 @@ export const TemplateElement = ({path}) => {
         })
     }, [])
 
-    const onSubmit = (data) => {
+    const onSubmit = (data) => {   
         if(data.name || data.specification){
-            axios.patch(targetPage.path, data, isAuth.confermAut)
+        axios.patch(targetPage.path, data, isAuth.confermAut)
         .then(res=> {
             console.log("submit", data)
             alert("Редактирование прошло успешно!")
         })
         .catch(err=> {
-            alert(err.request.responseText)
+            console.log("eerr", err)
+            alert(err.request?.responseText)
         })
 
         }
-    }
-
-    const  errorsSubmit = (data) => {
-        console.log("ERRORsubmit", data)
     }
 
     if(!isAuth.isAuth) return <Navigate to="/"/>
@@ -101,29 +97,29 @@ export const TemplateElement = ({path}) => {
                 </div>
             </div>}
             {manager&&
-            <form className='templates-wraper-redact' onSubmit={handleSubmit(onSubmit, errorsSubmit)}>
+            <form className='templates-wraper-redact' onSubmit={handleSubmit(onSubmit)}>
                 {flag&&
                 <div>
                     <div className="templates-element">
-                        <input {...register(`id`)} type="hidden" value={id} />
-                        <RedactTextDate field_name="name" value={obj?.name}/>
+                        <input {...register(`id`)} type="hidden" value={obj.id} />
+                        <Input name="name">{obj?.name}</Input>
                     </div>
                     <div className="templates-element">
-                        <RedactTextDate field_name="specification" value={obj?.specification}/>
+                        <Input name="specification">{obj?.specification}</Input>
                     </div> 
                 </div> 
 
                 }
-                <div>
+                {manager&&<div>
                 <Button className="red" onClick={() => {setFlag(res=>!res)}}>{!flag?"Редактировать": "Отправить"}</Button>
-                </div>
+                </div>}
             </form>}
             {flag&&
             <div>
-                <Button onClick={() => {
+                {manager&&<Button onClick={() => {
                     reset()
                     setFlag(res=>!res)
-            }}>Не редактировать</Button>
+            }}>Не редактировать</Button>}
             </div>}
             <div>
                 <Button onClick={goBack}>Назад вернуться</Button> 

@@ -31,7 +31,6 @@ function StickyTableServes({dataTable, columnsTable, ...resProps}) {
       data,
       stateReducer: (newState, action) => {
         if (action.type === "toggleRowSelected") {
-          debugger
           if(!action.value){
             dispatch(removeTargetServID())
           }

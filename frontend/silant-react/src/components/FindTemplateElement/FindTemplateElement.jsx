@@ -4,7 +4,7 @@ import {  useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
 
-export const FindTempateElement = ({ data_row, path, role, name_fild, children}) => {
+export const FindTempateElement = ({ data_row, user, path, role, name_fild, children}) => {
 
     const targetIndexRow = useSelector(state => state.clickIndex)
 
@@ -27,11 +27,10 @@ export const FindTempateElement = ({ data_row, path, role, name_fild, children})
 
     const clickTak = () => {
         if(data_row.index === Number(targetIndexRow) && targetIndexRow !== null) {
-            debugger
             const elementID = data_row.values?.id
             const data_path = dict_change[role][elementID]
 
-            const id_path = data_path[name_fild].id
+            const id_path = user ? data_path[name_fild].user : data_path[name_fild].id
 
             const path_for_element = `${path}${id_path}`
             setPathFindPage(path_for_element)

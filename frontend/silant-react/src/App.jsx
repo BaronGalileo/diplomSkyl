@@ -10,15 +10,15 @@ import { Test } from './pages/test/test';
 import { ExaminationExpires } from './components/Examination/ExaminationExpires';
 import { TemplateElement } from './pages/TemplateElements/TemlateElement';
 import { MachinePage } from './pages/MachinePage/MachinePage';
+import { ServPage } from './pages/ServisePage/ServPage';
 
 
 
 function App() {
 
   const methods = useForm({
-    mode: 'onBlur'
+    mode: "onChange"
   })
-
 
   return (
     <div className="App">
@@ -39,6 +39,7 @@ function App() {
               <Route path="failurenode/:id" element={<TemplateElement path={"failurenode"}/>}/>
               <Route path="recoverymethod/:id" element={<TemplateElement path={"recoverymethod"}/>}/>
               <Route path="machine/:id" element={<MachinePage path={"machine"}/>}/>
+              <Route path="servises/:id" element={<ServPage path={"servises"}/>}/>
               <Route path="*" element={<Notfoundpage/>}/>
             </Route>
           </Routes>

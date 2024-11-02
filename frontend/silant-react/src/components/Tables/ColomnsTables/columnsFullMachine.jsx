@@ -30,7 +30,7 @@ export const columnsFullMachine = [
         accessor: 'brand',
         sticky: 'left',
         disableSortBy: true,
-        Cell: ({value, row }) => {return(<MachineFromTable data_row={row} field_value={value}/>)}
+        Cell: ({value, row }) => {return(<MachineFromTable   path_ser="machine/" data_row={row} field_value={value}/>)}
     },
     {
         Header: 'Модель техники',
@@ -50,7 +50,7 @@ export const columnsFullMachine = [
         Header: 'Зав.№ двигателя',
         accessor: 'engine_num',
         disableSortBy: true,
-        Cell: ({value, row }) => {return(<MachineFromTable data_row={row} field_value={value}/>)}
+        Cell: ({value, row }) => {return(<MachineFromTable path_ser="machine/" data_row={row} field_value={value}/>)}
 
     },
     {
@@ -64,7 +64,7 @@ export const columnsFullMachine = [
         Header: 'Зав.№ трансмиссии',
         accessor: 'transmission_num',
         disableSortBy: true,
-        Cell: ({value, row }) => {return(<MachineFromTable data_row={row} field_value={value}/>)}
+        Cell: ({value, row }) => {return(<MachineFromTable path_ser="machine/" data_row={row} field_value={value}/>)}
 
     },
     {
@@ -78,7 +78,7 @@ export const columnsFullMachine = [
         Header: 'Зав.№ ведущего моста',
         accessor: 'driving_axle_num',
         disableSortBy: true,
-        Cell: ({value, row }) => {return(<MachineFromTable data_row={row} field_value={value}/>)}
+        Cell: ({value, row }) => {return(<MachineFromTable path_ser="machine/" data_row={row} field_value={value}/>)}
 
     },
     {
@@ -92,33 +92,33 @@ export const columnsFullMachine = [
         Header: 'Зав.№ управляемого моста',
         accessor: 'num_of_a_controlled_bridge',
         disableSortBy: true,
-        Cell: ({value, row }) => {return(<MachineFromTable data_row={row} field_value={value}/>)}
+        Cell: ({value, row }) => {return(<MachineFromTable path_ser="machine/" data_row={row} field_value={value}/>)}
     },
     {
         Header: 'Договор поставки №, дата',
         accessor: 'contractNo',
         disableSortBy: true,
-        Cell: ({value, row }) => {return(<MachineFromTable data_row={row} field_value={value}/>)}
+        Cell: ({value, row }) => {return(<MachineFromTable path_ser="machine/" data_row={row} field_value={value}/>)}
 
     },
     {
         Header: 'Дата отгрузки с завода',
         accessor: 'date_from_the_factory',
-        Cell: ({value, row }) => {return(<MachineFromTable data_row={row} field_value={value}/>)}
+        Cell: ({value, row }) => {return(<MachineFromTable path_ser="machine/" data_row={row} field_value={value}/>)}
 
     },
     {
         Header: 'Грузополучатель(конечный потребитель)',
         accessor: 'consignee',
         disableSortBy: true,
-        Cell: ({value, row }) => {return(<MachineFromTable data_row={row} field_value={value}/>)}
+        Cell: ({value, row }) => {return(<MachineFromTable path_ser="machine/" data_row={row} field_value={value}/>)}
 
     },
     {
         Header: 'Адрес поставки (эксплуатации)',
         accessor: 'delivery_address',
         disableSortBy: true,
-        Cell: ({value, row }) => {return(<MachineFromTable data_row={row} field_value={value}/>)}
+        Cell: ({value, row }) => {return(<MachineFromTable path_ser="machine/" data_row={row} field_value={value}/>)}
     },
     {
         Header: 'Клиент',
@@ -141,7 +141,7 @@ export const columnsFullMachine = [
         Header: 'Комплектация (доп. опции)',
         accessor: 'equipment',
         disableSortBy: true,
-        Cell: ({value, row }) => {return(<MachineFromTable data_row={row} field_value={value}/>)}
+        Cell: ({value, row }) => {return(<MachineFromTable path_ser="machine/" data_row={row} field_value={value}/>)}
     },
 
 ]

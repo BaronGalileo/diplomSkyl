@@ -1,3 +1,4 @@
+import { MachineFromTable } from "../../FindMachine/MachineFromTable"
 import { FindTempateElement } from "../../FindTemplateElement/FindTemplateElement"
 import { Text } from "../../Text/Text"
 import { CheckBoxTable } from "../CheckBoxTable"
@@ -28,14 +29,14 @@ export const ColomnsService = [
     {
         Header: 'сервисная компания',
         accessor: 'service_company.name',
-        // sticky: 'left',
         disableSortBy: true,
         Filter: FilterComponySelect,
-        Cell: ({value, row}) => { return (<FindTempateElement user role="servis" name_fild="service_company" data_row={row} path='servicecompany/'>{value}</FindTempateElement>)},
+        Cell: ({value, row}) => { return (<FindTempateElement user role="servis" name_fild="service_company" data_row={row} path='servicesorgan/'>{value}</FindTempateElement>)},
     },
     {
         Header: 'дата проведения ТО',
         accessor: 'date_service',
+        Cell: ({value, row }) => {return(<MachineFromTable path_ser="servises/" data_row={row} field_value={value}/>)},
     },
     {
         Header: 'Вид ТО',
@@ -48,15 +49,18 @@ export const ColomnsService = [
         Header: 'наработка, м/час',
         accessor: 'working_hours',
         disableSortBy: true,
+        Cell: ({value, row }) => {return(<MachineFromTable path_ser="servises/" data_row={row} field_value={value}/>)},
     },
     {
         Header: '№ заказ-наряда',
         accessor: 'order_No',
         disableSortBy: true,
+        Cell: ({value, row }) => {return(<MachineFromTable path_ser="servises/" data_row={row} field_value={value}/>)},
     },
     {
         Header: 'дата заказ-наряда',
         accessor: 'date_order',
         disableSortBy: true,
+        Cell: ({value, row }) => {return(<MachineFromTable path_ser="servises/" data_row={row} field_value={value}/>)},
     },
 ]

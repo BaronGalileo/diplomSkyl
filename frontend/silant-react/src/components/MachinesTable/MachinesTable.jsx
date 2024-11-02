@@ -6,6 +6,8 @@ import { Button } from "../Button/Button";
 import axios from "axios";
 import { ColumnsMachinePatch } from "../Tables/ColomnsTables/columnsMachinePatch";
 import { StickyTableFilters } from "../Tables/StickyTableFilters";
+import { useNavigate } from "react-router-dom";
+import { Text } from "../Text/Text";
 
 
 
@@ -45,17 +47,21 @@ export const MachinesTable = ({createMachine, machineObj, setFlag, addDataMachin
         service_company: ''
     }]
 
+    const navigate = useNavigate();
+
+    const goBack = () => navigate(-1)
+
 
     const onSubmitPost = (data) => {
         if(data.target_serial_num){
             delete data["target_serial_num"]
         }
-        console.log("DATA machine", data)
         axios.post(path_machine, data, isAuth.confermAut)
         .then(res => {
             alert("Машина создана!")
             setFlag(res=> !res)
             addDataMachine(overload=>!overload)
+            goBack()
         })
         .catch(err => {
             alert(err.request.responseText)
@@ -64,12 +70,14 @@ export const MachinesTable = ({createMachine, machineObj, setFlag, addDataMachin
     }
 
     const onSubmitPatch = (data) => {
+        console.log(data)
         const path_patch = path_machine + data.id +'/'
         axios.patch(path_patch, data, isAuth.confermAut)
         .then(res => {
             alert("Редакция прошла успешно!")
             setFlag(res=> !res)
             addDataMachine(true)
+            reset()
         })
         .catch(err => {
             alert(err.request.responseText)
@@ -78,7 +86,6 @@ export const MachinesTable = ({createMachine, machineObj, setFlag, addDataMachin
     }
 
     const errorsSubmit = (data) => {
-        console.log("ERROR", data)
         reset()
     }
  
@@ -89,12 +96,13 @@ export const MachinesTable = ({createMachine, machineObj, setFlag, addDataMachin
                 {createMachine&&
                 <form onSubmit={handleSubmit(onSubmitPost, errorsSubmit)}>               
                     <StickyTableFilters dataTable={data_machine} columnsTable={ColumnsMachinePost}/>
-                    <Button>Создать машину</Button>
+                    <Button disabled={!isValid}>Создать машину</Button>
                 </form>}
                 {machineObj&&!createMachine&&
-                    <form onSubmit={handleSubmit(onSubmitPatch, errorsSubmit)}>            
+                    <form onSubmit={handleSubmit(onSubmitPatch, errorsSubmit)}> 
+                    <Text>РЕДАКШЕНЫ</Text>           
                         <StickyTableFilters dataTable={machineObj} columnsTable={ColumnsMachinePatch}/>
-                        <Button >Редактировать машину</Button>
+                        <Button odisabled={!isValid} onClick={handleSubmit}>Редактировать машину</Button>
                 </form>}
             </div>
         </div>

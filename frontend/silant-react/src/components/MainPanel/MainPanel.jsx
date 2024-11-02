@@ -87,9 +87,12 @@ function MainPanel() {
     }, [macinesTable, flag])
 
     useEffect(() => {
+    }, [isTargetMachine])
+
+    useEffect(() => {
         dispatch(removeTargetmachine())
-        
-    }, [])
+
+    },[])
 
 
     useEffect(() => {
@@ -251,10 +254,6 @@ function MainPanel() {
             <Button className="TO" onClick={change}>{!isTargetMachine?"Техническое обслуживание всех машин": "ТО выбранной машины"}</Button>
             <Button className="reclam" onClick={change} >{!isTargetMachine?"Рекламация всей техники": "Рекламация выбранной машины"}</Button>
         </div>
-        {/* <div className="main-panel-element">
-            <Button className="TO" onClick={change} disabled={isTargetMachine}>Техническое обслуживание всех машин </Button>
-            <Button className="reclam" onClick={change} disabled={isTargetMachine}>Рекламация всех машин</Button>
-        </div> */}
             {machinesDataTable&& macinesTable&&!flag&&
             <StickyTableFilters dataTable={machinesDataTable} columnsTable={columnsFullMachine}/>}
             <div className="main-panel-element">

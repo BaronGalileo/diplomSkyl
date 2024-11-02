@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { SelectBox } from "../../SelectBox/SelectBox"
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { select_data, select_user_data } from "../../../helpers/selectData";
+import { select_machine } from "../../helpers/selectData";
+import { SelectBox } from "../SelectBox/SelectBox";
 
 
-export const FormSelectFromServer = ({path, value, user=false, placeholder, message, name}) => {
+export const FindMachines = ({path, value,  placeholder, message, name}) => {
 
     const isAuth = useSelector(state => state.auth)
 
@@ -16,7 +16,7 @@ export const FormSelectFromServer = ({path, value, user=false, placeholder, mess
     useEffect(() => {
         axios.get(path, isAuth.confermAut)
         .then(res => {
-            const data_select = user? select_user_data(res.data) : select_data(res.data)
+            const data_select = select_machine(res.data)
             setOptions(data_select)
         })
     }, [])

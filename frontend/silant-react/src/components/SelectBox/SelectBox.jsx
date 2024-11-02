@@ -18,8 +18,8 @@ export const SelectBox = ({options, name, message, children, placeholder, defaul
     return(
 
 
-    <label className="select-wrapper">
-        <Text className="left">{children}</Text>
+    <label className="input-wrapper">
+        <Text className="dark-color">{children}</Text>
         <span>{error}</span>
         <select
             {...register(name, {

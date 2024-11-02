@@ -8,7 +8,6 @@ export const select_data = (obj) => {
 }
 
 export const select_user_data = (obj) => {
-    debugger
     const data_select =[]
     obj.map(val => {
         const key_value = {value: val.user, text: val.name}
