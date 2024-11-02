@@ -1,21 +1,37 @@
-import { FormChoiceService } from "../../FormComponents/FormChoiceService/FormChoiceService"
-import { ColumnFilter } from "../ColumnsFilter"
+import { FindTempateElement } from "../../FindTemplateElement/FindTemplateElement"
+import { Text } from "../../Text/Text"
+import { CheckBoxTable } from "../CheckBoxTable"
+import { FilterComponySelect } from "../FiltersSelect/FilterComponySelect"
+import { FilterNumber } from "../FiltersSelect/FilterNumber"
+import { FilterTOSelect } from "../FiltersSelect/FilterTOSelect"
 
 export const ColomnsService = [
     {
-        Header: 'Зав.№ машины',
+        Header: 'ID',
         accessor: 'id',
         sticky: 'left',
-        Cell: ({value}) => {return(<FormChoiceService value={value} name="id"></FormChoiceService>)},
+        Cell: ({value ,row}) => { return (
+            <>
+            <CheckBoxTable {...row.getToggleRowSelectedProps()} />
+            <Text className="dark-color">{value}</Text>
+            </>)},
         disableSortBy: true,
-        Filter: ColumnFilter,
+    },
+    {
+        Header: 'Серийный номер машины',
+        accessor: 'machine.serial_num',
+        sticky: 'left',
+        disableSortBy: true,
+        Filter: FilterNumber,
+        Cell: ({value, row}) => { return (<FindTempateElement role="servis" name_fild="machine" data_row={row} path='machine/'>{value}</FindTempateElement>)},
     },
     {
         Header: 'сервисная компания',
         accessor: 'service_company.name',
-        sticky: 'left',
+        // sticky: 'left',
         disableSortBy: true,
-        Filter: ColumnFilter,
+        Filter: FilterComponySelect,
+        Cell: ({value, row}) => { return (<FindTempateElement user role="servis" name_fild="service_company" data_row={row} path='servicecompany/'>{value}</FindTempateElement>)},
     },
     {
         Header: 'дата проведения ТО',
@@ -25,9 +41,10 @@ export const ColomnsService = [
         Header: 'Вид ТО',
         accessor: 'type_of_service.name',
         disableSortBy: true,
-        Filter: ColumnFilter,
+        Filter: FilterTOSelect,
+        Cell: ({value, row}) => { return (<FindTempateElement role="servis" name_fild="type_of_service" data_row={row} path='typeofservice/'>{value}</FindTempateElement>)},
     },
-    {
+    {    
         Header: 'наработка, м/час',
         accessor: 'working_hours',
         disableSortBy: true,

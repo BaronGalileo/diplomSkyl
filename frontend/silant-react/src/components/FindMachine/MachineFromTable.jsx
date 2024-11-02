@@ -24,14 +24,14 @@ export const MachineFromTable = ({ data_row, field_value}) => {
                 id: data_row.values.id,
                 brand: data_row.values.brand,
                 serial_num:  data_row.values.serial_num,
-                car_model: data_row.values.car_model.name,
-                engine_model:  data_row.values.engine_model.name,
+                car_model: data_row.values.car_model,
+                engine_model:  data_row.values.engine_model,
                 engine_num: data_row.values.engine_num,
-                transmission_model:  data_row.values.transmission_model.name,
+                transmission_model:  data_row.values.transmission_model,
                 transmission_num: data_row.values.transmission_num,
-                driving_axle_model:  data_row.values.driving_axle_model.name,
+                driving_axle_model:  data_row.values.driving_axle_model,
                 driving_axle_num:  data_row.values.driving_axle_num,
-                model_of_a_controlled_bridge: data_row.values.model_of_a_controlled_bridge.name,
+                model_of_a_controlled_bridge: data_row.values.model_of_a_controlled_bridge,
                 num_of_a_controlled_bridge: data_row.values.num_of_a_controlled_bridge,
                 service_company: data_row.values.service_company,
                 client: data_row.values.client,
@@ -56,9 +56,7 @@ export const MachineFromTable = ({ data_row, field_value}) => {
     } 
  
     return(
-            <>
-            <Button onClick={() => setFlag(res=>!res)}>{field_value}</Button>
-            </>
+            <Button clean className="btn-table" onClick={() => setFlag(res=>!res)}>{field_value}</Button>
 
     )
 }

@@ -11,6 +11,7 @@ export const FormChoiceMachine = () => {
     const {
         register
     } = useFormContext()
+    debugger
 
     const isMachines = useSelector(state => state.machines.sorted_serian_num)
 
@@ -31,7 +32,7 @@ export const FormChoiceMachine = () => {
         <>
         <input {...register(`machine`)} type="hidden" value={machine_obj.id}/>
         {machine_obj&&
-        <Text className="dark-color">{machine_obj.brand}</Text>}
+        <Text className="dark-color">{machine_obj.serial_num}</Text>}
         </>
     )
 }

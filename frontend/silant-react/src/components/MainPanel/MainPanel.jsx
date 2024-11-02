@@ -1,18 +1,17 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useFormContext } from "react-hook-form"
 import { Text } from "../Text/Text";
 import "./styles.css"
 import { Button } from "../Button/Button";
 import axios from "axios";
-import { removeMachine_obj, removeMachines, setMachine_obj, setMachines, setSorted_serian_num } from "../../store/machinesSlice";
+import { setMachineID, setMachines, setSorted_serian_num } from "../../store/machinesSlice";
 import { MachinesTable } from "../MachinesTable/MachinesTable";
 import { ServicesTable } from "../ServicesTable/ServicesTable";
 import { ReclamationTable } from "../ReclamationTable/ReclamationTable";
 import { removeTargetmachine, setTargetmachine } from "../../store/targetmachineSlice";
-import { setReclamation, setReclamation_id } from "../../store/reclamationSlice";
-import { setServices, setServices_ids } from "../../store/servicesSlice";
+import { setReclamaData, setReclamation, setReclamation_id } from "../../store/reclamationSlice";
+import { setDataServ, setServices, setServices_ids } from "../../store/servicesSlice";
 import { sortedDataBySerialNum } from "../../helpers/sortedData";
 import { sorted_id } from "../../helpers/sorted_id";
 import { StickyTableFilters } from "../Tables/StickyTableFilters";
@@ -59,14 +58,7 @@ function MainPanel() {
     const client_and_serv = Boolean(isAuth.user_role === "client" || isAuth.user_role === "serviseorg" )
 
     const[machineObj, setMachineObj] = useState(null)
-
-    const {
-        handleSubmit,
-        formState: {isValid},
-        reset,
-    
-      } = useFormContext()
-    
+   
 
     const DICT_ROLE = {
         "client": "Клиент",
@@ -81,17 +73,52 @@ function MainPanel() {
 
     const path_reclamation = "http://127.0.0.1:8000/api/service/v1/reclamation/"
 
-    useEffect( () => checkedCheckBox())
- 
+
     useEffect(() => {
         addDataMachine()
-        checkedOff()
+        addDataService()
+        addDataReclamations()
+        
+    }, [])
+
+    useEffect(() => {
+        addDataMachine()
         
     }, [macinesTable, flag])
 
     useEffect(() => {
+        dispatch(removeTargetmachine())
+        
+    }, [])
 
-    }, [redactionForManager, machinesDataTable, machineObj])
+
+    useEffect(() => {
+           if(target.target){
+            const full_data_machine = isMashines.sorted_serian_num[target.target]
+            setMachineObj(full_data_machine)
+            setTitleMachine(full_data_machine[0])
+            setIsTargetMachineForManager(true)
+            setRedactionForManager(true)
+            setIsTargetMachine(true)
+
+        }
+        else{
+            setIsTargetMachineForManager(false)
+            setTitleMachine(null)
+            setMachineObj(null) 
+            setRedactionForManager(false)
+            setReclamationTable(false)
+            setServicesTable(false)
+            setIsTargetMachine(false)
+        }
+
+
+    }, [target])
+
+    useEffect(() => {
+
+    }, [servicesTable, reclamationTable])
+
 
     useEffect(() => {
         const elements = document.querySelectorAll(".td")
@@ -103,13 +130,18 @@ function MainPanel() {
         })
     })
 
-    function addDataMachine(overload=false) {
+    function addDataMachine(overload) {
         if(!isMashines.machines_data||overload){
+            setRedactionForManager(false)
             axios.get(path_machine, isAuth.confermAut)
             .then(res => {
+                const data_by_id = {
+                    ids:sorted_id(res.data)
+                }
                 const data = {
                     machines_data: res.data
                 }
+                dispatch(setMachineID(data_by_id))
                 dispatch(setMachines(data))
                 const dataRES = sortedDataBySerialNum(res.data)
                 const data_for_store = {
@@ -123,10 +155,11 @@ function MainPanel() {
         }
     }
 
-    function addDataService() {
-        if(!isServices[0]){
+    function addDataService(overload) {
+        if(!isServices[0] ||overload){
             axios.get(path_service, isAuth.confermAut)
             .then(res => {
+                dispatch(setDataServ(res.data))
                 const data_by_id = {
                     ids:sorted_id(res.data)
                 }
@@ -142,10 +175,11 @@ function MainPanel() {
         }
     }
 
-    function addDataReclamations() {
-        if(!isReclamation[0]) {
+    function addDataReclamations(overload) {
+        if(!isReclamation[0] ||overload) {
             axios.get(path_reclamation, isAuth.confermAut)
             .then(res => {
+                dispatch(setReclamaData(res.data))
                 const data_by_id = {
                     ids:sorted_id(res.data)
                 }
@@ -160,45 +194,17 @@ function MainPanel() {
         }
     }
 
-    const onSubmit = (data) => {
-        console.log("DTAT", data)
-        if(data.target_serial_num) {
-            for (const [key, value] of Object.entries(data.target_serial_num)) {
-                if(value) {
-                    const data_for_state = {
-                        machine_obj : isMashines.sorted_serian_num[key][0]
-                    }
-                    dispatch(setMachine_obj(data_for_state))
-                    setTitleMachine(isMashines.sorted_serian_num[key][0])
-                    dispatch(setTargetmachine(key))
-                }
-                reset()
-            }
-
-        }
-        }
-
-    function checkedOff() {
-        const checkboxsArray = document.querySelectorAll(".serian-num");
-        for (let i = 0; i < checkboxsArray.length; i++) {
-            if(checkboxsArray[i].checked){
-                setRedactionForManager(false)
-                return checkboxsArray[i].checked = false
-            }
-            setIsTargetMachine(false)
-            setIsTargetMachineForManager(false)
-        }
-        }
-
 
     function change(e) {
         if(e.target.className === "btn all-info"){
+            setRedactionForManager(false)
             addDataMachine()
             setMacinesTable(res => true)
             setServicesTable(res => false)
             setReclamationTable(res => false)
         }
         else if(e.target.className === "btn TO"){
+            setRedactionForManager(false)
             addDataService()
             setMacinesTable(res => false)
             setRedactionForManager(false)
@@ -212,47 +218,16 @@ function MainPanel() {
             setServicesTable(res => false)
             setReclamationTable(res => true)
         }
-        const btns = document.querySelectorAll("button");
+        const btns = document.querySelectorAll(".btn");
         for (let i = 0; i < btns.length; i++) {
             btns[i].classList.remove("active");
           }
         return e.currentTarget.classList.add("active")
     }
 
-    const checkedCheckBox = () => {
-        const checkboxsArray = document.querySelectorAll(".serian-num");
-        checkboxsArray.forEach((elem) => {
-        elem.addEventListener("click", (e) => {
-            setTitleMachine(null)
-            dispatch(removeTargetmachine())
-            dispatch(removeMachine_obj())
-            for (let i = 0; i < checkboxsArray.length; i++) {
-                if(checkboxsArray[i] !== e.target){
-                    checkboxsArray[i].checked = false
-                }
-              }
-            if(e.target.checked){
-                setRedactionForManager(true)
-                setIsTargetMachine(true)
-                setIsTargetMachineForManager(true)
-                dispatch(setTargetmachine(e.target.id))
-                setMachineObj(isMashines?.sorted_serian_num[e.target.id])
-            } else {
-                setMachineObj(null) 
-                setRedactionForManager(false)
-                setIsTargetMachine(false)
-                setIsTargetMachineForManager(false)
-            }
-        });
-    });
-    }
    
     if(!isAuth.isAuth) return <Navigate to="/"/>
-
-
-    const errorSubmit = (data) => {
-        console.log("Errrors", data)
-    }     
+    
 
     return(
         <div className="main-panel-wrapper">
@@ -271,18 +246,23 @@ function MainPanel() {
         <Text as="h3">Информация о проведенных ТО Вашей техники</Text>}
         {reclamationTable &&
         <Text as="h3">Информация о рекламации Вашей техники</Text>}
-            <form onSubmit={handleSubmit(onSubmit, errorSubmit)}>
+        <div className="main-panel-element">
             <Button className="all-info"onClick={change} active>Общая информация</Button>
-            <Button className="TO" onClick={change} disabled={!isTargetMachine}>Техническое обслуживание</Button>
-            <Button className="reclam" onClick={change} disabled={!isTargetMachine}>Рекламация</Button>
+            <Button className="TO" onClick={change}>{!isTargetMachine?"Техническое обслуживание всех машин": "ТО выбранной машины"}</Button>
+            <Button className="reclam" onClick={change} >{!isTargetMachine?"Рекламация всей техники": "Рекламация выбранной машины"}</Button>
+        </div>
+        {/* <div className="main-panel-element">
+            <Button className="TO" onClick={change} disabled={isTargetMachine}>Техническое обслуживание всех машин </Button>
+            <Button className="reclam" onClick={change} disabled={isTargetMachine}>Рекламация всех машин</Button>
+        </div> */}
             {machinesDataTable&& macinesTable&&!flag&&
             <StickyTableFilters dataTable={machinesDataTable} columnsTable={columnsFullMachine}/>}
-            {redactionForManager&&isTargetMachineForManager&&!client_and_serv&&
+            <div className="main-panel-element">
+            {redactionForManager&&!client_and_serv&&
                 <Button  onClick={() => {
-                    setFlag(res=>!res);
                     setIsTargetMachine(res=>!res)
-                }}>{!flag?"Редактировать машину": "В меню"}</Button>}
-            </form>
+                    setFlag(res=>!res);
+                }}>{!flag?"Редактировать машину": "В меню"}</Button>}</div>
         <div className="main-panel-element">
             {!client_and_serv&&!redactionForManager&&!servicesTable&&!reclamationTable&&
                 <Button onClick={() => {
@@ -292,7 +272,7 @@ function MainPanel() {
                 >{!flag?"Создать машину": "В меню"}</Button>}
         </div>
 
-        <div className="main-panel-element">
+        <div >
         {flag&&(createMachine||machineObj)&&
                 <MachinesTable createMachine={createMachine} machineObj={machineObj} addDataMachine={addDataMachine} setFlag={setFlag}/>}
         </div>
@@ -302,7 +282,7 @@ function MainPanel() {
         </div>
         <div className="main-panel-element">
         {reclamationTable&&!flag&&
-            <ReclamationTable/>}
+            <ReclamationTable addReclama={addDataReclamations}/>}
         </div>
         </div>
     

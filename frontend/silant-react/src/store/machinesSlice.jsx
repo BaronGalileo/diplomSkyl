@@ -4,6 +4,7 @@ const initialState = {
     machines_data: null,
     sorted_serian_num: null,
     machine_obj: null,
+    ids: null,
 }
 
 
@@ -11,6 +12,10 @@ const machinesSlice = createSlice({
     name: 'machines',
     initialState,
     reducers: {
+        setMachineID(state,action){
+
+            state.ids = action.payload;
+        },
         setMachine_obj(state,action){
             state.machine_obj = action.payload.machine_obj;
         },
@@ -34,6 +39,6 @@ const machinesSlice = createSlice({
     }
 });
 
-export const {setMachines, setMachine_obj, setSorted_serian_num, removeMachines, removeMachine_obj} = machinesSlice.actions;
+export const { setMachineID ,setMachines, setMachine_obj, setSorted_serian_num, removeMachines, removeMachine_obj} = machinesSlice.actions;
 
 export default machinesSlice.reducer;

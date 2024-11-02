@@ -1,35 +1,61 @@
-import React, { useMemo } from "react";
-import { useTable, useBlockLayout, useSortBy, useFilters } from 'react-table';
+import React, { useEffect, useMemo } from "react";
+import { useTable, useBlockLayout, useSortBy, useFilters, useRowSelect} from 'react-table';
 import { useSticky } from 'react-table-sticky'
 import { Styles } from "./TableStyles";
-import { Checkbox } from "../CheckBox/Checkbox";
+import { useDispatch } from "react-redux";
+import { setTargetServID, removeTargetServID } from "../../store/servicesSlice";
 
 
 
 
-function StickyTable({dataTable, columnsTable, ...resProps}) {
+
+
+function StickyTableServes({dataTable, columnsTable, ...resProps}) {
 
   const columns = useMemo(() => columnsTable, [])
   const data = useMemo(() => dataTable, [])
+
+  const dispatch  = useDispatch()
 
   const {
 
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    footerGroups,
     rows,
     prepareRow,
+    selectedFlatRows,
   } = useTable(
     {
       columns,
       data,
+      stateReducer: (newState, action) => {
+        if (action.type === "toggleRowSelected") {
+          debugger
+          if(!action.value){
+            dispatch(removeTargetServID())
+          }
+          newState.selectedRowIds = {
+            [action.id]: action.value
+          }
+        }
+        return newState;
     },
-    // useFilters,
+    },
+    useFilters,
     useBlockLayout,
     useSticky,
     useSortBy,
-    )
+    useRowSelect,
+  )
+
+  useEffect(() => {
+    if(selectedFlatRows[0]?.isSelected){
+        dispatch(setTargetServID(selectedFlatRows[0].values.id))
+      }
+  },[selectedFlatRows])
+  
+    
 
     const firstPageRows = rows.slice(0, 20)
 
@@ -43,10 +69,12 @@ function StickyTable({dataTable, columnsTable, ...resProps}) {
               {headerGroup.headers.map((column) => (
                 <div {...column.getHeaderProps(column.getSortByToggleProps())} className="th">
                   {column.render('Header')}
-                  {/* <div>{column.canFilter ? column.render('Filter') : null}</div> */}
-                  <span>
-                    {column.isSorted ? (column.isSortedDesc ? '🔽' : '🔼') : ''}
-                  </span>
+                  {column.Filter&&
+                    <div>{column.canFilter ? column.render('Filter') : null}</div>} 
+                    {!column.disableSortBy&&
+                    <span>
+                      {column.isSorted ? (column.isSortedDesc ? '🔽' : '🔼') : '🔃'}
+                  </span>}
                 </div>
               ))}
             </div>
@@ -58,7 +86,7 @@ function StickyTable({dataTable, columnsTable, ...resProps}) {
             return (
               <div {...row.getRowProps()} className="tr">
                 {row.cells.map((cell) => (
-                  <div {...cell.getCellProps()} className="td">
+                  <div {...cell.getCellProps()} className={`td ${row.id}`}>
                     {cell.render('Cell')}
                   </div>
                 ))}
@@ -66,19 +94,9 @@ function StickyTable({dataTable, columnsTable, ...resProps}) {
             );
           })}
         </div>
-        {/* <div className="footer">
-          {footerGroups.map((footerGroup) => (
-            <div {...footerGroup.getHeaderGroupProps()} className="tr">
-              {footerGroup.headers.map((column) => (
-                <div {...column.getHeaderProps()} className="td">
-                  {column.render('Footer')}
-                </div>
-              ))}
-            </div>
-          ))}
-        </div> */}
+
       </div>
     </Styles>
     )
 }
-export {StickyTable}
+export {StickyTableServes}

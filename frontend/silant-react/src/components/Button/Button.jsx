@@ -5,7 +5,7 @@ import './styles.css'
 
 
 function Button({children = 'Default button', onClick =() => {}, className = '', disabled = false, active = false, clean = false, ...restProps}){
-    
+
     function onClikAction(e){
         if (disabled){
             e.preventDefault();

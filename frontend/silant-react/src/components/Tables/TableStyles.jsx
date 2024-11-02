@@ -24,13 +24,9 @@ export const Styles = styled.div`
       padding: 3px;
       border-bottom: 3px solid #ddd;
       border-right: 3px solid #ddd;
-      background-color: #fff;
+      background-color: #EBE6D6;
       overflow: hidden;
  
-      :last-child {
-        border-right: 10px;
-
-      }
     }
  
     &.sticky {

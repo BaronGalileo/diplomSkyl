@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { StickyTable } from "../Tables/StickyTable";
 import { ColomnsService } from "../Tables/ColomnsTables/columnsService";
 import { useFormContext } from "react-hook-form"
 import { Button } from "../Button/Button";
 import { ColomnsServicePost } from "../Tables/ColomnsTables/columnsServicePost";
 import axios from "axios";
-import { removeServices } from "../../store/servicesSlice";
+import { removeServices, removeTargetServID } from "../../store/servicesSlice";
 import { ColomnsServicePatch } from "../Tables/ColomnsTables/columnsServicePatch";
-import { StickyTableFilters } from "../Tables/StickyTableFilters";
+import { StickyTableServes } from "../Tables/StickyTableServes";
 
 export const ServicesTable = () => {
 
@@ -24,6 +23,8 @@ export const ServicesTable = () => {
     const isServices = useSelector(state => state.services)
 
     const target = useSelector(state => state.targetmachine)
+
+    const targetService = useSelector(state => state.services.targetServID)
 
     const[redactionData, setRedactionData] = useState(null)
 
@@ -47,12 +48,18 @@ export const ServicesTable = () => {
 
     const path_service = "http://127.0.0.1:8000/api/service/v1/service/"
 
-    useEffect( () => checkedCheckBox())
+    useEffect( () => {
 
-    const onSubmit = (data) => {
-        if(data?.id) {
-            
-            const service_data_old = isServices.ids[data.id[0]]
+    }, [target, flag])
+
+    useEffect( () => {
+        dispatch(removeTargetServID())
+    }, [])
+
+    useEffect( () => {
+
+        if(targetService) {
+            const service_data_old = isServices.ids[targetService]
 
             const serviceData_for_redaction = [{
                 id: service_data_old.id,
@@ -64,13 +71,16 @@ export const ServicesTable = () => {
                 type_of_service: service_data_old.type_of_service,
                 working_hours: service_data_old.working_hours,
             }]
+            setRedaction(true)
             setRedactionData(serviceData_for_redaction)
-            setFlag(true)
-
-            
         }
-        reset()
-    }
+        else{
+            setRedaction(false)
+            setRedactionData(null)
+        }
+
+    }, [targetService])
+
 
     const onSubmitPost = (data) => {
         if(!data.date_order){
@@ -119,11 +129,9 @@ export const ServicesTable = () => {
             alert("Вы поменяли дату заказ-наряда на дату, которая уже прошла. Выберете, пожалуйста, дату заказ-наряда минимум с сегодняшнего дня")
         }
         else {
-            console.log("POST", data)
             const path_patch = path_service + data.id +"/"
             axios.patch(path_patch, data, isAuth.confermAut)
             .then(res => {
-                dispatch(removeServices())
                 reset()
                 alert("Редакция на ТО успешна принята")
             })
@@ -145,49 +153,33 @@ export const ServicesTable = () => {
         console.log("ERROR", data)
     }
 
-    const checkedCheckBox = () => {
-        const checkboxsArray = document.querySelectorAll(".check-service");
-        checkboxsArray.forEach((elem) => {
-        elem.addEventListener("click", (e) => {
-
-            for (let i = 0; i < checkboxsArray.length; i++) {
-                if(checkboxsArray[i] !== e.target){
-                    checkboxsArray[i].checked = false
-                }
-              }
-            if(e.target.checked){
-                setRedaction(true)
-            } else {
-                setRedaction(false) 
-            }
-        });
-    });
-    }
-
     
 
     return(
         <div className="reclamation-wrapper">
             <div classnema="reclamation-element">
-            <form onSubmit={handleSubmit(onSubmit, errorSubmit)}>
             {isServices.sorted_data[target.target]&&!flag&&
-                <StickyTableFilters dataTable={isServices.sorted_data[target.target]} columnsTable={ColomnsService}/>}
-                    {redaction&&!flag&&
-                    <Button>Редактировать</Button>}
-            </form>
+                <StickyTableServes dataTable={isServices.sorted_data[target.target]} columnsTable={ColomnsService}/>}
+                {!isServices.sorted_data[target.target]&&isServices&&!flag&&
+                <StickyTableServes dataTable={isServices.data} columnsTable={ColomnsService}/>}
+
+                {redaction&&
+                <div classnema="reclamation-element">
+                    <Button onClick={() => {setFlag(res=>!res)}}>{!flag?"Редактировать ТО": "Назад"}</Button>
+                </div>}
             </div>
             <div classnema="reclamation-element">
             {!redaction&&
                     <Button onClick={() => {setFlag(res=>!res)}}>{!flag?"Заказать ТО": "Назад"}</Button>}
                 {flag&&!redaction&&
                     <form onSubmit={handleSubmit(onSubmitPost, errorSubmit)}>               
-                        <StickyTable dataTable={service_data} columnsTable={ColomnsServicePost}/>
-                        <Button disabled={!isValid}>Отправить рекламацию</Button>
-                </form>}
+                        <StickyTableServes dataTable={service_data} columnsTable={ColomnsServicePost}/>
+                        <Button >Заказать ТО</Button>
+                    </form>}
                 {flag&&redaction&&
                     <form onSubmit={handleSubmit(onSubmitPatch, errorSubmit)}>
-                        <StickyTableFilters dataTable={redactionData} columnsTable={ColomnsServicePatch}/>
-                        <Button>Редактировать рекламацию</Button>                    
+                        <StickyTableServes dataTable={redactionData} columnsTable={ColomnsServicePatch}/>
+                        <Button >Редактировать</Button>                    
                     </form>}
             </div>
         </div>

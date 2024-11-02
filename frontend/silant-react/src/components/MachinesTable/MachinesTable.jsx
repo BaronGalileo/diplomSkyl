@@ -1,6 +1,5 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { StickyTable } from "../Tables/StickyTable";
 import { useFormContext } from "react-hook-form"
 import { ColumnsMachinePost } from "../Tables/ColomnsTables/columnsMachinePost"
 import { Button } from "../Button/Button";
@@ -10,7 +9,9 @@ import { StickyTableFilters } from "../Tables/StickyTableFilters";
 
 
 
-export const MachinesTable = ({createMachine, machineObj, setFlag, addDataMachine}) => {
+export const MachinesTable = ({createMachine, machineObj, setFlag, addDataMachine}) => {    
+
+
 
     const {
         handleSubmit,
@@ -63,13 +64,12 @@ export const MachinesTable = ({createMachine, machineObj, setFlag, addDataMachin
     }
 
     const onSubmitPatch = (data) => {
-        console.log("patch", data)
         const path_patch = path_machine + data.id +'/'
         axios.patch(path_patch, data, isAuth.confermAut)
         .then(res => {
             alert("Редакция прошла успешно!")
             setFlag(res=> !res)
-            addDataMachine(overload=>!overload)
+            addDataMachine(true)
         })
         .catch(err => {
             alert(err.request.responseText)
@@ -95,7 +95,7 @@ export const MachinesTable = ({createMachine, machineObj, setFlag, addDataMachin
                     <form onSubmit={handleSubmit(onSubmitPatch, errorsSubmit)}>            
                         <StickyTableFilters dataTable={machineObj} columnsTable={ColumnsMachinePatch}/>
                         <Button >Редактировать машину</Button>
-                    </form>}
+                </form>}
             </div>
         </div>
     )

@@ -1,21 +1,32 @@
 import { Button } from "../../Button/Button"
-import { FormChoiceReclamation } from "../../FormComponents/FormChoiceReclamation/FormChoiceReclamation"
+import { FindTempateElement } from "../../FindTemplateElement/FindTemplateElement"
+import { FindTempateServisOrg } from "../../FindTemplateElement/FindTemplateServisOrg"
+import { Text } from "../../Text/Text"
+import { CheckBoxTable } from "../CheckBoxTable"
 import { ColumnFilter } from "../ColumnsFilter"
+import { FilterComponySelect } from "../FiltersSelect/FilterComponySelect"
+import { FilterNodeSelect } from "../FiltersSelect/FilterNodeSelect"
+import { FilterRecoveryMetod } from "../FiltersSelect/FilterRecoveryMetod"
 
 export const ColomnsReclamation = [
     {     
-        Header: 'Марка машины',
+        Header: 'Id',
         accessor: 'id',
         sticky: 'left',
-        Cell: ({value}) => {return(<FormChoiceReclamation value={value} name="id"></FormChoiceReclamation>)},
+        Cell: ({value ,row}) => { return (
+            <>
+            <CheckBoxTable {...row.getToggleRowSelectedProps()} />
+            <Text className="dark-color">{value}</Text>
+            </>)},
         disableSortBy: true,
-        Filter: ColumnFilter,
     },
     {
         Header: 'сервисная компания',
         accessor: 'service_company.name',
         disableSortBy: true,
-        Filter: ColumnFilter,
+        Filter: FilterComponySelect,
+        Cell: ({value, row}) => { return (<FindTempateServisOrg data_row={row} path='servicesorgan/'>{value}</FindTempateServisOrg>)},
+
     },
     {
         Header: 'дата отказа',
@@ -28,10 +39,10 @@ export const ColomnsReclamation = [
     },
     {
         Header: 'узел отказа',
-        accessor: 'failure_node',
+        accessor: 'failure_node.name',
         disableSortBy: true,
-        Filter: ColumnFilter,
-        Cell: ({value}) => { return (<Button href={`http://localhost:3000/failurenode/${value.id}`}>{value.name}</Button>)}
+        Filter: FilterNodeSelect,
+        Cell: ({value, row}) => { return (<FindTempateServisOrg data_row={row} path='failurenode/'>{value}</FindTempateServisOrg>)},
     },
     {
         Header: 'описание отказа',
@@ -41,10 +52,10 @@ export const ColomnsReclamation = [
     },
     {
         Header: 'способ восстановления',
-        accessor: 'recovery_method',
+        accessor: 'recovery_method.name',
         disableSortBy: true,
-        Filter: ColumnFilter,
-        Cell: ({value}) => { return (<Button href={`http://localhost:3000/recoverymethod/${value.id}`}>{value.name}</Button>)}
+        Filter: FilterRecoveryMetod,
+        Cell: ({value, row}) => { return (<FindTempateServisOrg data_row={row} path='recoverymethod/'>{value}</FindTempateServisOrg>)},
     },
     {
         Header: 'используемые запасные части',

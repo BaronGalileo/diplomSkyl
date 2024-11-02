@@ -43,6 +43,8 @@ export const TemplateElement = ({path}) => {
         typeofservice: {"path": `http://127.0.0.1:8000/api/service/v1/typeofservice/${id}/`, "src":'../images/type-TO', 'title': "Вид ТО"},
         failurenode: {"path":`http://127.0.0.1:8000/api/service/v1/failurenode/${id}/`, "src":'../images/node-crash.png', 'title': "Узел отказа"},
         recoverymethod: {"path":`http://127.0.0.1:8000/api/service/v1/recoverymethod/${id}/`, "src":'../images/recover-metod.png', 'title': "Способ восстановления"},
+        servicesorgan: {"path":`http://127.0.0.1:8000/users/v1/servicesorgan/${id}/`, "src":'../images/12.png', 'title': "Сервисная компания"},
+        client: {"path":`http://127.0.0.1:8000/users/v1/clients/${id}/`, "src":'../images/client.png', 'title': "Клиент"},
     }
 
     const targetPage = dict_path[path]

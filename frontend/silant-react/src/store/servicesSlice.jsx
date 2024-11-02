@@ -1,8 +1,10 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
+    data: null,
     sorted_data: {},
     ids: {},
+    targetServID: null,
     expire: null,
 }
 
@@ -15,6 +17,17 @@ const servicesSlice = createSlice({
     name: 'services',
     initialState,
     reducers: {
+
+        setDataServ(state, action){
+            state.data = action.payload;
+
+        },
+
+        setTargetServID(state, action){
+            
+            state.targetServID = action.payload;
+
+        },
 
         setServices_ids(state, action){
             state.ids = action.payload.ids;
@@ -32,9 +45,15 @@ const servicesSlice = createSlice({
                 expire: null,
             };
         },
+
+        removeTargetServID(state) {
+
+            state.targetServID = null
+
+        }
     }
 });
 
-export const {setServices, setServices_ids, removeServices} = servicesSlice.actions;
+export const {setDataServ, setTargetServID, setServices, setServices_ids, removeTargetServID, removeServices} = servicesSlice.actions;
 
 export default servicesSlice.reducer;

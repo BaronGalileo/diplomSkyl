@@ -6,13 +6,14 @@ import {  useFormContext } from "react-hook-form"
 
 export const SelectBox = ({options, name, message, children, placeholder, defaultSelect, ...restProps}) => {
 
-
     const {
         register,
         formState: {errors}
     } = useFormContext()
 
     const error = errors[name]?.message
+
+    
 
     return(
 

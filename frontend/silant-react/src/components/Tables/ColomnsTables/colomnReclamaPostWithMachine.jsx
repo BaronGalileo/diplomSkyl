@@ -3,24 +3,23 @@ import { FormChoiceMachine } from '../../FormComponents/FormChoiceMachine/FormCh
 import { FormChoiceServiceOrg } from '../../FormComponents/FormChoiceServiceOrg/FormChoiceServiceOrg';
 import { FormSelectFromServer } from '../../FormComponents/FormComponentSelect/FormSelectFromServer';
 import { Input } from '../../Input/Input'
-import { SelectForReclama } from '../../ReclamationTable/SelectForReclama';
 
 
 
-export const ColomnsReclamationPOST = [
+export const ColomnsReclamationPOSTWithMachine = [
 
     {
-        Header: 'машина',
+        Header: 'Серийный номер',
         accessor: 'machine',
         sticky: 'left',
-        Cell: () => { return (<SelectForReclama name="machine" machine path="http://127.0.0.1:8000/api/v1/machine/"/>)},
+        Cell: () => { return (<FormChoiceMachine/>)},
         disableSortBy: true,
     },
     {
-        Header: 'сервисная компания',
+        Header: 'Сервисная компания',
         accessor: 'service_company',
         // sticky: 'left',
-        Cell: () => { return (<SelectForReclama name="service_company" path="http://127.0.0.1:8000/users/v1/servicesorgan/"/>)},
+        Cell: () => { return (<FormChoiceServiceOrg/>)},
         disableSortBy: true,
     },
     {

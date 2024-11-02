@@ -76,7 +76,18 @@
   color: #EBE6D6;
 }
 
-.btn-from-table{
-  background-color: #ffffff;
+.btn-table{
+  background-color:#EBE6D6;
+  text-decoration: none;
+  border: 0;
+  color: #000;
+  width: 100%;
+  height: 100%;
+  cursor: zoom-in;
+}
+
+.btn-table:hover:not(:active) {
+  color: #D20A11;
+  font-size: 1.2rem;  
 }
 

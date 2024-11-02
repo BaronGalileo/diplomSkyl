@@ -32,6 +32,8 @@ function App() {
               <Route path="enginemodel/:id" element={<TemplateElement path={"enginemodel"}/>}/>
               <Route path="transmissionmodel/:id" element={<TemplateElement path={"transmissionmodel"}/>}/>
               <Route path="drivingaxlemodel/:id" element={<TemplateElement path={"drivingaxlemodel"}/>}/>
+              <Route path="servicesorgan/:id" element={<TemplateElement path={"servicesorgan"}/>}/>
+              <Route path="client/:id" element={<TemplateElement path={"client"}/>}/>
               <Route path="modelofacontrolledbridge/:id" element={<TemplateElement path={"modelofacontrolledbridge"}/>}/>
               <Route path="typeofservice/:id" element={<TemplateElement path={"typeofservice"}/>}/>
               <Route path="failurenode/:id" element={<TemplateElement path={"failurenode"}/>}/>

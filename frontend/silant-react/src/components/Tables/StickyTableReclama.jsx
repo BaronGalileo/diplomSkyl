@@ -3,13 +3,14 @@ import { useTable, useBlockLayout, useSortBy, useFilters, useRowSelect} from 're
 import { useSticky } from 'react-table-sticky'
 import { Styles } from "./TableStyles";
 import { useDispatch } from "react-redux";
-import { removeTargetmachine, setTargetmachine } from "../../store/targetmachineSlice";
+import { removeReclamaID, setReclamaID } from "../../store/reclamationSlice";
 
 
 
 
 
-function StickyTableFilters({dataTable, columnsTable, ...resProps}) {
+
+function StickyTableReclama({dataTable, columnsTable, ...resProps}) {
 
   const columns = useMemo(() => columnsTable, [])
   const data = useMemo(() => dataTable, [])
@@ -31,7 +32,7 @@ function StickyTableFilters({dataTable, columnsTable, ...resProps}) {
       stateReducer: (newState, action) => {
         if (action.type === "toggleRowSelected") {
           if(!action.value){
-            dispatch(removeTargetmachine())
+            dispatch(removeReclamaID())
           }
           newState.selectedRowIds = {
             [action.id]: action.value
@@ -49,9 +50,9 @@ function StickyTableFilters({dataTable, columnsTable, ...resProps}) {
 
   useEffect(() => {
     if(selectedFlatRows[0]?.isSelected){
-      dispatch(setTargetmachine(selectedFlatRows[0].values.serial_num))
-
-    }
+        dispatch(setReclamaID(selectedFlatRows[0].values.id))
+      }
+      else dispatch(removeReclamaID())
   },[selectedFlatRows])
   
     
@@ -98,4 +99,4 @@ function StickyTableFilters({dataTable, columnsTable, ...resProps}) {
     </Styles>
     )
 }
-export {StickyTableFilters}
+export {StickyTableReclama}
