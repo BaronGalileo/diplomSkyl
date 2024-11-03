@@ -16,10 +16,12 @@ export const FormChoiceServiceOrg = () => {
     const serviceOrg = isMachines[target][0]
 
     return(
-        <>
-        <input {...register(`service_company`)} type="hidden" value={serviceOrg.service_company.user}/>
-        {serviceOrg&&
-        <Text className="dark-color">{serviceOrg.service_company.name}</Text>}
-        </>
+        <div className="redact-element">
+            <input {...register("service_company", {
+                    required: "Обязательно выберете сервисную компанию",
+                })} type="hidden" value={serviceOrg.service_company.user}/>
+            {serviceOrg&&
+                <Text className="dark-color">{serviceOrg.service_company.name}</Text>}
+        </div>
     )
 }

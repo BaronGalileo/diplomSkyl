@@ -1,4 +1,3 @@
-import { RedactTextDate } from '../../ElementForRedaction/RedactTextDate';
 import { FormChoiceMachine } from '../../FormComponents/FormChoiceMachine/FormChoiceMachine';
 import { FormChoiceServiceOrg } from '../../FormComponents/FormChoiceServiceOrg/FormChoiceServiceOrg';
 import { FormSelectFromServer } from '../../FormComponents/FormComponentSelect/FormSelectFromServer';
@@ -28,8 +27,7 @@ export const ColomnsServicePost = [
     {
         Header: 'Вид ТО',
         accessor: 'type_of_service',
-        Cell: ({value}) => { return (<FormSelectFromServer path="http://127.0.0.1:8000/api/service/v1/typeofservice/"
-             message="обязательно заполнить" name="type_of_service">{value}</FormSelectFromServer>)},
+        Cell: ({value}) => { return (<FormSelectFromServer select="name" path="http://127.0.0.1:8000/api/service/v1/typeofservice/" message="обязательно заполнить" name="type_of_service">{value}</FormSelectFromServer>)},
         disableSortBy: true,
     },
     {

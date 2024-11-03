@@ -7,7 +7,6 @@ import { Navigate } from "react-router-dom";
 
 export const MachineFromTable = ({ data_row, path_ser, field_value}) => {
 
-    const targetIndexRow = useSelector(state => state.clickIndex)
 
     const[pathMachinePage, setPathMachinePage] = useState(null)
 
@@ -15,7 +14,8 @@ export const MachineFromTable = ({ data_row, path_ser, field_value}) => {
 
 
     const clickKlack =() => {
-        if(data_row.index === Number(targetIndexRow) && targetIndexRow !== null) {
+
+        if(data_row.index|| data_row.index === 0) {
             const my_machine = {
                 id: data_row.values.id}
 

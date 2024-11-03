@@ -21,13 +21,13 @@ export const ColumnsMachinePost = [
     {
         Header: 'Модель техники',
         accessor: 'car_model',
-        Cell: ({value}) => { return (<FormSelectFromServer path="http://127.0.0.1:8000/api/v1/carmodel/" message="обязательно заполнить" name="car_model" value={value}/>)},
+        Cell: ({value}) => { return (<FormSelectFromServer select="name" path="http://127.0.0.1:8000/api/v1/carmodel/" message="обязательно заполнить" name="car_model" value={value}/>)},
         disableSortBy: true,
     },
     {
         Header: 'Модель двигателя',
         accessor: 'engine_model',
-        Cell: ({value}) => { return (<FormSelectFromServer path="http://127.0.0.1:8000/api/v1/enginemodel/" message="обязательно заполнить" name="engine_model" value={value}/>)},
+        Cell: ({value}) => { return (<FormSelectFromServer select="name" path="http://127.0.0.1:8000/api/v1/enginemodel/" message="обязательно заполнить" name="engine_model" value={value}/>)},
         disableSortBy: true,
     },
     {
@@ -40,7 +40,7 @@ export const ColumnsMachinePost = [
     {
         Header: 'Модель трансмиссии',
         accessor: 'transmission_model',
-        Cell: ({value}) => { return (<FormSelectFromServer path="http://127.0.0.1:8000/api/v1/transmissionmodel/"
+        Cell: ({value}) => { return (<FormSelectFromServer select="name" path="http://127.0.0.1:8000/api/v1/transmissionmodel/"
              message="обязательно заполнить" name="transmission_model" value={value} />)},
         disableSortBy: true,
     },
@@ -53,7 +53,7 @@ export const ColumnsMachinePost = [
     {
         Header: 'Модель ведущего моста',
         accessor: 'driving_axle_model',
-        Cell: ({value}) => { return (<FormSelectFromServer path="http://127.0.0.1:8000/api/v1/drivingaxlemodel/" message="обязательно заполнить" name="driving_axle_model" value={value}/>)},
+        Cell: ({value}) => { return (<FormSelectFromServer  select="name" path="http://127.0.0.1:8000/api/v1/drivingaxlemodel/" message="обязательно заполнить" name="driving_axle_model" value={value}/>)},
         disableSortBy: true,
     },
     {
@@ -65,7 +65,7 @@ export const ColumnsMachinePost = [
     {
         Header: 'Модель управляемого моста',
         accessor: 'model_of_a_controlled_bridge',
-        Cell: ({value}) => { return (<FormSelectFromServer path="http://127.0.0.1:8000/api/v1/modelofacontrolledbridge/"
+        Cell: ({value}) => { return (<FormSelectFromServer select="name" path="http://127.0.0.1:8000/api/v1/modelofacontrolledbridge/"
              message="обязательно заполнить" name="model_of_a_controlled_bridge" value={value}/>)},
         disableSortBy: true,
     },
@@ -108,13 +108,13 @@ export const ColumnsMachinePost = [
     {
         Header: 'Клиент',
         accessor: 'client',
-        Cell: ({value}) => { return (<FormSelectFromServer user={true} path="http://127.0.0.1:8000/users/v1/clients/" message="обязательно заполнить" name="client" value={value}/>)},
+        Cell: ({value}) => { return (<FormSelectFromServer select="user" path="http://127.0.0.1:8000/users/v1/clients/" message="обязательно заполнить" name="client" value={value}/>)},
         disableSortBy: true,
     },
     {
         Header: 'Сервисная компания',
         accessor: 'service_company',
-        Cell: ({value}) => { return (<FormSelectFromServer user={true} path="http://127.0.0.1:8000/users/v1/servicesorgan/"
+        Cell: ({value}) => { return (<FormSelectFromServer select="user" path="http://127.0.0.1:8000/users/v1/servicesorgan/"
              message="обязательно заполнить" name="service_company"value={value}/>)},
         disableSortBy: true,
     },

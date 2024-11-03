@@ -2,21 +2,25 @@ import { useEffect, useState } from "react";
 import { SelectBox } from "../../SelectBox/SelectBox"
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { select_data, select_user_data } from "../../../helpers/selectData";
+import { select_data, select_machine, select_user_data } from "../../../helpers/selectData";
 
 
-export const FormSelectFromServer = ({path, value, user=false, placeholder, message, name}) => {
+export const FormSelectFromServer = ({path, value, select, placeholder, message, name}) => {
 
     const isAuth = useSelector(state => state.auth)
 
     const[options, setOptions] = useState(null)
 
-    const path_serv = path
 
     useEffect(() => {
         axios.get(path, isAuth.confermAut)
         .then(res => {
-            const data_select = user? select_user_data(res.data) : select_data(res.data)
+            const dict_sekected = {
+                "user": select_user_data(res.data),
+                'name': select_data(res.data),
+                'machine': select_machine(res.data)
+            }
+            const data_select = dict_sekected[select]
             setOptions(data_select)
         })
     }, [])

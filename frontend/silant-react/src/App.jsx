@@ -11,6 +11,7 @@ import { ExaminationExpires } from './components/Examination/ExaminationExpires'
 import { TemplateElement } from './pages/TemplateElements/TemlateElement';
 import { MachinePage } from './pages/MachinePage/MachinePage';
 import { ServPage } from './pages/ServisePage/ServPage';
+import { ReclamationPage } from './pages/ReclamaPage/ReclamationPage';
 
 
 
@@ -40,6 +41,7 @@ function App() {
               <Route path="recoverymethod/:id" element={<TemplateElement path={"recoverymethod"}/>}/>
               <Route path="machine/:id" element={<MachinePage path={"machine"}/>}/>
               <Route path="servises/:id" element={<ServPage path={"servises"}/>}/>
+              <Route path="reclamation/:id" element={<ReclamationPage path={"reclamation"}/>}/>
               <Route path="*" element={<Notfoundpage/>}/>
             </Route>
           </Routes>

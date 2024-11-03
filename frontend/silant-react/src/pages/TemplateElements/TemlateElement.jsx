@@ -39,7 +39,7 @@ export const TemplateElement = ({path}) => {
         transmissionmodel: {"path":`http://127.0.0.1:8000/api/v1/transmissionmodel/${id}/`, "src":'../images/transmish.png', 'title': "Модель трансмиссии"},
         drivingaxlemodel: {"path":`http://127.0.0.1:8000/api/v1/drivingaxlemodel/${id}/`, "src":'../images/most-drive.png', 'title': "Модель ведущего моста"},
         modelofacontrolledbridge: {"path":`http://127.0.0.1:8000/api/v1/modelofacontrolledbridge/${id}/`, "src":'../images/control-drive.png', 'title': "Модель управляемого моста"},
-        typeofservice: {"path": `http://127.0.0.1:8000/api/service/v1/typeofservice/${id}/`, "src": '../images/type-TO', 'title': "Вид ТО"},
+        typeofservice: {"path": `http://127.0.0.1:8000/api/service/v1/typeofservice/${id}/`, "src": '../images/type-TO.png', 'title': "Вид ТО"},
         failurenode: {"path":`http://127.0.0.1:8000/api/service/v1/failurenode/${id}/`, "src":'../images/node-crash.png', 'title': "Узел отказа"},
         recoverymethod: {"path":`http://127.0.0.1:8000/api/service/v1/recoverymethod/${id}/`, "src":'../images/recover-metod.png', 'title': "Способ восстановления"},
         servicesorgan: {"path":`http://127.0.0.1:8000/users/v1/servicesorgan/${id}/`, "src":'../images/12.png', 'title': "Сервисная компания"},

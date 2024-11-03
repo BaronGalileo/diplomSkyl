@@ -14,7 +14,6 @@ export const SelectForReclama = ({path, machine, name}) => {
     const path_serv = path
 
     useEffect(() => {
-        debugger
         axios.get(path_serv, isAuth.confermAut).then(res => {
             const data = machine ? select_machine(res.data) : select_user_data(res.data)
             setOptions(data)

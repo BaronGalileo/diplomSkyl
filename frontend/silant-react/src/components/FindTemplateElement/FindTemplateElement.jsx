@@ -6,8 +6,6 @@ import { Navigate } from "react-router-dom";
 
 export const FindTempateElement = ({ data_row, user, path, role, name_fild, children}) => {
 
-    const targetIndexRow = useSelector(state => state.clickIndex)
-
     const servis = useSelector(state => state.services.ids)
 
     const reclama = useSelector(state => state.reclamation.ids)
@@ -26,7 +24,7 @@ export const FindTempateElement = ({ data_row, user, path, role, name_fild, chil
 
 
     const clickTak = () => {
-        if(data_row.index === Number(targetIndexRow) && targetIndexRow !== null) {
+        if(data_row.index|| data_row.index === 0) {
             const elementID = data_row.values?.id
             const data_path = dict_change[role][elementID]
 

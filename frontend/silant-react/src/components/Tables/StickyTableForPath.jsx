@@ -1,22 +1,17 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useTable, useBlockLayout, useSortBy, useFilters, usePagination, useRowSelect} from 'react-table';
+import { useTable, useBlockLayout, useFilters, usePagination} from 'react-table';
 import { useSticky } from 'react-table-sticky'
 import { Styles } from "./TableStyles";
-import { useDispatch } from "react-redux";
-import { removeReclamaID, setReclamaID } from "../../store/reclamationSlice";
 import { Button } from "../Button/Button";
 
 
 
 
 
-
-function StickyTableReclama({dataTable, columnsTable, ...resProps}) {
+function StickyTableForPatch({dataTable, columnsTable, ...resProps}) {
 
   const columns = useMemo(() => columnsTable, [])
   const data = useMemo(() => dataTable, [])
-
-  const dispatch  = useDispatch()
 
   const {
 
@@ -27,43 +22,23 @@ function StickyTableReclama({dataTable, columnsTable, ...resProps}) {
     nextPage,
     previousPage,
     canNextPage,
-    canPreviousPage, 
-    prepareRow,
+    canPreviousPage,   
     selectedFlatRows,
+    prepareRow,
   } = useTable(
     {
       columns,
       data,
-      stateReducer: (newState, action) => {
-        if (action.type === "toggleRowSelected") {
-          if(!action.value){
-            dispatch(removeReclamaID())
-          }
-          newState.selectedRowIds = {
-            [action.id]: action.value
-          }
-        }
-        return newState;
-    },
     },
     useFilters,
     useBlockLayout,
-    useSticky,
-    useSortBy,
     usePagination,
-    useRowSelect,
+    useSticky,
   )
 
+
+    
   const [screenWidth, setScreenWidth] = useState(window.innerWidth - 200);
-
-  useEffect(() => {
-    if(selectedFlatRows[0]?.isSelected){
-        dispatch(setReclamaID(selectedFlatRows[0].values.id))
-      }
-      else dispatch(removeReclamaID())
-  },[selectedFlatRows])
-
-
 
   window.addEventListener('resize', function () {
     if(window.window.innerWidth<= screenWidth){
@@ -73,31 +48,23 @@ function StickyTableReclama({dataTable, columnsTable, ...resProps}) {
       setScreenWidth(window.window.innerWidth - 200)
     }
   })
-
-  useEffect(() => {
-
-
-  }, [screenWidth]);
   
-    
+    useEffect(() => {
+  
+  
+  }, [screenWidth]);
 
 
     return(
-      <>
+    <>
     <Styles>
       <div {...getTableProps()} className="table sticky" style={{ width: screenWidth, height: "auto" }}>
         <div className="header">
           {headerGroups.map((headerGroup) => (
             <div {...headerGroup.getHeaderGroupProps()} className="tr">
               {headerGroup.headers.map((column) => (
-                <div {...column.getHeaderProps(column.getSortByToggleProps())} className="th">
+                <div {...column.getHeaderProps()} className="th">
                   {column.render('Header')}
-                  {column.Filter&&
-                    <div>{column.canFilter ? column.render('Filter') : null}</div>} 
-                    {!column.disableSortBy&&
-                    <span>
-                      {column.isSorted ? (column.isSortedDesc ? '🔽' : '🔼') : '🔃'}
-                  </span>}
                 </div>
               ))}
             </div>
@@ -127,4 +94,4 @@ function StickyTableReclama({dataTable, columnsTable, ...resProps}) {
     </>
     )
 }
-export {StickyTableReclama}
+export {StickyTableForPatch}

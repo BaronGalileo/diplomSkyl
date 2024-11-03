@@ -9,8 +9,10 @@ import { removeServices, removeTargetServID } from "../../store/servicesSlice";
 import { ColomnsServicePatch } from "../Tables/ColomnsTables/columnsServicePatch";
 import { StickyTableServes } from "../Tables/StickyTableServes";
 import { ColomnsServicePostNotMachine } from "../Tables/ColomnsTables/ColumnsServicePostNotMachine";
+import { StickyTableForPatch } from "../Tables/StickyTableForPath";
+import { isValid_data_patch } from '../../helpers/isValidData'
 
-export const ServicesTable = () => {
+export const ServicesTable = ({addService}) => {
 
     const {
         handleSubmit,
@@ -51,6 +53,9 @@ export const ServicesTable = () => {
     const path_service = "http://127.0.0.1:8000/api/service/v1/service/"
 
     useEffect( () => {
+        if(!flag){
+            reset()
+        }
 
     }, [target, flag])
 
@@ -58,23 +63,26 @@ export const ServicesTable = () => {
         dispatch(removeTargetServID())
     }, [])
 
+    
+
     useEffect( () => {
 
         if(targetService) {
             const service_data_old = isServices.ids[targetService]
 
             const serviceData_for_redaction = [{
-                id: service_data_old.id,
-                date_order: service_data_old.date_order,
-                date_service: service_data_old.date_service,
-                machine: service_data_old.machine.brand,
-                order_No: service_data_old.order_No,
-                service_company: service_data_old.service_company.name,
-                type_of_service: service_data_old.type_of_service,
-                working_hours: service_data_old.working_hours,
+                id: service_data_old?.id,
+                date_order: service_data_old?.date_order,
+                date_service: service_data_old?.date_service,
+                order_No: service_data_old?.order_No,
+                service_company: service_data_old?.service_company.name,
+                type_of_service: service_data_old?.type_of_service.name,
+                working_hours: service_data_old?.working_hours,
             }]
-            setRedaction(true)
-            setRedactionData(serviceData_for_redaction)
+            if (serviceData_for_redaction[0]){
+                setRedaction(true)
+                setRedactionData(serviceData_for_redaction)
+            }
         }
         else{
             setRedaction(false)
@@ -85,17 +93,18 @@ export const ServicesTable = () => {
 
 
     const onSubmitPost = (data) => {
-        if(!data.date_order){
-            delete data["date_order"]
+        const dataIsValid = isValid_data_patch(data)
+        if(dataIsValid.date_service&&timeNew>dataIsValid.date_service){
+                alert("Невозможно вернуться в прошлое. Поменяйте, пожалуйста, дату проведения ТО")
+    
         }
-        if(timeNew>data.date_service||timeNew>data.date_order){
-            alert("Невозможно вернуться в прошлое. Выберете, пожалуйста, дату проведения ТО(дата заказ-наряда) минимум на завтра")
-        }      
-        else {
-            console.log("POST", data)
-            axios.post(path_service, data, isAuth.confermAut)
+        else if(dataIsValid.date_order&&timeNew>dataIsValid.date_order){
+                alert("Невозможно вернуться в прошлое. Поменяйте, пожалуйста, дату заказ-наряда")
+        }
+        else{
+            axios.post(path_service, dataIsValid, isAuth.confermAut)
             .then(res => {
-                dispatch(removeServices())
+                addService(overload=>!overload)
                 reset()
                 alert("Заяка на ТО успешна принята")
             })
@@ -108,35 +117,35 @@ export const ServicesTable = () => {
             })
             setRedaction(false)
             setFlag(res => !res)
-
         }
     }
 
     const onSubmitPatch = (data) => {
+        const dataIsValid = isValid_data_patch(data)
+        if(Object.keys(dataIsValid).length ===1){
+            return alert("Вы ничего не редактировали")
+        }
+        const date_TO = dataIsValid.date_service
+        const date_TO_old = redactionData[0].date_service
+        const date_Order = dataIsValid.date_order 
+        const date_Order_old = redactionData[0].date_order
 
-        if(!data.date_order){
-            delete data["date_order"]
+        if(date_Order){
+            if(date_Order>date_TO||date_TO_old){
+                return alert("Дата заказ-наряда не может быть позже проведения ТО")
+            }
         }
-        if(!data.date_service){
-            delete data["date_service"]
-        }
-        if(timeNew>data.date_service&&!redactionData[0].date_service){
-            alert("Невозможно вернуться в прошлое. Выберете, пожалуйста, дату проведения ТО минимум на завтра")
-        }
-        else if(timeNew>data.date_service&&redactionData[0].date_service) {
-            alert("Вы поменяли дату проведения ТО на дату, которая уже прошла. Выберете, пожалуйста, дату проведения ТО минимум на завтра")
-        }
-        else if(timeNew>data.date_order&&!redactionData[0].date_order){
-            alert("Невозможно вернуться в прошлое. Выберете, пожалуйста, дату заказ-наряда минимум с сегодняшнего дня")
-        }
-        else if(timeNew>data.date_order&&redactionData[0].date_order) {
-            alert("Вы поменяли дату заказ-наряда на дату, которая уже прошла. Выберете, пожалуйста, дату заказ-наряда минимум с сегодняшнего дня")
+        else if(date_TO) {
+            if(date_TO<date_Order||date_Order_old ){
+                return alert("Дата проведения ТО  не может быть раньше заказ-наряда")
+            }
         }
         else {
             const path_patch = path_service + data.id +"/"
-            axios.patch(path_patch, data, isAuth.confermAut)
+            axios.patch(path_patch, dataIsValid, isAuth.confermAut)
             .then(res => {
                 reset()
+                addService(overload=>!overload)
                 alert("Редакция на ТО успешна принята")
             })
             .catch(err => {
@@ -156,7 +165,6 @@ export const ServicesTable = () => {
     const errorSubmit = (data) => {
         console.log("ERROR", data)
     }
-
     
 
     return(
@@ -164,7 +172,7 @@ export const ServicesTable = () => {
             <div classnema="reclamation-element">
             {isServices.sorted_data[target.target]&&!flag&&
                 <StickyTableServes dataTable={isServices.sorted_data[target.target]} columnsTable={ColomnsService}/>}
-                {!isServices.sorted_data[target.target]&&isServices&&!flag&&
+            {!isServices.sorted_data[target.target]&&!flag&&isServices.data&&
                 <StickyTableServes dataTable={isServices.data} columnsTable={ColomnsService}/>}
 
                 {redaction&&
@@ -178,17 +186,17 @@ export const ServicesTable = () => {
                 {flag&&!redaction&&target.target&&
                     <form onSubmit={handleSubmit(onSubmitPost, errorSubmit)}>               
                         <StickyTableServes dataTable={service_data} columnsTable={ColomnsServicePost}/>
-                        <Button >Заказать ТО</Button>
+                        <Button disabled={!isValid}>Заказать ТО</Button>
                     </form>}
 
                 {flag&&!redaction&&!target.target&&
                 <form onSubmit={handleSubmit(onSubmitPost, errorSubmit)}>               
                     <StickyTableServes dataTable={service_data} columnsTable={ColomnsServicePostNotMachine}/>
-                    <Button >Заказать ТО</Button>
+                    <Button disabled={!isValid}>Заказать ТО</Button>
                 </form>}
                 {flag&&redaction&&
                     <form onSubmit={handleSubmit(onSubmitPatch, errorSubmit)}>
-                        <StickyTableServes dataTable={redactionData} columnsTable={ColomnsServicePatch}/>
+                        <StickyTableForPatch dataTable={redactionData} columnsTable={ColomnsServicePatch}/>
                         <Button >Редактировать</Button>                    
                     </form>}
             </div>

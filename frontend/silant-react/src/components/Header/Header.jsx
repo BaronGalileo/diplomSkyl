@@ -34,9 +34,6 @@ function Header() {
         dispatch(removeReclamation())
         }
 
-    function del() {
-        dispatch(removeOne_machine())
-    }
 
     return(
         <div>

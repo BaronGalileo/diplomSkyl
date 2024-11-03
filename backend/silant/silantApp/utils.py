@@ -18,6 +18,7 @@ def authUser_is_person(user):
 
 def authUser_role(user):
     if user == None:
+        print("None", user)
         return user
     else:
         manager = Manager.objects.filter(user_id=user)
@@ -32,8 +33,7 @@ def authUser_role(user):
 
 
 def filter_by_role(user_id, queryset, my_serializer):
-    if (my_serializer != MachineSerializer and my_serializer != ReclamationSerializer
-            and my_serializer != ServiceSerializer):
+    if (my_serializer != MachineSerializer and my_serializer != ReclamationSerializer and my_serializer != ServiceSerializer):
         return None
     else:
         user_target = authUser_role(user_id)
@@ -73,6 +73,10 @@ def role_user_is_serviseorg(user_id, queryset, my_serializer):
         reclamation = queryset.filter(service_company_id=user_id)
         serializer = my_serializer(reclamation, many=True)
         return Response(serializer.data)
+    elif (my_serializer == ServiceSerializer):
+        servises = queryset.filter(service_company_id=user_id)
+        serializer = my_serializer(servises, many=True)
+        return Response(serializer.data)
 
 
 def role_user_is_manager(queryset, my_serializer):
@@ -80,18 +84,4 @@ def role_user_is_manager(queryset, my_serializer):
     serializer = my_serializer(my_queryset, many=True)
     return Response(serializer.data)
 
-# def request_User_role_is(user):
-#     if user == None:
-#         return user
-#     elif (user.is_staff):
-#         return "admin"
-#     else:
-#         manager = Manager.objects.filter(user_id=user.id)
-#         if manager and manager.values()[0].get("role"):
-#             return manager.values()[0].get("role")
-#         servise_organization = ServiseOrganization.objects.filter(user_id=user.id)
-#         if servise_organization and servise_organization.values()[0].get("role"):
-#             return servise_organization.values()[0].get("role")
-#         client = Client.objects.filter(user_id=user.id)
-#         if client and client.values()[0].get("role"):
-#             return client.values()[0].get("role")
+

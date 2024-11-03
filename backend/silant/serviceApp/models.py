@@ -20,10 +20,10 @@ class TypeOfService(models.Model):
 class Service(models.Model):
     machine = models.ForeignKey(Machine, on_delete=models.CASCADE, verbose_name="Машина")
     type_of_service = models.ForeignKey(TypeOfService, on_delete=models.PROTECT, verbose_name="Вид ТО")
-    date_service = models.DateField(verbose_name="дата проведения ТО")
+    date_service = models.DateField(verbose_name="дата проведения ТО", blank=True, null=True)
     working_hours = models.FloatField(verbose_name="наработка, м/час")
-    order_No = models.CharField(max_length=100, verbose_name="№ заказ-наряда", blank=True)
-    date_order = models.DateField(verbose_name="дата заказ-наряда", blank=True)
+    order_No = models.CharField(max_length=100, verbose_name="№ заказ-наряда", blank=True, null=True)
+    date_order = models.DateField(verbose_name="дата заказ-наряда", blank=True, null=True)
     service_company = models.ForeignKey(ServiseOrganization, on_delete=models.CASCADE, verbose_name="сервисная компания")
 
     def __str__(self):
@@ -40,7 +40,7 @@ class Reclamation(models.Model):
     failure_node = models.ForeignKey('FailureNode', on_delete=models.PROTECT, verbose_name="узел отказа")
     description_of_failure = models.TextField(verbose_name="описание отказа")
     recovery_method = models.ForeignKey('RecoveryMethod', on_delete=models.PROTECT, verbose_name="способ восстановления")
-    spare_parts = models.TextField(blank=True, verbose_name="используемые запасные части")
+    spare_parts = models.TextField(blank=True, verbose_name="Используемые запасные части")
     date_of_restoration = models.DateField(verbose_name="дата восстановления", blank=True, null=True)
     downtime = models.FloatField(verbose_name="время простоя техники в днях", blank=True, null=True)
     service_company = models.ForeignKey(ServiseOrganization, on_delete=models.PROTECT, verbose_name="сервисная компания")

@@ -5,8 +5,8 @@ import { useSelector } from "react-redux";
 import { Img } from "../../components/Img/Img";
 import { Button } from "../../components/Button/Button";
 import { useFormContext } from "react-hook-form";
-import { RedactTextDate } from "../../components/ElementForRedaction/RedactTextDate";
-import { RedactSelect } from "../../components/ElementForRedaction/RedactSelect";
+import { FormSelectFromServer } from "../../components/FormComponents/FormComponentSelect/FormSelectFromServer";
+import { Input } from "../../components/Input/Input";
 
 
 export const ServPage = () => {
@@ -102,24 +102,23 @@ export const ServPage = () => {
                         <input {...register(`id`)} type="hidden" value={my_servise.id} />
                         <input {...register(`machine`)} type="hidden" value={my_servise.machine.id} />
                         <Text className="dark-color" as='h3'>дата заказ-наряда</Text>
-                        <RedactTextDate  type="date" field_name={"date_service"} value={my_servise.date_order}></RedactTextDate>
+                        <Input type="date" classText="dark-color" name={'date_service'}>{my_servise.date_order}</Input>
                     </div>
                     <div className="templates-element">
                         <Text className="dark-color" as='h3'>№ заказ-наряда</Text>
-                        <RedactTextDate field_name="order_No" value={my_servise.order_No}/>
+                        <Input type="text" classText="dark-color" name={'order_No'}>{my_servise.order_No}</Input>
                     </div>
                     <div className="templates-element">
                         <Text className="dark-color" as='h3'>Сервисная компания</Text>
-                        <RedactSelect field_user={true} path_for_serv="http://127.0.0.1:8000/users/v1/servicesorgan/" field_name="service_company" value={my_servise.service_company}/>
+                        <FormSelectFromServer  select="user" placeholder={my_servise.service_company.name} path="http://127.0.0.1:8000/users/v1/servicesorgan/" name="service_company">{my_servise.service_company}</FormSelectFromServer>
                     </div>
                     <div className="templates-element">
                         <Text className="dark-color" as='h3'>наработка, м/час</Text>
-                        <RedactTextDate field_name="working_hours" value={my_servise.working_hours}/>
+                        <Input type="number" classText="dark-color" name={'working_hours'}>{my_servise.working_hours}</Input>
                     </div>
                     <div className="templates-element">
                     <Text className="dark-color" as='h3'>Вид ТО :</Text>
-                    <RedactSelect path_for_serv="http://127.0.0.1:8000/api/service/v1/typeofservice/"
-             message="обязательно заполнить" field_name="type_of_service" value={my_servise.type_of_service}/>
+                    <FormSelectFromServer  select="user" placeholder={my_servise.type_of_service.name} path="http://127.0.0.1:8000/api/service/v1/typeofservice/" name="type_of_service">{my_servise.type_of_service}</FormSelectFromServer>
                     </div>  
                 </div> 
 

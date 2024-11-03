@@ -7,9 +7,7 @@ export const Styles = styled.div`
     font-family: Regular, serif;
     border-radius: 10px;
     text-align: center;
-
-    
-    
+        
  
     .tr {
       :last-child {
@@ -67,8 +65,11 @@ export const Styles = styled.div`
       [data-sticky-first-right-td] {
         box-shadow: -2px 0px 3px #ccc;
         border-radius: 2px;
-        
       }
+      @media (max-width: 1000px) {
+      .table sticky{
+        width: 500;
+      }}
     }
   }
 `

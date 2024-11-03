@@ -16,8 +16,6 @@ import machinesReducer from './machinesSlice'
 import targetmachineReducer from './targetmachineSlice'
 import reclamationReducer from './reclamationSlice'
 import servicesReducer from './servicesSlice'
-import clickIndexRowReducer from './clickIndexRow'
-
 
 
 
@@ -29,7 +27,7 @@ const rootReducer = combineReducers({
   targetmachine: targetmachineReducer,
   reclamation: reclamationReducer,
   services: servicesReducer,
-  clickIndex: clickIndexRowReducer,
+
 })
 
 const persistConfig = {

@@ -16,7 +16,7 @@ import { sortedDataBySerialNum } from "../../helpers/sortedData";
 import { sorted_id } from "../../helpers/sorted_id";
 import { StickyTableFilters } from "../Tables/StickyTableFilters";
 import { columnsFullMachine } from "../Tables/ColomnsTables/columnsFullMachine";
-import { setClick } from "../../store/clickIndexRow";
+
 
 
 
@@ -58,6 +58,8 @@ function MainPanel() {
     const client_and_serv = Boolean(isAuth.user_role === "client" || isAuth.user_role === "serviseorg" )
 
     const[machineObj, setMachineObj] = useState(null)
+
+    const serviseTO = useSelector(state => state.services)
    
 
     const DICT_ROLE = {
@@ -87,7 +89,12 @@ function MainPanel() {
     }, [macinesTable, flag])
 
     useEffect(() => {
-    }, [isTargetMachine])
+
+    }, [isTargetMachine ])
+
+    useEffect(() =>{
+
+    }, [isReclamation, isServices, isMashines])
 
     useEffect(() => {
         dispatch(removeTargetmachine())
@@ -122,16 +129,6 @@ function MainPanel() {
 
     }, [servicesTable, reclamationTable])
 
-
-    useEffect(() => {
-        const elements = document.querySelectorAll(".td")
-        elements.forEach((elem) => {
-            elem.addEventListener("click", (e) => {
-                const click_index = elem.classList[1]
-                dispatch(setClick(click_index))
-           })
-        })
-    })
 
     function addDataMachine(overload) {
         if(!isMashines.machines_data||overload){
@@ -256,12 +253,13 @@ function MainPanel() {
         </div>
             {machinesDataTable&& macinesTable&&!flag&&
             <StickyTableFilters dataTable={machinesDataTable} columnsTable={columnsFullMachine}/>}
-            <div className="main-panel-element">
             {redactionForManager&&!client_and_serv&&
-                <Button  onClick={() => {
-                    setIsTargetMachine(res=>!res)
-                    setFlag(res=>!res);
-                }}>{!flag?"Редактировать машину": "В меню"}</Button>}</div>
+                <div className="main-panel-element">
+                    <Button  onClick={() => {
+                        setIsTargetMachine(res=>!res)
+                        setFlag(res=>!res);
+                    }}>{!flag?"Редактировать машину": "В меню"}</Button>
+                </div>}
         <div className="main-panel-element">
             {!client_and_serv&&!redactionForManager&&!servicesTable&&!reclamationTable&&
                 <Button onClick={() => {
@@ -273,11 +271,11 @@ function MainPanel() {
 
         <div >
         {flag&&(createMachine||machineObj)&&
-                <MachinesTable createMachine={createMachine} machineObj={machineObj} addDataMachine={addDataMachine} setFlag={setFlag}/>}
+                <MachinesTable createMachine={createMachine} machineObj={machineObj} addDataMachine={addDataMachine} flag={flag} setFlag={setFlag}/>}
         </div>
         <div className="main-panel-element">
         {servicesTable&&!flag&&
-            <ServicesTable/>}
+            <ServicesTable addService={addDataService}/>}
         </div>
         <div className="main-panel-element">
         {reclamationTable&&!flag&&

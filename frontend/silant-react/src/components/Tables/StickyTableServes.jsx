@@ -1,9 +1,10 @@
-import React, { useEffect, useMemo } from "react";
-import { useTable, useBlockLayout, useSortBy, useFilters, useRowSelect} from 'react-table';
+import React, { useEffect, useMemo, useState } from "react";
+import { useTable, useBlockLayout, useSortBy, useFilters, useRowSelect, usePagination} from 'react-table';
 import { useSticky } from 'react-table-sticky'
 import { Styles } from "./TableStyles";
 import { useDispatch } from "react-redux";
 import { setTargetServID, removeTargetServID } from "../../store/servicesSlice";
+import { Button } from "../Button/Button";
 
 
 
@@ -22,7 +23,11 @@ function StickyTableServes({dataTable, columnsTable, ...resProps}) {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
+    page,
+    nextPage,
+    previousPage,
+    canNextPage,
+    canPreviousPage,
     prepareRow,
     selectedFlatRows,
   } = useTable(
@@ -45,23 +50,49 @@ function StickyTableServes({dataTable, columnsTable, ...resProps}) {
     useBlockLayout,
     useSticky,
     useSortBy,
+    usePagination,
     useRowSelect,
   )
+
+  const [screenWidth, setScreenWidth] = useState(1200);
 
   useEffect(() => {
     if(selectedFlatRows[0]?.isSelected){
         dispatch(setTargetServID(selectedFlatRows[0].values.id))
       }
+      else dispatch(removeTargetServID())
   },[selectedFlatRows])
-  
-    
 
-    const firstPageRows = rows.slice(0, 20)
+  window.addEventListener('resize', function () {
+    if(window.innerWidth>1300){
+      setScreenWidth(1200)
+    }
+    else if(window.innerWidth < 1300 && window.innerWidth> 1000){
+      setScreenWidth(window.innerWidth - 200)
+    }
+    else{
+      setScreenWidth(window.innerWidth - 100)
+    }
+  })
+
+  useEffect(() => {
+    if(window.innerWidth >1400){
+      setScreenWidth(1200)
+    }
+    else{
+      setScreenWidth(window.innerWidth - 200)
+    }
+
+
+  }, [screenWidth]);
+  
+
 
 
     return(
+  <>
     <Styles>
-      <div {...getTableProps()} className="table sticky" style={{ width: 800, height: "auto" }}>
+      <div {...getTableProps()} className="table sticky" style={{ width: screenWidth, height: "auto" }}>
         <div className="header">
           {headerGroups.map((headerGroup) => (
             <div {...headerGroup.getHeaderGroupProps()} className="tr">
@@ -80,7 +111,7 @@ function StickyTableServes({dataTable, columnsTable, ...resProps}) {
           ))}
         </div>
         <div {...getTableBodyProps()} className="body">
-          {firstPageRows.map((row) => {
+          {page.map((row) => {
             prepareRow(row);
             return (
               <div {...row.getRowProps()} className="tr">
@@ -96,6 +127,11 @@ function StickyTableServes({dataTable, columnsTable, ...resProps}) {
 
       </div>
     </Styles>
+        <div>
+          <Button onClick={() => previousPage()} disabled={!canPreviousPage}>{'<<<'}</Button>
+          <Button onClick={() => nextPage()} disabled={!canNextPage}>{'>>>'}</Button>
+        </div>
+  </>
     )
 }
 export {StickyTableServes}

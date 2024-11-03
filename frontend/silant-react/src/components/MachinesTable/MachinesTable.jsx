@@ -6,13 +6,12 @@ import { Button } from "../Button/Button";
 import axios from "axios";
 import { ColumnsMachinePatch } from "../Tables/ColomnsTables/columnsMachinePatch";
 import { StickyTableFilters } from "../Tables/StickyTableFilters";
-import { useNavigate } from "react-router-dom";
-import { Text } from "../Text/Text";
+import { StickyTableForPatch } from "../Tables/StickyTableForPath";
+import { isValid_data_patch } from "../../helpers/isValidData";
 
 
 
 export const MachinesTable = ({createMachine, machineObj, setFlag, addDataMachine}) => {    
-
 
 
     const {
@@ -47,42 +46,44 @@ export const MachinesTable = ({createMachine, machineObj, setFlag, addDataMachin
         service_company: ''
     }]
 
-    const navigate = useNavigate();
-
-    const goBack = () => navigate(-1)
-
-
     const onSubmitPost = (data) => {
-        if(data.target_serial_num){
-            delete data["target_serial_num"]
+        const dataIsValid = isValid_data_patch(data)
+        if(Object.keys(dataIsValid).length ===1){
+            return alert("Вы ничего не редактировали")
         }
-        axios.post(path_machine, data, isAuth.confermAut)
+
+        axios.post(path_machine, dataIsValid, isAuth.confermAut)
         .then(res => {
             alert("Машина создана!")
             setFlag(res=> !res)
             addDataMachine(overload=>!overload)
-            goBack()
         })
         .catch(err => {
-            alert(err.request.responseText)
+            alert(err.request?.responseText)
         })
         reset()
     }
 
     const onSubmitPatch = (data) => {
-        console.log(data)
-        const path_patch = path_machine + data.id +'/'
-        axios.patch(path_patch, data, isAuth.confermAut)
-        .then(res => {
-            alert("Редакция прошла успешно!")
-            setFlag(res=> !res)
-            addDataMachine(true)
+        const dataIsValid = isValid_data_patch(data)
+        if(Object.keys(dataIsValid).length ===1){
+            return alert("Вы ничего не редактировали")
+        }
+        else{
+            const path_patch = path_machine + data.id +'/'
+            axios.patch(path_patch, dataIsValid, isAuth.confermAut)
+            .then(res => {
+                alert("Редакция прошла успешно!")
+                setFlag(res=> !res)
+                addDataMachine(true)
+                reset()
+            })
+            .catch(err => {
+                alert(err.request?.responseText)
+            })
             reset()
-        })
-        .catch(err => {
-            alert(err.request.responseText)
-        })
-        reset()
+
+            }
     }
 
     const errorsSubmit = (data) => {
@@ -99,10 +100,9 @@ export const MachinesTable = ({createMachine, machineObj, setFlag, addDataMachin
                     <Button disabled={!isValid}>Создать машину</Button>
                 </form>}
                 {machineObj&&!createMachine&&
-                    <form onSubmit={handleSubmit(onSubmitPatch, errorsSubmit)}> 
-                    <Text>РЕДАКШЕНЫ</Text>           
-                        <StickyTableFilters dataTable={machineObj} columnsTable={ColumnsMachinePatch}/>
-                        <Button odisabled={!isValid} onClick={handleSubmit}>Редактировать машину</Button>
+                    <form onSubmit={handleSubmit(onSubmitPatch, errorsSubmit)}>          
+                        <StickyTableForPatch dataTable={machineObj} columnsTable={ColumnsMachinePatch}/>
+                        <Button odisabled={!isValid}>Редактировать машину</Button>
                 </form>}
             </div>
         </div>

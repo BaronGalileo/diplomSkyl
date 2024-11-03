@@ -20,10 +20,10 @@ export const RedactID = ({value, id_data="reclamation", name}) => {
 
     useEffect(() => {
         if(id_data ==="reclamation"){
-            setValueMachine(title_by_reclama.ids[value].machine.brand)
+            setValueMachine(title_by_reclama.ids[value]?.machine.serial_num)
         }
         if(id_data ==="services"){
-            setValueMachine(title_by_service.ids[value].machine.brand)
+            setValueMachine(title_by_service.ids[value]?.machine.serial_num)
         }
     }, [])
 

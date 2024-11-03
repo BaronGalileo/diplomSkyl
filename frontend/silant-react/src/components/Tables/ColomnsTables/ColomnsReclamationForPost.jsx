@@ -1,6 +1,3 @@
-import { RedactTextDate } from '../../ElementForRedaction/RedactTextDate';
-import { FormChoiceMachine } from '../../FormComponents/FormChoiceMachine/FormChoiceMachine';
-import { FormChoiceServiceOrg } from '../../FormComponents/FormChoiceServiceOrg/FormChoiceServiceOrg';
 import { FormSelectFromServer } from '../../FormComponents/FormComponentSelect/FormSelectFromServer';
 import { Input } from '../../Input/Input'
 import { SelectForReclama } from '../../ReclamationTable/SelectForReclama';
@@ -38,7 +35,7 @@ export const ColomnsReclamationPOST = [
     {
         Header: 'узел отказа',
         accessor: 'failure_node',
-        Cell: ({value}) => { return (<FormSelectFromServer path="http://127.0.0.1:8000/api/service/v1/failurenode/"
+        Cell: ({value}) => { return (<FormSelectFromServer select="name" path="http://127.0.0.1:8000/api/service/v1/failurenode/"
              message="обязательно заполнить" name="failure_node">{value}</FormSelectFromServer>)},
         disableSortBy: true,
     },
@@ -51,7 +48,7 @@ export const ColomnsReclamationPOST = [
     {
         Header: 'способ восстановления',
         accessor: 'recovery_method',
-        Cell: ({value}) => { return (<FormSelectFromServer path="http://127.0.0.1:8000/api/service/v1/recoverymethod/"
+        Cell: ({value}) => { return (<FormSelectFromServer select="name" path="http://127.0.0.1:8000/api/service/v1/recoverymethod/"
              message="Выберете метод" name="recovery_method">{value}</FormSelectFromServer>)},
         disableSortBy: true,
     },
