@@ -46,10 +46,21 @@ main {
   .btn{
     font-size: 12px;
   }
-  .td {
-    width: 100px;
+  .frame-tables {
+    display: flex;
+    flex-direction: column;
+    font-size: 15px;
   }
+  .result-machine{
+    font-size: 0.8rem;
+  }
+  .tablesMachine-element {
+    width: 90%;
 
+  }
+  .columns {
+    width: 75%;
+  }
   
   
   }

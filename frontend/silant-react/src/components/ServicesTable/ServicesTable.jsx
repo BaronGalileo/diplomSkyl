@@ -113,7 +113,6 @@ export const ServicesTable = ({addService}) => {
                 alert("Заяка на ТО успешна принята")
             })
             .catch(err => {
-                console.log("ERROR", err, data)
                 if(err.request.status >= 500) {
                     alert("Извените, проблема с сервером, попробуйте отправить позже!");
                     reset()
@@ -153,7 +152,6 @@ export const ServicesTable = ({addService}) => {
                 alert("Редакция на ТО успешна принята")
             })
             .catch(err => {
-                console.log("ERROR", err, data)
                 if(err.request.status >= 500) {
                     alert("Извените, проблема с сервером, попробуйте отправить позже!");
                     reset()
@@ -166,10 +164,6 @@ export const ServicesTable = ({addService}) => {
         reset()
     }
 
-    const errorSubmit = (data) => {
-        console.log("ERROR", data)
-    }
-    
 
     return(
         <div className="reclamation-wrapper">
@@ -188,18 +182,18 @@ export const ServicesTable = ({addService}) => {
             {!redaction&&
                     <Button className={!flag ? "red" : ""} onClick={() => {setFlag(res=>!res)}}>{!flag?"Заказать ТО": "Назад"}</Button>}
                 {flag&&!redaction&&target.target&&
-                    <form onSubmit={handleSubmit(onSubmitPost, errorSubmit)}>               
+                    <form onSubmit={handleSubmit(onSubmitPost)}>               
                         <StickyTableServes dataTable={service_data} columnsTable={ColomnsServicePost}/>
                         <Button disabled={!isValid}>Заказать ТО</Button>
                     </form>}
 
                 {flag&&!redaction&&!target.target&&
-                <form onSubmit={handleSubmit(onSubmitPost, errorSubmit)}>               
+                <form onSubmit={handleSubmit(onSubmitPost)}>               
                     <StickyTableServes dataTable={service_data} columnsTable={ColomnsServicePostNotMachine}/>
                     <Button disabled={!isValid}>Заказать ТО</Button>
                 </form>}
                 {flag&&redaction&&
-                    <form onSubmit={handleSubmit(onSubmitPatch, errorSubmit)}>
+                    <form onSubmit={handleSubmit(onSubmitPatch)}>
                         <StickyTableForPatch dataTable={redactionData} columnsTable={ColomnsServicePatch}/>
                         <Button >Редактировать</Button>                    
                     </form>}

@@ -63,13 +63,6 @@ const one_machineSlice = createSlice({
             state.driving_axle_num = null;
             state.model_of_a_controlled_bridge = null;
             state.num_of_a_controlled_bridge = null;
-            state.contractNo = null;
-            state.date_from_the_factory = null;
-            state.consignee = null;
-            state.delivery_address = null;
-            state.equipment = null;
-            state.client = null;
-            state.service_company = null;
 
         },
     }

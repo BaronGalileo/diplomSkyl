@@ -20,7 +20,6 @@ function Login() {
             axios.get(pach_user_role, isAuth.confermAut)
             .then(res => {
                 res.data.roles.map(val => {
-                    console.log("res.data", res.data)
                     if(val[0]){
                         const accountAdd = {
                             name: val[0]?.name,
@@ -68,7 +67,6 @@ function Login() {
         
         })
         .catch(err => {
-            console.log(err.request.status)
             if(err.request.status === 401){
                 alert("Вы ошиблись! Проверьте Логин и Пароль");
                 reset()

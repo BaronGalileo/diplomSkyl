@@ -116,7 +116,6 @@ export const ServPage = () => {
                 goBack()
             })
             .catch(err => {
-                console.log("ERROR", err, data)
                 if(err.request.status >= 500) {
                     alert("Извените, проблема с сервером, попробуйте отправить позже!");
                     reset()

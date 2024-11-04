@@ -28,8 +28,7 @@ function FindMachine() {
 
     function onSubmit(data){
         reset()
-        axios.get(path + data.serial_num, isAuth.confermAut).then(res => {
-            console.log(res.data)
+        axios.get(path + data.serial_num).then(res => {
             const my_machine = {
                 brand: res.data.brand,
                 serial_num:  res.data.serial_num,
@@ -43,7 +42,6 @@ function FindMachine() {
                 model_of_a_controlled_bridge: res.data.model_of_a_controlled_bridge.name,
                 num_of_a_controlled_bridge: res.data.num_of_a_controlled_bridge,
             }
-                console.log("machine", my_machine)
                 dispatch(setOne_machine(my_machine))
         }).catch(err => {
             if(err.status === 404)

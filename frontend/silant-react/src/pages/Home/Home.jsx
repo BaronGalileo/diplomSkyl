@@ -10,14 +10,6 @@ function Home() {
 
     const isAuth = useSelector(state => state.auth)
 
-    const target = useSelector(state => state.targetmachine)
-
-    const isReclamation = useSelector(state => state.reclamation)
-
-    const isMashines = useSelector(state => state.machines)
-
-    const isServices = useSelector(state => state.services)
-
 
 
     return(

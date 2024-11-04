@@ -21,10 +21,8 @@ function ResultFind() {
                 <Text className="left" as="h3">Результат поиска:</Text>
                 <Text as="h3">Информация о комплектации и технических характеристиках Вашей техники</Text>
                     <div className="tablesMachine-wrapper">
-                    <TablesElement  classNameText="bold" dictionary={frame_dict}/>
                     <div className="tables_row">
                         <TablesElement key_of_dictionary={mashine_dict}  dictionary={targetMachine} classNameFrame="column" classNameText="italic"/>
-                        <TablesElement   dictionary={targetMachine} classNameFrame="column"classNameText="italic"/>
                     </div>                 
 
                                        

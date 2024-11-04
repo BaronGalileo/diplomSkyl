@@ -8,10 +8,18 @@
 
 .tablesMachine-wrapper {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.result-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .tablesMachine-element {
+    width: 45%;
     margin: 1px;
     padding: 3px;
     border-radius: 5px;
@@ -29,4 +37,10 @@
 
 .information {
     width: 70%;
+}
+
+.colum{
+    display: flex;
+    flex-direction: column;
+
 }

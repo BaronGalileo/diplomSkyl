@@ -15,7 +15,6 @@ export const ColumnFilter = ({ column }) => {
                 {flag&&
                     <input className="filter-input" value={filterValue || ''}
                 onChange={(e) => {setFilter(e.target.value)
-                    console.log("e.FILTER",e.target.value)
                 }}/>
                 }
             </form>

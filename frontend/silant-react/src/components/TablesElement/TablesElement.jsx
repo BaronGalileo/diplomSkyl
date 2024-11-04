@@ -12,6 +12,7 @@ function TablesElement({dictionary = {}, key_of_dictionary=false, classNameText 
 
     const classesText = classNames(
         !clearTxt? 'dark-color' : null,
+        'result-machine',
         classNameText,
     )
 
@@ -19,18 +20,18 @@ function TablesElement({dictionary = {}, key_of_dictionary=false, classNameText 
         <div className={classes} {...restProps}>
             {Object.entries(dictionary).map(key => {
                 if(key_of_dictionary && key[1]){
+
                     return(
-                        <div className="tablesMachine-element" key={key}>
-                            <Text className={classesText}>{key_of_dictionary[key[0]]}</Text>
+                        <div className="table_row" key={key}>
+                            <div className="tablesMachine-element" >
+                                <Text className={classesText}>{key_of_dictionary[key[0]]}</Text>
+                            </div>
+                            <div className="tablesMachine-element" >
+                                <Text className={classesText}>{key[1]}</Text>
+                            </div>
                         </div>
                     )
                 }
-                else if(!key_of_dictionary && key[1]){ 
-                    return(
-                    <div className="tablesMachine-element name" key={key}>
-                        <Text className={classesText}>{key[1]}</Text>
-                    </div>
-                )}
             })}
         </div>
     )
