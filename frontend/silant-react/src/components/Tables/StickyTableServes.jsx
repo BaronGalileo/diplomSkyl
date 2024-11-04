@@ -54,7 +54,7 @@ function StickyTableServes({dataTable, columnsTable, ...resProps}) {
     useRowSelect,
   )
 
-  const [screenWidth, setScreenWidth] = useState(1200);
+  const [screenWidth, setScreenWidth] = useState(900);
 
   useEffect(() => {
     if(selectedFlatRows[0]?.isSelected){
@@ -64,23 +64,26 @@ function StickyTableServes({dataTable, columnsTable, ...resProps}) {
   },[selectedFlatRows])
 
   window.addEventListener('resize', function () {
-    if(window.innerWidth>1300){
-      setScreenWidth(1200)
+    if(window.innerWidth >1400){
+      setScreenWidth(900)
     }
     else if(window.innerWidth < 1300 && window.innerWidth> 1000){
-      setScreenWidth(window.innerWidth - 200)
+      setScreenWidth(window.innerWidth - 150)
+    }
+    else if(window.innerWidth < 1000 && window.innerWidth> 500){
+      setScreenWidth(window.innerWidth - 70)
     }
     else{
-      setScreenWidth(window.innerWidth - 100)
+      setScreenWidth(window.innerWidth - 10)
     }
   })
 
   useEffect(() => {
     if(window.innerWidth >1400){
-      setScreenWidth(1200)
+      setScreenWidth(900)
     }
     else{
-      setScreenWidth(window.innerWidth - 200)
+      setScreenWidth(window.innerWidth - 50)
     }
 
 

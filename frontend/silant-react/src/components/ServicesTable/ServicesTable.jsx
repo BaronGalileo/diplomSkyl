@@ -5,7 +5,7 @@ import { useFormContext } from "react-hook-form"
 import { Button } from "../Button/Button";
 import { ColomnsServicePost } from "../Tables/ColomnsTables/columnsServicePost";
 import axios from "axios";
-import { removeServices, removeTargetServID } from "../../store/servicesSlice";
+import { removeTargetServID } from "../../store/servicesSlice";
 import { ColomnsServicePatch } from "../Tables/ColomnsTables/columnsServicePatch";
 import { StickyTableServes } from "../Tables/StickyTableServes";
 import { ColomnsServicePostNotMachine } from "../Tables/ColomnsTables/ColumnsServicePostNotMachine";
@@ -26,6 +26,8 @@ export const ServicesTable = ({addService}) => {
     const isServices = useSelector(state => state.services)
 
     const target = useSelector(state => state.targetmachine)
+
+    const machine_obj = useSelector(state => state.machines.ids)
 
     const targetService = useSelector(state => state.services.targetServID)
 
@@ -94,6 +96,8 @@ export const ServicesTable = ({addService}) => {
 
     const onSubmitPost = (data) => {
         const dataIsValid = isValid_data_patch(data)
+        const servOrgID = machine_obj.ids[data.machine]?.service_company.user
+        dataIsValid['service_company'] = servOrgID
         if(dataIsValid.date_service&&timeNew>dataIsValid.date_service){
                 alert("Невозможно вернуться в прошлое. Поменяйте, пожалуйста, дату проведения ТО")
     
@@ -177,12 +181,12 @@ export const ServicesTable = ({addService}) => {
 
                 {redaction&&
                 <div classnema="reclamation-element">
-                    <Button onClick={() => {setFlag(res=>!res)}}>{!flag?"Редактировать ТО": "Назад"}</Button>
+                    <Button className={!flag ? "red" : ""} onClick={() => {setFlag(res=>!res)}}>{!flag?"Редактировать ТО": "Назад"}</Button>
                 </div>}
             </div>
             <div classnema="reclamation-element">
             {!redaction&&
-                    <Button onClick={() => {setFlag(res=>!res)}}>{!flag?"Заказать ТО": "Назад"}</Button>}
+                    <Button className={!flag ? "red" : ""} onClick={() => {setFlag(res=>!res)}}>{!flag?"Заказать ТО": "Назад"}</Button>}
                 {flag&&!redaction&&target.target&&
                     <form onSubmit={handleSubmit(onSubmitPost, errorSubmit)}>               
                         <StickyTableServes dataTable={service_data} columnsTable={ColomnsServicePost}/>

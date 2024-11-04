@@ -7,7 +7,7 @@ import { Input } from '../../Input/Input';
 
 export const ColomnsReclamaRedact = [
 
-    {
+    {   width:'70',
         Header: 'машина',
         accessor: 'id',
         sticky: 'left',

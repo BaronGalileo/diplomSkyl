@@ -38,18 +38,27 @@ function StickyTableForPatch({dataTable, columnsTable, ...resProps}) {
 
 
     
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth - 200);
+  const [screenWidth, setScreenWidth] = useState(1050);
 
   window.addEventListener('resize', function () {
-    if(window.window.innerWidth<= screenWidth){
-      setScreenWidth(window.window.innerWidth - 200)
+    if(window.innerWidth>1300){
+      setScreenWidth(1050)
     }
-    else if(window.window.innerWidth > 350 + screenWidth){
-      setScreenWidth(window.window.innerWidth - 200)
+    else if(window.innerWidth < 1300 && window.innerWidth> 1000){
+      setScreenWidth(window.innerWidth - 100)
+    }
+    else{
+      setScreenWidth(window.innerWidth - 50)
     }
   })
   
     useEffect(() => {
+      if(window.innerWidth >1400){
+        setScreenWidth(1050)
+      }
+      else{
+        setScreenWidth(window.innerWidth - 50)
+      }
   
   
   }, [screenWidth]);

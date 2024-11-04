@@ -24,3 +24,10 @@
     flex-direction: column;
     width: 100%;
 }
+
+@media (max-width: 800px) {
+
+    .templates-element{
+      flex-direction: column;
+    }
+}

@@ -54,7 +54,7 @@ function StickyTableReclama({dataTable, columnsTable, ...resProps}) {
     useRowSelect,
   )
 
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth - 200);
+  const [screenWidth, setScreenWidth] = useState(1200);
 
   useEffect(() => {
     if(selectedFlatRows[0]?.isSelected){
@@ -66,15 +66,30 @@ function StickyTableReclama({dataTable, columnsTable, ...resProps}) {
 
 
   window.addEventListener('resize', function () {
-    if(window.window.innerWidth<= screenWidth){
-      setScreenWidth(window.window.innerWidth - 200)
+    if(window.innerWidth>1600){
+      setScreenWidth(1200)
     }
-    else if(window.window.innerWidth > 350 + screenWidth){
-      setScreenWidth(window.window.innerWidth - 200)
+    else if(window.innerWidth < 1600 && window.innerWidth> 1000){
+      setScreenWidth(window.innerWidth - 200)
+    }
+    else if(window.innerWidth < 800 && window.innerWidth> 500){
+      setScreenWidth(window.innerWidth - 30)
+    }
+    else{
+      setScreenWidth(window.innerWidth)
     }
   })
 
   useEffect(() => {
+    if(window.innerWidth >1600){
+      setScreenWidth(1200)
+    }
+    else if (window.innerWidth < 1400 && window.innerWidth > 800){
+      setScreenWidth(window.innerWidth - 100)
+    }
+    else{
+      setScreenWidth(window.innerWidth - 50)
+    }
 
 
   }, [screenWidth]);

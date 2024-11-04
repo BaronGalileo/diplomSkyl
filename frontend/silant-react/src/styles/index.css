@@ -31,10 +31,27 @@ main {
 
 
 
-@media (max-width: 1035px) {
-    .col1 {
-      background-color: aqua;   
+@media (max-width: 800px) {
+  .btn{
+    font-size: 14px;
   }
+  .templates-element{
+    flex-direction: column;
+  }
+
+
+  }
+
+@media (max-width: 500px) {
+  .btn{
+    font-size: 12px;
+  }
+  .td {
+    width: 100px;
+  }
+
+  
+  
   }
 
 

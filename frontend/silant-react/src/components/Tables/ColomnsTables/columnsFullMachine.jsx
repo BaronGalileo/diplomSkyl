@@ -15,6 +15,7 @@ import { FilterAxeModel } from "../FiltersSelect/FilterAxeModel"
 
 export const columnsFullMachine = [
     {   
+        width:'100',
         Header: 'Зав.№ машины',
         accessor: 'serial_num',
         sticky: 'left',
@@ -28,7 +29,6 @@ export const columnsFullMachine = [
     {
         Header: 'Бренд',
         accessor: 'brand',
-        sticky: 'left',
         disableSortBy: true,
         Cell: ({value, row }) => {return(<MachineFromTable   path_ser="machine/" data_row={row} field_value={value}/>)}
     },
@@ -133,6 +133,7 @@ export const columnsFullMachine = [
         Cell: ({value}) => { return (<Button clean className="btn-table" href={`http://localhost:3000/servicesorgan/${value.user}`}>{value.name}</Button>)},
     },
     {
+        width:'70',
         Header: 'id',
         accessor: 'id',
         disableSortBy: true,

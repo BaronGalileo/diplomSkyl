@@ -7,16 +7,14 @@ export const ColomnsServicePostNotMachine = [
         accessor: 'machine.serial_num',
         sticky: 'left',
         Cell: ({value}) => { return (<FormSelectFromServer select="machine" message="обязательно заполнить" path="http://127.0.0.1:8000/api/v1/machine/" name="machine">{value}</FormSelectFromServer>)},
-        // Cell: () => {return(<FindMachines path="http://127.0.0.1:8000/api/v1/machine" name='machine' />)},
         disableSortBy: true,
     },
-    {
-        Header: 'сервисная компания',
-        accessor: 'service_company',
-        sticky: 'left',
-        Cell: ({value}) => {return(<FormSelectFromServer select="user" path="http://127.0.0.1:8000/users/v1/servicesorgan/" name='service_company' >{value}</FormSelectFromServer>)},
-        disableSortBy: true,
-    },
+    // {
+    //     Header: 'сервисная компания',
+    //     accessor: 'service_company',
+    //     Cell: ({value}) => {return(<FormSelectFromServer select="user" path="http://127.0.0.1:8000/users/v1/servicesorgan/" name='service_company' >{value}</FormSelectFromServer>)},
+    //     disableSortBy: true,
+    // },
     {
         Header: 'дата проведения ТО',
         accessor: 'date_service',

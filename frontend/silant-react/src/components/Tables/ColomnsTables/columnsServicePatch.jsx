@@ -16,7 +16,6 @@ export const ColomnsServicePatch = [
     {
         Header: 'сервисная компания',
         accessor: 'service_company',
-        sticky: 'left',
         Cell: ({value}) => {return(<RedactElementNoyTouch  value={value}/>)},
         disableSortBy: true,
     },

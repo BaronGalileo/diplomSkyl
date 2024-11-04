@@ -6,7 +6,6 @@ import { Notfoundpage } from './pages/NotFoundPage/Notfoundpage';
 import { useForm, FormProvider } from "react-hook-form";
 import './styles/index.css'
 import { LoginPage } from './pages/LoginPage/LoginPage';
-import { Test } from './pages/test/test';
 import { ExaminationExpires } from './components/Examination/ExaminationExpires';
 import { TemplateElement } from './pages/TemplateElements/TemlateElement';
 import { MachinePage } from './pages/MachinePage/MachinePage';

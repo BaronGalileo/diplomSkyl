@@ -13,13 +13,12 @@ export const ColomnsReclamationPOST = [
         Cell: () => { return (<SelectForReclama name="machine" machine path="http://127.0.0.1:8000/api/v1/machine/"/>)},
         disableSortBy: true,
     },
-    {
-        Header: 'сервисная компания',
-        accessor: 'service_company',
-        // sticky: 'left',
-        Cell: () => { return (<SelectForReclama name="service_company" path="http://127.0.0.1:8000/users/v1/servicesorgan/"/>)},
-        disableSortBy: true,
-    },
+    // {
+    //     Header: 'сервисная компания',
+    //     accessor: 'service_company',
+    //     Cell: () => { return (<SelectForReclama name="service_company" path="http://127.0.0.1:8000/users/v1/servicesorgan/"/>)},
+    //     disableSortBy: true,
+    // },
     {
         Header: 'дата отказа',
         accessor: 'date_of_failure',

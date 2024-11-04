@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button } from "../Button/Button";
 import {  useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
@@ -17,7 +17,6 @@ export const FindTempateServisOrg = ({ data_row, path, children}) => {
 
 
     const clickKlack = () => {
-        debugger
         if(data_row.index || data_row.index === 0) {
             const elementID = data_row.values.id
             const company = reclama[elementID].service_company.user

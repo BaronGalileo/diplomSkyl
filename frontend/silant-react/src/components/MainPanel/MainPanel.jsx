@@ -33,6 +33,8 @@ function MainPanel() {
 
     const target = useSelector(state => state.targetmachine)
 
+    const reloud = useSelector(state => state.reloadData.reload)
+
     const[isTargetMachine, setIsTargetMachine] = useState(false)
 
     const[isTargetMachineForManager, setIsTargetMachineForManager] = useState(false)
@@ -87,6 +89,12 @@ function MainPanel() {
         addDataMachine()
         
     }, [macinesTable, flag])
+
+    useEffect(() => {
+        addDataMachine(reloud)
+        addDataService(reloud)
+        addDataReclamations(reloud)
+    }, [reloud])
 
     useEffect(() => {
 
@@ -255,14 +263,14 @@ function MainPanel() {
             <StickyTableFilters dataTable={machinesDataTable} columnsTable={columnsFullMachine}/>}
             {redactionForManager&&!client_and_serv&&
                 <div className="main-panel-element">
-                    <Button  onClick={() => {
+                    <Button className={!flag ? "red" : ""} onClick={() => {
                         setIsTargetMachine(res=>!res)
                         setFlag(res=>!res);
                     }}>{!flag?"Редактировать машину": "В меню"}</Button>
                 </div>}
         <div className="main-panel-element">
             {!client_and_serv&&!redactionForManager&&!servicesTable&&!reclamationTable&&
-                <Button onClick={() => {
+                <Button className={!flag ? "red" : ""} onClick={() => {
                     setCreateMachine(res=>!res)
                     setFlag(res=>!res)
                 }}

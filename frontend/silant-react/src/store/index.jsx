@@ -16,6 +16,7 @@ import machinesReducer from './machinesSlice'
 import targetmachineReducer from './targetmachineSlice'
 import reclamationReducer from './reclamationSlice'
 import servicesReducer from './servicesSlice'
+import reloadDataReducer from './reloadData'
 
 
 
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   targetmachine: targetmachineReducer,
   reclamation: reclamationReducer,
   services: servicesReducer,
+  reloadData: reloadDataReducer,
 
 })
 

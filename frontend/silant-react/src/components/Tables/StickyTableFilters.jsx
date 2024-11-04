@@ -33,6 +33,9 @@ function StickyTableFilters({dataTable, columnsTable, ...resProps}) {
     {
       columns,
       data,
+      initialState: {
+        width: 100,
+      },
       stateReducer: (newState, action) => {
         if (action.type === "toggleRowSelected") {
           if(!action.value){
@@ -63,15 +66,30 @@ function StickyTableFilters({dataTable, columnsTable, ...resProps}) {
 const [screenWidth, setScreenWidth] = useState(window.innerWidth - 200);
 
 window.addEventListener('resize', function () {
-  if(window.innerWidth<= screenWidth){
+  if(window.innerWidth>1600){
     setScreenWidth(window.innerWidth - 200)
   }
-  else if(window.innerWidth > 350 + screenWidth){
+  else if(window.innerWidth < 1600 && window.innerWidth> 1000){
     setScreenWidth(window.innerWidth - 200)
+  }
+  else if(window.innerWidth < 1000 && window.innerWidth> 500){
+    setScreenWidth(window.innerWidth - 100)
+  }
+  else{
+    setScreenWidth(window.innerWidth - 50)
   }
 })
 
   useEffect(() => {
+    if(window.innerWidth >1600){
+      setScreenWidth(window.innerWidth - 200)
+    }
+    else if(window.innerWidth >700 && window.innerWidth < 1600){
+      setScreenWidth(window.innerWidth - 100)
+    }
+    else{
+      setScreenWidth(window.innerWidth - 50)
+    }
 
 }, [screenWidth]); 
 

@@ -14,7 +14,6 @@ export const ColumnsMachinePost = [
     {   
         Header: 'Зав.№ машины',
         accessor: 'serial_num',
-        sticky: 'left',
         Cell: () => { return (<Input type="text"  name={'serial_num'}/>)},
         disableSortBy: true,
     },

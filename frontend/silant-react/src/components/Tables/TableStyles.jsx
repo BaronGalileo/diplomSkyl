@@ -19,7 +19,7 @@ export const Styles = styled.div`
  
     .th,
     .td {
-      padding: 3px;
+      padding: 1px;
       border-bottom: 3px solid #ddd;
       border-right: 3px solid #ddd;
       background-color: #EBE6D6;
@@ -66,10 +66,6 @@ export const Styles = styled.div`
         box-shadow: -2px 0px 3px #ccc;
         border-radius: 2px;
       }
-      @media (max-width: 1000px) {
-      .table sticky{
-        width: 500;
-      }}
     }
   }
 `

@@ -8,19 +8,19 @@ import { Input } from '../../Input/Input'
 export const ColomnsReclamationPOSTWithMachine = [
 
     {
+        width:'100',
         Header: 'Серийный номер',
         accessor: 'machine',
         sticky: 'left',
         Cell: () => { return (<FormChoiceMachine/>)},
         disableSortBy: true,
     },
-    {
-        Header: 'Сервисная компания',
-        accessor: 'service_company',
-        // sticky: 'left',
-        Cell: () => { return (<FormChoiceServiceOrg/>)},
-        disableSortBy: true,
-    },
+    // {
+    //     Header: 'Сервисная компания',
+    //     accessor: 'service_company',
+    //     Cell: () => { return (<FormChoiceServiceOrg/>)},
+    //     disableSortBy: true,
+    // },
     {
         Header: 'дата отказа',
         accessor: 'date_of_failure',

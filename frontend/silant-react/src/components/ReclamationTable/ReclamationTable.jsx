@@ -21,7 +21,9 @@ export const ReclamationTable = ({addReclama}) => {
 
     const role_user_is_client = isAuth.user_role === "client"
 
-    const isMachines = useSelector(state => state.machines.machine_obj)
+    const machine_obj = useSelector(state => state.machines.ids)
+
+    // const isMachines = useSelector(state => state.machines.machine_obj)
 
     const isReclamation = useSelector(state => state.reclamation)
 
@@ -114,12 +116,15 @@ export const ReclamationTable = ({addReclama}) => {
 
     }]
 
+
     const path_reclamation = "http://127.0.0.1:8000/api/service/v1/reclamation/"
 
 
 
     const onSubmitPost = (data) => {
         const dataIsValid = isValid_data_patch(data)
+        const servOrgID = machine_obj.ids[data.machine]?.service_company.user
+        dataIsValid['service_company'] = servOrgID
         const date_start = dataIsValid.date_of_failure 
         const date_finish = dataIsValid.date_of_restoration
         if(date_start >= date_finish){
@@ -172,7 +177,7 @@ export const ReclamationTable = ({addReclama}) => {
             })
 
         }}
-    
+   
 
 
     if(!isReclamation.sorted_data[target]&&!isReclamation.data) return <></>
@@ -189,7 +194,7 @@ export const ReclamationTable = ({addReclama}) => {
             {!role_user_is_client&&
                 <div classnema="reclamation-element">
                     {!redaction&&
-                        <Button onClick={() => {setFlag(res=>!res)}}>{!flag?"Написать рекламацию": "Назад"}</Button>}
+                        <Button className={!flag ? "red" : ""} onClick={() => {setFlag(res=>!res)}}>{!flag?"Написать рекламацию": "Назад"}</Button>}
                     <form onSubmit={handleSubmit(onSubmitPost)}> 
                     {!target&&flag&&!redaction&&   
                        <div classnema="reclamation-element">   
@@ -204,12 +209,12 @@ export const ReclamationTable = ({addReclama}) => {
                     </div>
                     </form>
                     {redaction&&
-                        <Button onClick={() => {setFlag(res=>!res)}}>{!flag?"Редактировать рекламацию": "Назад"}</Button>}
+                        <Button className={!flag ? "red" : ""} onClick={() => {setFlag(res=>!res)}}>{!flag?"Редактировать рекламацию": "Назад"}</Button>}
                     {flag&&redaction&&
                         <form onSubmit={handleSubmit(onSubmitPatch)}>
                             <div classnema="reclamation-element">
                             <StickyTableForPatch dataTable={redactionData} columnsTable={ColomnsReclamaRedact}/>
-                            <Button disabled={!isValid}>Редактировать рекламацию</Button> 
+                            <Button className="red" disabled={!isValid}>Редактировать рекламацию</Button> 
                             </div>
                         </form>}
 

@@ -7,7 +7,8 @@ import { FilterNumber } from "../FiltersSelect/FilterNumber"
 import { FilterTOSelect } from "../FiltersSelect/FilterTOSelect"
 
 export const ColomnsService = [
-    {
+    {   
+        width:'70',
         Header: 'ID',
         accessor: 'id',
         sticky: 'left',
@@ -21,7 +22,6 @@ export const ColomnsService = [
     {
         Header: 'Серийный номер машины',
         accessor: 'machine.serial_num',
-        sticky: 'left',
         disableSortBy: true,
         Filter: FilterNumber,
         Cell: ({value, row}) => { return (<FindTempateElement role="servis" name_fild="machine" data_row={row} path='machine/'>{value}</FindTempateElement>)},

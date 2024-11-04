@@ -11,13 +11,12 @@ export const ColomnsServicePost = [
         Cell: () => {return(<FormChoiceMachine/>)},
         disableSortBy: true,
     },
-    {
-        Header: 'сервисная компания',
-        accessor: 'service_company',
-        sticky: 'left',
-        Cell: () => {return(<FormChoiceServiceOrg/>)},
-        disableSortBy: true,
-    },
+    // {
+    //     Header: 'сервисная компания',
+    //     accessor: 'service_company',
+    //     Cell: () => {return(<FormChoiceServiceOrg/>)},
+    //     disableSortBy: true,
+    // },
     {
         Header: 'дата проведения ТО',
         accessor: 'date_service',
@@ -48,4 +47,5 @@ export const ColomnsServicePost = [
         Cell: () => { return (<Input type="date"  name={'date_order'}></Input>)},
         disableSortBy: true,
     },
+
 ]

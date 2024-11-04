@@ -23,7 +23,7 @@ function ResultFind() {
                     <div className="tablesMachine-wrapper">
                     <TablesElement  classNameText="bold" dictionary={frame_dict}/>
                     <div className="tables_row">
-                        <TablesElement key_of_dictionary={mashine_dict}  dictionary={targetMachine} classNameFrame="column" classNameText="bold"/>
+                        <TablesElement key_of_dictionary={mashine_dict}  dictionary={targetMachine} classNameFrame="column" classNameText="italic"/>
                         <TablesElement   dictionary={targetMachine} classNameFrame="column"classNameText="italic"/>
                     </div>                 
 

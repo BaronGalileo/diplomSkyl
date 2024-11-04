@@ -9,7 +9,8 @@ import { FilterNodeSelect } from "../FiltersSelect/FilterNodeSelect"
 import { FilterRecoveryMetod } from "../FiltersSelect/FilterRecoveryMetod"
 
 export const ColomnsReclamation = [
-    {     
+    {   
+        width:'50',    
         Header: 'Id',
         accessor: 'id',
         sticky: 'left',

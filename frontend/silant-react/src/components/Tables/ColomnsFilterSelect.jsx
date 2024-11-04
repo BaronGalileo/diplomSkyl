@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import './styles.css'
 import { Button } from "../Button/Button";
 import axios from "axios";
 import { useSelector } from "react-redux";
