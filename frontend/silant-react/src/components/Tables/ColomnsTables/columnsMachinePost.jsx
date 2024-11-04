@@ -4,17 +4,18 @@ import { Input } from "../../Input/Input"
 
 
 export const ColumnsMachinePost = [
+    {   
+        Header: 'Зав.№ машины',
+        sticky: 'left',
+        accessor: 'serial_num',
+        Cell: () => { return (<Input type="text"  name={'serial_num'}/>)},
+        disableSortBy: true,
+    },
     {
         Header: 'Бренд',
         accessor: 'brand',
         sticky: 'left',
         Cell: () => { return (<Input type="text"  name={'brand'}/>)},
-        disableSortBy: true,
-    },
-    {   
-        Header: 'Зав.№ машины',
-        accessor: 'serial_num',
-        Cell: () => { return (<Input type="text"  name={'serial_num'}/>)},
         disableSortBy: true,
     },
     {

@@ -9,7 +9,7 @@ export const ColomnsReclamationPOSTWithMachine = [
 
     {
         width:'100',
-        Header: 'Серийный номер',
+        Header: 'Зав.№ машины',
         accessor: 'machine',
         sticky: 'left',
         Cell: () => { return (<FormChoiceMachine/>)},

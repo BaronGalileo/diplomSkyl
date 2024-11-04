@@ -3,7 +3,7 @@ import { Input } from '../../Input/Input'
 
 export const ColomnsServicePostNotMachine = [
     {
-        Header: 'Машина',
+        Header: 'Зав.№ машины',
         accessor: 'machine.serial_num',
         sticky: 'left',
         Cell: ({value}) => { return (<FormSelectFromServer select="machine" message="обязательно заполнить" path="http://127.0.0.1:8000/api/v1/machine/" name="machine">{value}</FormSelectFromServer>)},

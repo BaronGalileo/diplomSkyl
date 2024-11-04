@@ -1,13 +1,13 @@
 
 export const COLUMNS = [
     {
-        Header: 'Бренд',
-        accessor: 'brand',
+        Header: 'Зав.№ машины',
+        accessor: 'serial_num',
         sticky: 'left'
     },
     {
-        Header: 'Зав.№ машины',
-        accessor: 'serial_num',
+        Header: 'Бренд',
+        accessor: 'brand',
         sticky: 'left'
     },
     {

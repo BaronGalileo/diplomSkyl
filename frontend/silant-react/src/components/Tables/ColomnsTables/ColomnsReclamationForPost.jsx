@@ -7,7 +7,7 @@ import { SelectForReclama } from '../../ReclamationTable/SelectForReclama';
 export const ColomnsReclamationPOST = [
 
     {
-        Header: 'машина',
+        Header: 'Зав.№ машины',
         accessor: 'machine',
         sticky: 'left',
         Cell: () => { return (<SelectForReclama name="machine" machine path="http://127.0.0.1:8000/api/v1/machine/"/>)},

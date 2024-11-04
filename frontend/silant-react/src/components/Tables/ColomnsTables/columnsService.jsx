@@ -20,7 +20,7 @@ export const ColomnsService = [
         disableSortBy: true,
     },
     {
-        Header: 'Серийный номер машины',
+        Header: 'Зав.№ машины',
         accessor: 'machine.serial_num',
         disableSortBy: true,
         Filter: FilterNumber,

@@ -154,7 +154,7 @@ export const TemplateElement = ({path}) => {
                 </div>}
             </form>}
                 <div>
-                    {manager&&!flag&&<Button className={!create? "red" : ""} onClick={() => {setCreate(res=>!res)}}>{!create?"Создать": "Назад"}</Button>}
+                    {manager&&!flag&&!not_create&&<Button className={!create? "red" : ""} onClick={() => {setCreate(res=>!res)}}>{!create?"Создать": "Назад"}</Button>}
                 </div>
             {manager&&!not_create&&
             <form className='templates-wraper-redact' onSubmit={handleSubmit(onSubmitPost)}>

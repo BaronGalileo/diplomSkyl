@@ -5,7 +5,7 @@ import { Input } from '../../Input/Input'
 
 export const ColomnsServicePost = [
     {
-        Header: 'Машина',
+        Header: 'Зав.№ машины',
         accessor: 'machine',
         sticky: 'left',
         Cell: () => {return(<FormChoiceMachine/>)},
